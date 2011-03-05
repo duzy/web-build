@@ -8,7 +8,7 @@ var fs     = require("fs"),
     path   = require("path"),
     sys    = require("sys");
 
-require.paths.unshift("/home/duzy/open/uki/src");
+//require.paths.unshift("/home/duzy/open/uki/src");
 require.paths.unshift(__dirname);
 
 var comp   = require("compressor");
