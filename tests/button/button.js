@@ -40,6 +40,10 @@ uki([
     {
         view: 'Button', pos: 'l:50% t:305px w:40px ml:-20px',
         tabIndex: 1, iconSrc: './settings.png', disabled: true
+    },
+
+    {
+        view: 'Button', iconSrc: './settings.png'
     }
     
 ]).attach();

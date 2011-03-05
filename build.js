@@ -11,7 +11,7 @@ var fs     = require("fs"),
 require.paths.unshift("/home/duzy/open/uki/src");
 require.paths.unshift(__dirname);
 
-var comp   = require("compiler");
+var comp   = require("compressor");
 
 function compileFile(filePath, options) {
     var code = comp.compile(filePath, options);
@@ -28,16 +28,24 @@ function makeHtmlCode(title, js) {
 }
 
 cli.main(function(args, flags) {
-    if (args.length == 0 ) {
+    if (args.length == 0) {
 	sys.error("No input file.");
 	return;
     }
+
+    var inname = args[0];
+    /*
+    if (!path.exists(inname)) {
+        sys.error("Input file not exists: " + inname);
+        return;
+    }
+    */
 
     var outname = flags.output || "a.html";
     var ext = path.extname(outname);
     var name = path.basename(outname, ext);
 
-    var title = path.basename(args[0], path.extname(args[0]));
+    var title = path.basename(inname, path.extname(inname));
 
     var codegen_options = {
 	ascii_only: false,
@@ -48,8 +56,8 @@ cli.main(function(args, flags) {
 	space_colon: false
     };
 
-    var code = compileFile(args[0], codegen_options);
-    if (!code) {
+    var code = compileFile(inname, codegen_options);
+    if (!code || code == "") {
 	sys.error('No code generated.');
 	return;
     }
