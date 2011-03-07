@@ -8020,3 +8020,5 @@ uki.view.declare('uki.view.Toolbar', uki.view.Container, function(Base) {
 
     uki.theme.register(uki.theme.airport);
 })();
+
+exports.uki = uki;

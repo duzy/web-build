@@ -8,8 +8,8 @@ var fs     = require("fs"),
     path   = require("path"),
     sys    = require("sys");
 
-//require.paths.unshift("/home/duzy/open/uki/src");
 require.paths.unshift(__dirname);
+require.paths.unshift("/home/duzy/open/uki/src");
 
 var comp   = require("compressor");
 
@@ -21,7 +21,7 @@ function compileFile(filePath, options) {
 function makeHtmlCode(title, js) {
     var code = '<!DOCTYPE html>';
     code    += '<html><head><title>' + title + '</title></head>';
-    code    += '<html><body>'
+    code    += '<html><body><div id="main"></div>'
     code    += '<script lang="javascript">' + js + '</script>';
     code    += '</body></html>'
     return code;
