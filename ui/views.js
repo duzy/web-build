@@ -1,4 +1,4 @@
-requireCss('./views/uki.css');
+requireCss('./views/ui.css');
 
 /*
 var view = require('./core/view.js');

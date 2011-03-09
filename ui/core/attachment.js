@@ -1,4 +1,6 @@
 (function() {
+    requireCss('./attachment.css');
+
     var utils = require('./utils'),
         env   = require('./env'),
         evt   = require('./event'),
@@ -11,7 +13,7 @@
 
             _setup: function(initArgs) {
                 this._dom = initArgs.dom;
-                dom.addClass(this.dom(), 'uki-attachment');
+                dom.addClass(this.dom(), 'ui-attachment');
                 Can.prototype._setup.call(this, initArgs);
             },
 
