@@ -5,6 +5,14 @@ var ui = require('lui');
 require('lui/core/gesture');
 */
 
+ui.view(
+    require('lui/views/splitPane'),
+    require('lui/views/flow'),
+    require('lui/views/button'),
+    require('lui/views/rich'),
+    require('lui/views/text')
+);
+
 try {
     var root = ui([
 	{ view: 'SplitPane', pos: 'l:0 t:0 r:0 b:0',

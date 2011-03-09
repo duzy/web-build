@@ -1,6 +1,6 @@
 (function() {
-    var fun   = require('./function'),
-        utils = require('./utils');
+    var fun   = require('../core/function'),
+        utils = require('../core/utils');
 
     var Binding = fun.newClass({
         view: null,

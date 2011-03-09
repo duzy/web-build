@@ -6,7 +6,7 @@ var fun   = require('../core/function'),
     env   = require('../core/env'),
     evt   = require('../core/event'),
 
-    Binding   = require('../core/binding').Binding,
+    Binding   = require('../tool/binding').Binding,
     Focusable = require('./focusable').Focusable,
     Base      = require('../core/view/base').Base;
 

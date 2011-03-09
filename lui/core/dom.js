@@ -34,10 +34,10 @@
                     else if (name == 'html') { e.innerHTML = value; }
                     else if (name == 'className') { e.className = value; }
                     else { e.setAttribute(name, value); }
-                });
+            });
             children && utils.forEach(children, function(c) {
                     e.appendChild(c);
-                });
+            });
             return e;
         },
 

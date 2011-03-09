@@ -7,7 +7,11 @@
         ids = {};
 
     /** @namespace */
-    module.exports = {
+    var view = function() {
+	utils.forEach(arguments, function(v) { utils.extend(view, v) });
+    }
+
+    utils.extend(view, {
         register: function(view) {
             registry[view.dom()[env.expando]] = view;
         },
@@ -88,6 +92,7 @@
                 return this;
             };
         }
-    };
+    });
 
+    module.exports = view;
 })();

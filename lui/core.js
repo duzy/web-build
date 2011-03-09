@@ -46,18 +46,15 @@
     var gesture = require('./core/gesture');
     */
 
-    var view = require('./core/view');
-
     // add view as ui.view namespace
-    ui.view = view;
+    var view = ui.view = require('./core/view');
 
     // register view as default search path for views
     builder.viewNamespaces.unshift(view);
 
     // copy views from default view namespaces into view
-    utils.extend(
-	view, 
-	require('./core/view/base'),        
+    view(
+	require('./core/view/base'),
 	require('./core/view/container')
     );
 })();
