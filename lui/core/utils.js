@@ -72,9 +72,7 @@
         function prop(v) {
             return utils.prop(v, prop);
         };
-        return array.map ?
-        array.map(prop) :
-        utils.map(array, prop);
+        return array.map ? array.map(prop) : utils.map(array, prop);
     };
 
     utils.without = function(array, value) {
@@ -82,9 +80,7 @@
             return v !== value;
         };
 
-        return array.filter ?
-        array.filter(filter) :
-        utils.filter(array, filter);
+        return array.filter ? array.filter(filter) : utils.filter(array, filter);
     };
 
     /**

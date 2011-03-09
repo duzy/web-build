@@ -147,10 +147,10 @@
 		if (context.length === undefined) { context = [context]; }
 		
 		var tokens = Selector.tokenize(selector),
-		expr   = tokens[0],
-		extra  = tokens[1],
-		result = context,
-		mapper;
+                    expr   = tokens[0],
+                    extra  = tokens[1],
+                    result = context,
+                    mapper;
 		
 		while (expr.length > 0) {
 		    mapper = mappers[expr[0]] ? mappers[expr.shift()] : mappers[''];
