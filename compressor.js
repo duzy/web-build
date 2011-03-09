@@ -8,12 +8,12 @@
         mime = require('mime'),
         url = require('url'),
         mod = require('module');
-    
+
     var REQUIRE = 'require';
-    var REQUIRE_TEXT = 'requireText';
-    var REQUIRE_CSS  = 'requireCss';
-    var TO_DATA_URI  = 'toDataUri';
-    var PREFIX  = '__module_';
+    var REQUIRE_TEXT = 'requireText'; // uki defined
+    var REQUIRE_CSS  = 'requireCss'; // uki defined
+    var TO_DATA_URI  = 'toDataUri'; // uki defined
+    var PREFIX  = '__module_'; // uki defined
 
     function compressor() {
     }

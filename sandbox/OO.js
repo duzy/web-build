@@ -32,3 +32,28 @@
 
     exports.Foobar = Foobar;
 })();
+
+
+// == Inheritance ==================================
+(function(){
+
+    // Base
+    function NamedObject(name) {
+        this.name = name;
+    }
+
+    // Intermedia Base
+    function Product(name, type) {
+	NamedObject.call(this, name);
+        this.type = type;
+    }
+    Product.prototype = new NamedObject();
+
+    // Concrete Class
+    function ConcreteProduct(name,type) {
+	Product.apply(this, arguments);
+    }
+    ConcreteProduct.prototype = new Product();
+
+    exports.ConcreteProduct = ConcreteProduct;
+})();

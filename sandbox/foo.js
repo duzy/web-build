@@ -1,7 +1,10 @@
-var OO = require("./OO.js");
+var OO = require("./OO");
 var o = new OO.Foobar("foobar");
 o.hi();
 o.say(o.name);
+
+var prod = new OO.ConcreteProduct('foo','A');
+o.say("product: ", prod.name, ", ", prod.type);
 
 // o.name = "xxx"; // error: Cannot set property name of #<Foobar> which has only a getter
 

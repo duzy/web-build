@@ -9,6 +9,7 @@ var fs     = require("fs"),
     sys    = require("sys");
 
 require.paths.unshift(__dirname);
+//require.paths.unshift(path.join(__dirname, 'lui'));
 require.paths.unshift("/home/duzy/open/uki/src");
 
 var comp   = require("compressor");
