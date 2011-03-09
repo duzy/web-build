@@ -1,6 +1,6 @@
 (function() {
-    var utils = require('./utils'),
-        fun = require('./function');
+    var utils = require('../core/utils'),
+        fun = require('../core/function');
 
     var Observable = {
         addListener: function(names, callback) {

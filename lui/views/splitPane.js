@@ -7,7 +7,7 @@ var fun   = require('../core/function'),
     dom   = require('../core/dom'),
     build = require('../core/builder').build,
 
-    Mustache  = require('../core/mustache').Mustache,
+    Mustache  = require('../tool/mustache').Mustache,
     Container = require('../core/view/container').Container,
     Focusable = require('./focusable').Focusable;
 

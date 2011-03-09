@@ -7,7 +7,7 @@ var env   = require('../core/env'),
     evt   = require('../core/event'),
     build = require('../core/builder').build,
     
-    Mustache   = require('../core/mustache').Mustache;
+    Mustache   = require('../tool/mustache').Mustache;
     Base       = require('../core/view/base').Base;
     Focusable  = require('./focusable').Focusable;
     Selectable = require('./selectable').Selectable;
