@@ -43,7 +43,6 @@
 	require('./core/dom'),
 	require('./core/event'),
 	require('./core/gesture'),
-	require('./core/observable'),
 	require('./core/binding'),
 	require('./core/attachment'),
 	require('./core/mustache')
