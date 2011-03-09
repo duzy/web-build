@@ -39,7 +39,7 @@
     utils.extend(
 	ui,
 	utils, builder, collection,
-	require('./core/function'),
+	//require('./core/function'),
 	require('./core/dom'),
 	//require('./core/event'),
 	require('./core/gesture'),
