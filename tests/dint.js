@@ -7,7 +7,7 @@
     });
     */
     var data = [];
-    for (n=1; n < 30000; ++n) { data.push('row #' + n) };
+    for (n=1; n < 30; ++n) { data.push('row #' + n) };
     
     var views = uki([
 	{ view: 'SplitPane', pos: 'l:0 t:0 r:0 b:0',
@@ -36,8 +36,8 @@
 		    { view: 'Header', text: 'Post', size: 'small',
 		      pos: 'l:0 t:0 w:100% h:25px',
 		    },
-		    { view: 'RichEdit', id: 'rich', name: 'rich',
-		      pos: 'l:0 t:26px w:95% h:90%',
+		    { view: 'DataList', id: 'list', name: 'list',
+		      pos: 'l:0 t:26px w:95% h:90%', data: data,
 		    },
 		    { view: 'Button', text: 'Publish',
 		      pos: 'l:0 t:95% w:1 h:25px',

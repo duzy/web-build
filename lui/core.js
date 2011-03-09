@@ -8,16 +8,16 @@
     /**
      * Shortcut access to builder, selector and
      * Collection constructor
-     * lui('#id') is also a shortcut for search view.byId
+     * ui('#id') is also a shortcut for search view.byId
      *
      * @param {String|view.Base|Object|Array.<view.Base>} val
      * @param {Array.<view.Base>=} optional context for selector
      * @class
      * @namespace
-     * @name lui
+     * @name ui
      * @return {Collection}
      */
-    var lui = module.exports = function(val, context) {
+    var ui = module.exports = function(val, context) {
 	if (typeof val === "string") {
             var m = val.match(/^#((?:[\w\u00c0-\uFFFF_-]|\\.)+)$/),
             e = m && view.byId(m[1]);
@@ -33,11 +33,11 @@
 	return builder.build(val);
     }
 
-    lui.version = '0.0.1a1'; // derived from lui-0.4.0a2;
+    ui.version = '0.0.1a1'; // derived from ui-0.4.0a2;
 
     // push everything into core namespace
     utils.extend(
-	lui,
+	ui,
 	utils, builder, selector, collection,
 	require('./core/function'),
 	require('./core/dom'),
@@ -51,15 +51,15 @@
 
     /*
     utils.extend(
-	lui,
+	ui,
 	require('./core/dom')
     )
     */
 
     var view = require('./core/view');
 
-    // add view as lui.view namespace
-    lui.view = view;
+    // add view as ui.view namespace
+    ui.view = view;
 
     // register view as default search path for views
     builder.viewNamespaces.unshift(view);
