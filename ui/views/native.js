@@ -8,7 +8,7 @@
         evt   = require('../core/event'),
 
         Binding   = require('../tool/binding').Binding,
-        Focusable = require('./focusable').Focusable,
+        Focusable = require('../facet/focusable').Focusable,
         Base      = require('../core/view/base').Base;
 
 

@@ -8,10 +8,10 @@
     /**
      * @class
      * @augments Base
-     * @name Container
+     * @name Can
      */
-    var Container = fun.newClass(Base, {
-        typeName: 'Container',
+    var Can = fun.newClass(Base, {
+        typeName: 'Can',
 
         _setup: function(initArgs) {
             Base.prototype._setup.call(this, initArgs);
@@ -139,5 +139,5 @@
         }
     });
 
-    exports.Container = Container;
+    exports.Can = Can;
 })();

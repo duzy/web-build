@@ -22,7 +22,7 @@ try {
 	      leftMin: '20%', rightMin: '80%',
 	  },
 	  leftChildViews: [
-	      { view: 'Container',
+	      { view: 'Can',
 		childViews: [
 		    { view: 'Flow', horizontal: true,
 		      childViews: [
@@ -34,7 +34,7 @@ try {
 	      }
 	  ],
 	  rightChildViews: [
-	      { view: 'Container', pos: 'l:5px t:5px r:0 b:0',
+	      { view: 'Can', pos: 'l:5px t:5px r:0 b:0',
 		addClass: 'scrollable',
 		childViews: [
 		    { view: 'Header', text: 'Post', size: 'small',

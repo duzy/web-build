@@ -5,10 +5,10 @@ var fun   = require('../core/function'),
     view  = require('../core/view'),
     dom   = require('../core/dom'),
 
-    Container = require('../core/view/container').Container;
+    Can = require('../core/view/can').Can;
 
 
-var Flow = fun.newClass(Container, {
+var Flow = fun.newClass(Can, {
     typeName: 'Flow',
 
     spacing: view.newClassMapProp({

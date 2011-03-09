@@ -6,8 +6,8 @@ var view = require('./core/view.js'),
 utils.extend(
     view,
     
-    require('./views/focusable.js'),
-    require('./views/selectable.js')
+    require('./facet/focusable.js'),
+    require('./facet/selectable.js')
 
     //require('./views/button.js'),
     //require('./views/flow.js'),

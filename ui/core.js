@@ -55,6 +55,6 @@
     // copy views from default view namespaces into view
     view(
 	require('./core/view/base'),
-	require('./core/view/container')
+	require('./core/view/can')
     );
 })();

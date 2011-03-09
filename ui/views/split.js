@@ -8,11 +8,11 @@ var fun   = require('../core/function'),
     build = require('../core/builder').build,
 
     Mustache  = require('../tool/mustache').Mustache,
-    Container = require('../core/view/container').Container,
-    Focusable = require('./focusable').Focusable;
+    Can = require('../core/view/can').Can,
+    Focusable = require('../facet/focusable').Focusable;
 
 
-var Split = fun.newClass(Container, Focusable, {}),
+var Split = fun.newClass(Can, Focusable, {}),
     proto = Split.prototype;
 
 proto.typeName = 'Split';
@@ -31,7 +31,7 @@ proto._setup = function(initArgs) {
     this._handleWidth = initArgs.handleWidth || this._handleWidth;
     this._originalWidth = 0;
     this._exts = [];
-    Container.prototype._setup.call(this, initArgs);
+    Can.prototype._setup.call(this, initArgs);
 };
 
 /**
@@ -173,8 +173,8 @@ proto._createDom = function() {
     this._dom = dom.createElement('div', { className: 'splitPane' });
 
     build([
-        { view: 'Container', addClass: 'uki-splitPane-container uki-splitPane-container_left' },
-        { view: 'Container', addClass: 'uki-splitPane-container uki-splitPane-container_right' }
+        { view: 'Can', addClass: 'uki-splitPane-container uki-splitPane-container_left' },
+        { view: 'Can', addClass: 'uki-splitPane-container uki-splitPane-container_right' }
     ]).appendTo(this);
 
     this._dom.appendChild(this._handle = this._createHandle());

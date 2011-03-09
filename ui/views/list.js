@@ -10,8 +10,8 @@
     
         Mustache   = require('../tool/mustache').Mustache,
         Base       = require('../core/view/base').Base,
-        Focusable  = require('./focusable').Focusable,
-        Selectable = require('./selectable').Selectable;
+        Focusable  = require('../facet/focusable').Focusable,
+        Selectable = require('../facet/selectable').Selectable;
     
 
     var DataList = fun.newClass(Base, Focusable, Selectable, {}),

@@ -4,15 +4,15 @@
         evt   = require('./event'),
         dom   = require('./dom'),
         fun   = require('./function'),
-        Container = require('./view/container').Container;
+        Can = require('./view/can').Can;
 
-    var Attachment = fun.newClass(Container, {
+    var Attachment = fun.newClass(Can, {
             typeName: 'Attachment',
 
             _setup: function(initArgs) {
                 this._dom = initArgs.dom;
                 dom.addClass(this.dom(), 'uki-attachment');
-                Container.prototype._setup.call(this, initArgs);
+                Can.prototype._setup.call(this, initArgs);
             },
 
             _createDom: fun.FS,

@@ -5,7 +5,7 @@ var fun  = require('../core/function'),
     dom  = require('../core/dom'),
 
     Base      = require('../core/view/base').Base,
-    Focusable = require('./focusable').Focusable;
+    Focusable = require('../facet/focusable').Focusable;
 
 
 var Button = fun.newClass(Base, Focusable, {

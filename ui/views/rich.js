@@ -17,7 +17,7 @@
         view = require('../core/view'),
 
         Base = require('../core/view/base').Base,
-        Focusable = require('./focusable').Focusable;
+        Focusable = require('../facet/focusable').Focusable;
 
     var RichEdit = fun.newClass(Base, Focusable, {}),
         proto = RichEdit.prototype;

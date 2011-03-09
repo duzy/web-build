@@ -26,11 +26,11 @@ try {
 	{ view: 'Header', text: 'Two forms bound to the same data' },
 	{ view: 'P', text: 'Input values should be synced on blur event, comboboxes on change' },
 	{ view: 'Flow', horizontal: true, spacing: 'large', childViews: [
-            { view: 'Container', addClass: 'form', childViews: [
+            { view: 'Can', addClass: 'form', childViews: [
 		{ view: 'NativeControl.Text', addClass: 'input', binding: { model: bob, modelProp: 'name' } },
 		{ view: 'NativeControl.Select', options: options, binding: { model: bob, modelProp: 'age' } }
             ]},
-            { view: 'Container', addClass: 'form', childViews: [
+            { view: 'Can', addClass: 'form', childViews: [
 		{ view: 'NativeControl.Text', addClass: 'input', binding: { model: bob, modelProp: 'name' } },
 		{ view: 'NativeControl.Select', options: options, binding: { model: bob, modelProp: 'age' } }
             ]}
