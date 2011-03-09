@@ -1,6 +1,4 @@
 (function() {
-    require('./core/types');
-
     var env        = require('./core/env'),
         utils      = require('./core/utils'),
         builder    = require('./core/builder'),
@@ -37,7 +35,6 @@
 
     lui.version = '0.0.1a1'; // derived from lui-0.4.0a2;
 
-    /*
     // push everything into core namespace
     utils.extend(
 	lui,
@@ -51,13 +48,13 @@
 	require('./core/attachment'),
 	require('./core/mustache')
     );
-    */
 
-
+    /*
     utils.extend(
 	lui,
 	require('./core/dom')
     )
+    */
 
     var view = require('./core/view');
 

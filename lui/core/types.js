@@ -1,18 +1,14 @@
 (function() {
 
-    var proto;
-
-    proto = Object.prototype;
+    var proto = Object.prototype;
+    var hasOwnProperty = proto.hasOwnProperty;
 
     proto.forEach = proto.forEach || function(action, context) {
 	var name;
 	for(name in this) {
-	    if (!name || this[name] === undefined ||
-		!this.hasOwnProperty(name)) {
-		continue;
+	    if (hasOwnProperty.call(this, name)) {
+		action.call(context, this[name], name, this);
 	    }
-	    if (action.call(context || object[name], object[name],
-			    name) === false) { break; }
 	}
     };
 

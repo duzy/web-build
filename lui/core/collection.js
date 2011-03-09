@@ -135,12 +135,18 @@
 
     var proto = Collection.prototype;
 
-    /** @function
-        @name Collection#parent */
-    /** @function
-        @name Collection#next */
-    /** @function
-        @name Collection#prev */
+    /*
+    [ ['parent', 'parent'],
+      ['next', 'nextView'],
+      ['prev', 'prevView']
+    ].forEach(function(desc,i) {
+	proto[desc[0]] = function() {
+            return new Collection(
+		utils.unique(utils.pluck(this, desc[1]))
+            );
+	};
+    });
+    */
     utils.forEach([
 	['parent', 'parent'],
 	['next', 'nextView'],
@@ -153,6 +159,18 @@
 	};
     });
 
+    /*
+    [ 'addListener', 'removeListener', 'trigger', 'on', 'emit',
+      'appendChild', 'removeChild', 'insertBefore', 'toggle'
+    ].forEach(function(name) {
+	proto[name] = function() {
+            for (var i = this.length - 1; i >= 0; i--) {
+		this[i][name].apply(this[i], arguments);
+            }
+            return this;
+	};
+    });
+    */
     utils.forEach([
 	'addListener', 'removeListener', 'trigger', 'on', 'emit',
 	'appendChild', 'removeChild', 'insertBefore', 'toggle'

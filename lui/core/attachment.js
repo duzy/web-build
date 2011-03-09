@@ -34,9 +34,7 @@ Attachment.attach = function(dom, view) {
 
 Attachment.instances = function() {
     var atts = [];
-    utils.forEach(instances || {}, function(a) {
-        atts.push(a);
-    });
+    utils.forEach(instances || {}, function(a) { atts.push(a); });
     return atts;
 };
 

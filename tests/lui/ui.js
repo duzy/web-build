@@ -1,4 +1,4 @@
-var ui = require('lui/lui');
+var ui = require('lui');
 
 try {
     var root = ui([
@@ -16,7 +16,7 @@ try {
 			  { view: 'Button', label: 'test', id:'cmd' },
 		      ]
 		    },
-		    { view: 'Text', html: requireText('./dinthelp.html') }
+		    { view: 'Text', html: requireText('../dinthelp.html') }
 		]
 	      }
 	  ],
