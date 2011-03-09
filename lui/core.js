@@ -41,7 +41,7 @@
 	utils, builder, collection,
 	require('./core/function'),
 	require('./core/dom'),
-	require('./core/event'),
+	//require('./core/event'),
 	require('./core/gesture'),
 	require('./core/binding'),
 	require('./core/attachment'),
