@@ -6,7 +6,7 @@ require('ui/core/gesture');
 */
 
 ui.view(
-    require('ui/views/splitPane'),
+    require('ui/views/split'),
     require('ui/views/flow'),
     require('ui/views/button'),
     require('ui/views/rich'),
@@ -15,7 +15,7 @@ ui.view(
 
 try {
     var root = ui([
-	{ view: 'SplitPane', pos: 'l:0 t:0 r:0 b:0',
+	{ view: 'Split', pos: 'l:0 t:0 r:0 b:0',
 	  init: {
 	      vertical: true,
 	      //handleWidth: 1.5,

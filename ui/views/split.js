@@ -1,4 +1,4 @@
-requireCss('./splitPane/splitPane.css');
+requireCss('./split/split.css');
 
 var fun   = require('../core/function'),
     utils = require('../core/utils'),
@@ -12,10 +12,10 @@ var fun   = require('../core/function'),
     Focusable = require('./focusable').Focusable;
 
 
-var SplitPane = fun.newClass(Container, Focusable, {}),
-    proto = SplitPane.prototype;
+var Split = fun.newClass(Container, Focusable, {}),
+    proto = Split.prototype;
 
-proto.typeName = 'SplitPane';
+proto.typeName = 'Split';
 
 proto._throttle = 0; // do not try to render more often than every Xms
 proto._handlePosition = 200;
@@ -36,23 +36,23 @@ proto._setup = function(initArgs) {
 
 /**
 * @function
-* @name view.HSplitPane#leftMin
+* @name view.Split#leftMin
 */
 /**
 * @function
-* @name view.HSplitPane#rightMin
+* @name view.Split#rightMin
 */
 /**
 * @function
-* @name view.HSplitPane#autogrowLeft
+* @name view.Split#autogrowLeft
 */
 /**
 * @function
-* @name view.HSplitPane#autogrowRight
+* @name view.Split#autogrowRight
 */
 /**
 * @function
-* @name view.HSplitPane#throttle
+* @name view.Split#throttle
 */
 fun.addProps(proto, ['leftMin', 'rightMin', 'leftSpeed', 'rightSpeed', 'throttle']);
 proto.topMin = proto.leftMin;
@@ -63,7 +63,7 @@ proto.bottomSpeed = proto.rightSpeed;
 /**
 * @function
 * @fires event:handleMove
-* @name view.HSplitPane#handlePosition
+* @name view.Split#handlePosition
 */
 fun.addProp(proto, 'handlePosition', function(val) {
     if (this._x_width()) {
@@ -116,7 +116,7 @@ proto.extPositions = function(positions) {
 
 /**
 * @function
-* @name view.HSplitPane#handleWidth
+* @name view.Split#handleWidth
 */
 proto.handleWidth = function() {
     return this._handleWidth;
@@ -152,7 +152,7 @@ proto._x_xName = function() {
 
 proto._createHandle = function() {
     var handle = dom.fromHTML(Mustache.to_html(
-        requireText('splitPane/handle.html'),
+        requireText('split/handle.html'),
         { type: this._x_type() }
     ));
 
@@ -240,24 +240,24 @@ proto._updatePositionOnDrag = function(e, stop) {
 
 /**
 * @function
-* @name view.HSplitPane#topChildViews
+* @name view.Split#topChildViews
 */
 /**
 * @function
-* @name view.HSplitPane#leftChildViews
+* @name view.Split#leftChildViews
 */
 proto.topChildViews = proto.leftChildViews = function(views) {
     return this._childViewsAt(0, views);
 };
 
 /**
-* @function
-* @name view.HSplitPane#rightChildViews
-*/
+ * @function
+ * @name view.Split#rightChildViews
+ */
 /**
-* @function
-* @name view.HSplitPane#bottomChildViews
-*/
+ * @function
+ * @name view.Split#bottomChildViews
+ */
 proto.bottomChildViews = proto.rightChildViews = function(views) {
     return this._childViewsAt(1, views);
 };
@@ -288,4 +288,4 @@ proto._resizeChildViews = function() {
 };
 
 
-exports.SplitPane = SplitPane;
+exports.Split = Split;
