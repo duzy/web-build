@@ -1,5 +1,10 @@
 var ui = require('lui');
 
+/*
+// for dragging support:
+require('lui/core/gesture');
+*/
+
 try {
     var root = ui([
 	{ view: 'SplitPane', pos: 'l:0 t:0 r:0 b:0',
@@ -16,7 +21,7 @@ try {
 			  { view: 'Button', label: 'test', id:'cmd' },
 		      ]
 		    },
-		    { view: 'Text', html: requireText('../dinthelp.html') }
+		    { view: 'P', html: '<b>LiteUI</b>, '+ui.version }
 		]
 	      }
 	  ],

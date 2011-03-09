@@ -38,12 +38,13 @@
     // push everything into core namespace
     utils.extend(
 	ui,
-	require('./core/dom'),
-	require('./core/attachment')
+	require('./core/dom')
     );
 
+    /*
     // must require gesture to support mouse dragging.
     var gesture = require('./core/gesture');
+    */
 
     var view = require('./core/view');
 
