@@ -1,16 +1,16 @@
-var ui = require('lui');
+var ui = require('ui');
 
 /*
 // for dragging support:
-require('lui/core/gesture');
+require('ui/core/gesture');
 */
 
 ui.view(
-    require('lui/views/splitPane'),
-    require('lui/views/flow'),
-    require('lui/views/button'),
-    require('lui/views/rich'),
-    require('lui/views/text')
+    require('ui/views/splitPane'),
+    require('ui/views/flow'),
+    require('ui/views/button'),
+    require('ui/views/rich'),
+    require('ui/views/text')
 );
 
 try {
