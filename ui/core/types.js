@@ -1,4 +1,4 @@
-(function() {
+//(function() {
 
     var proto = Object.prototype;
     var hasOwnProperty = proto.hasOwnProperty;
@@ -22,4 +22,4 @@
 	}
     };
 
-})();
+//})();

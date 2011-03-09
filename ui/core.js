@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var env        = require('./core/env'),
         utils      = require('./core/utils'),
         builder    = require('./core/builder'),
@@ -57,4 +57,4 @@
 	require('./core/view/base'),
 	require('./core/view/can')
     );
-})();
+//})();

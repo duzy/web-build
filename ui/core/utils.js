@@ -1,4 +1,4 @@
-(function() {
+//(function() {
 
     var toString = Object.prototype.toString,
         arrayPrototype = Array.prototype,
@@ -246,4 +246,4 @@
         return compat.trim.call(s);
     };
 
-})();
+//})();

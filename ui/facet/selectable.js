@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var env   = require('../core/env'),
         fun   = require('../core/function'),
         utils = require('../core/utils'),
@@ -266,4 +266,4 @@
     };
 
     exports.Selectable = Selectable;
-})();
+//})();

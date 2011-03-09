@@ -104,7 +104,7 @@ proto.extPositions = function(positions) {
 
     this._exts = positions.map(function(pos) {
         var ext = dom.createElement('div', {
-            className: 'uki-splitPane-handle-ext'
+            className: 'ui-splitPane-handle-ext'
         });
         pos = this._expandPos(pos);
         this._applyPosToStyle(pos, ext.style);
@@ -159,7 +159,7 @@ proto._createHandle = function() {
     if (this.handleWidth() > 1) {
         handle.style[this._x_widthName()] = this.handleWidth() + 'px';
     } else {
-        handle.className += ' ' + 'uki-splitPane-handle_thin';
+        handle.className += ' ' + 'ui-splitPane-handle_thin';
     }
 
     utils.forEach(['draggesturestart', 'draggesture', 'draggestureend'], function(name) {
@@ -173,8 +173,8 @@ proto._createDom = function() {
     this._dom = dom.createElement('div', { className: 'splitPane' });
 
     build([
-        { view: 'Can', addClass: 'uki-splitPane-container uki-splitPane-container_left' },
-        { view: 'Can', addClass: 'uki-splitPane-container uki-splitPane-container_right' }
+        { view: 'Can', addClass: 'ui-splitPane-container ui-splitPane-container_left' },
+        { view: 'Can', addClass: 'ui-splitPane-container ui-splitPane-container_right' }
     ]).appendTo(this);
 
     this._dom.appendChild(this._handle = this._createHandle());

@@ -1,8 +1,6 @@
-var view = require('./core/view.js'),
-    utils = require('./core/utils.js');
+var view = require('./core/view.js');
 
-utils.extend(
-    view,
+view(
     require('./facet/focusable.js'),
     require('./facet/selectable.js')
 );

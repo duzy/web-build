@@ -1,4 +1,4 @@
-(function(){
+//(function(){
     // high level browser objects
     exports.root    = window;
     exports.doc     = window.document || {};
@@ -8,4 +8,4 @@
 
     exports.guid = 1;
     exports.expando = 'uki' + (+new Date);
-})();
+//})();

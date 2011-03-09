@@ -12,17 +12,17 @@ var Flow = fun.newClass(Can, {
     typeName: 'Flow',
 
     spacing: view.newClassMapProp({
-        none: 'uki-flow_spacing-none',
-        small: 'uki-flow_spacing-small',
-        medium: 'uki-flow_spacing-medium',
-        large: 'uki-flow_spacing-large'
+        none: 'ui-flow_spacing-none',
+        small: 'ui-flow_spacing-small',
+        medium: 'ui-flow_spacing-medium',
+        large: 'ui-flow_spacing-large'
     }),
 
-    horizontal: view.newToggleClassProp('uki-flow_horizontal'),
+    horizontal: view.newToggleClassProp('ui-flow_horizontal'),
 
     _createDom: function() {
         this._dom = dom.createElement('ul', {
-            className: 'uki-flow uki-flow_spacing-small'
+            className: 'ui-flow ui-flow_spacing-small'
         });
     },
 
@@ -34,7 +34,7 @@ var Flow = fun.newClass(Can, {
     _appendChildToDom: function(child) {
         var flowClass = utils.prop(child, 'flowRowClass');
         var li = dom.createElement('li', {
-            className: 'uki-flow-item' + (flowClass ? ' ' + flowClass : '')
+            className: 'ui-flow-item' + (flowClass ? ' ' + flowClass : '')
         });
         li.appendChild(child.dom());
         this.dom().appendChild(li);

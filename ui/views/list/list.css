@@ -1,4 +1,4 @@
-.uki-dataList {
+.ui-list {
     position: relative;
     outline: none;
     -moz-user-select: -moz-none;
@@ -6,7 +6,7 @@
     user-select: none;
 }
 
-.uki-dataList-pack {
+.ui-list-pack {
     left: 0;
     width: 100%;
     display: block;
@@ -16,7 +16,7 @@
     margin: 0;
 }
 
-.uki-dataList-row {
+.ui-list-row {
     cursor: default;
     display: block;
     padding: 5px;
@@ -29,11 +29,11 @@
     white-space: nowrap;
 }
 
-.uki-dataList-row_odd {
+.ui-list-row_odd {
     background-color: #F1F1F1;
 }
 
-.uki-dataList-row_selected {
+.ui-list-row_selected {
     background-color: #3875D7;
     color: #FFF;
     padding-top: 4px;
@@ -43,12 +43,12 @@
     border-right: none;
 }
 
-.uki-dataList-row_selected + .uki-dataList-row_selected {
+.ui-list-row_selected + .ui-list-row_selected {
     border-top: none;
     padding-top: 5px;
 }
 
-.uki-dataList_blured .uki-dataList-row_selected {
+.ui-list_blured .ui-list-row_selected {
     background-color: #CCC;
     border-color: #AAA;
     color: #000;

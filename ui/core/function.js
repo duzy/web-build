@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var env = require('./env'),
         utils = require('./utils'),
         arrayPrototype = Array.prototype;
@@ -326,4 +326,4 @@
     fun.FF = function() { return false; };
     fun.FT = function() { return true; };
     fun.FS = function() { return this; };
-})();
+//})();

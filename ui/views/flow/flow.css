@@ -1,10 +1,10 @@
-.uki-flow {
+.ui-flow {
     display: block;
     padding: 0;
     margin: 0;
 }
 
-.uki-flow-item {
+.ui-flow-item {
     display: block;
     padding: 0;
     margin: 0;
@@ -17,7 +17,7 @@
     for more info.
 */
 
-.uki-flow_horizontal:after {
+.ui-flow_horizontal:after {
     clear: both;
     content: '.';
     display: block;
@@ -26,49 +26,49 @@
     visibility: hidden;
 }
 
-.uki-flow_horizontal {
+.ui-flow_horizontal {
     *zoom: 1;
 }
 
-.uki-flow_horizontal > .uki-flow-item {
+.ui-flow_horizontal > .ui-flow-item {
     float: left;
 }
 
 /* Spacing */
-.uki-flow_spacing-small {
+.ui-flow_spacing-small {
     margin: 0;
 }
 
-.uki-flow_spacing-small > .uki-flow-item {
+.ui-flow_spacing-small > .ui-flow-item {
     margin: 5px 0 0 0;
 }
 
-.uki-flow_spacing-medium > .uki-flow-item {
+.ui-flow_spacing-medium > .ui-flow-item {
     margin: 10px 0 0 0;
 }
 
-.uki-flow_spacing-large > .uki-flow-item {
+.ui-flow_spacing-large > .ui-flow-item {
     margin: 20px 0 0 0;
 }
 
-.uki-flow .uki-flow-item:first-child {
+.ui-flow .ui-flow-item:first-child {
     margin-top: 0;
 }
 
 
 /* Spacing for horizontal */
-.uki-flow_horizontal.uki-flow_spacing-small > .uki-flow-item {
+.ui-flow_horizontal.ui-flow_spacing-small > .ui-flow-item {
     margin: 0 0 0 5px;
 }
 
-.uki-flow_horizontal.uki-flow_spacing-medium > .uki-flow-item {
+.ui-flow_horizontal.ui-flow_spacing-medium > .ui-flow-item {
     margin: 0 0 0 10px;
 }
 
-.uki-flow_horizontal.uki-flow_spacing-large > .uki-flow-item {
+.ui-flow_horizontal.ui-flow_spacing-large > .ui-flow-item {
     margin: 0 0 0 20px;
 }
 
-.uki-flow_horizontal.uki-flow > .uki-flow-item:first-child {
+.ui-flow_horizontal.ui-flow > .ui-flow-item:first-child {
     margin-left: 0;
 }

@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var arrayPrototype = Array.prototype;
 
     var arrayFunctions = ['indexOf', 'lastIndexOf', 'forEach', 'map',
@@ -95,4 +95,4 @@
         return s.replace(/^\s*|\s*$/g, "");
     };
 
-})();
+//})();

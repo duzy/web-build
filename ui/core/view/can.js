@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var view  = require('../view'),
         utils = require('../utils'),
         fun   = require('../function'),
@@ -140,4 +140,4 @@
     });
 
     exports.Can = Can;
-})();
+//})();

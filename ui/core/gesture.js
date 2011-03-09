@@ -1,4 +1,4 @@
-(function(){
+//(function(){
     var utils = require('./utils'),
         env = require('./env'),
         event = require('./event');
@@ -91,4 +91,4 @@
     }
 
     module.exports = gesture;
-})();
+//})();

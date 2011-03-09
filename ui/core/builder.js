@@ -1,4 +1,4 @@
-(function() {
+//(function() {
 
     var utils      = require('./utils'),
         Collection = require('./collection').Collection;
@@ -62,4 +62,4 @@
 
     exports.build = build;
     exports.viewNamespaces = viewNamespaces;
-})();
+//})();

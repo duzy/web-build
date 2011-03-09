@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     var env = require('../core/env'),
         dom = require('../core/dom'),
         fun = require('../core/function');
@@ -59,4 +59,4 @@
     fun.addProp(Focusable, 'focusedClass');
 
     exports.Focusable = Focusable;
-})();
+//})();

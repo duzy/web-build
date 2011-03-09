@@ -11,7 +11,7 @@ var Text = fun.newClass(Base, {
     typeName: 'Text',
 
     _createDom: function() {
-        this._dom = dom.createElement('div', { className: 'uki-text' });
+        this._dom = dom.createElement('div', { className: 'ui-text' });
     }
 });
 
@@ -20,7 +20,7 @@ var P = fun.newClass(Base, {
     typeName: 'P',
 
     _createDom: function() {
-        this._dom = dom.createElement('p', { className: 'uki-text-p' });
+        this._dom = dom.createElement('p', { className: 'ui-text-p' });
     }
 });
 
@@ -29,7 +29,7 @@ var Label = fun.newClass(Base, {
     typeName: 'Label',
 
     _createDom: function(initArgs) {
-        this._dom = dom.createElement(initArgs.tagName || 'label', { className: 'uki-label' });
+        this._dom = dom.createElement(initArgs.tagName || 'label', { className: 'ui-label' });
     }
 });
 fun.delegateProp(Label.prototype, 'for', '_dom');
@@ -39,13 +39,13 @@ var Header = fun.newClass(Base, {
     typeName: 'Header',
 
     _createDom: function() {
-        this._dom = dom.createElement('h1', { className: 'uki-header uki-header_size_medium' });
+        this._dom = dom.createElement('h1', { className: 'ui-header ui-header_size_medium' });
     },
 
     size: view.newClassMapProp({
-        'small': 'uki-header_size_small',
-        'medium': 'uki-header_size_medium',
-        'large': 'uki-header_size_large'
+        'small': 'ui-header_size_small',
+        'medium': 'ui-header_size_medium',
+        'large': 'ui-header_size_large'
     })
 });
 

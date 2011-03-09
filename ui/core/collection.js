@@ -1,4 +1,4 @@
-(function() {
+//(function() {
 
     var fun = require('./function'),
         utils = require('./utils'),
@@ -170,4 +170,4 @@
     });
 
     exports.Collection = Collection;
-})();
+//})();

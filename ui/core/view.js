@@ -1,4 +1,4 @@
-(function() {
+//(function() {
 
     var utils = require('./utils'),
         env   = require('./env');
@@ -95,4 +95,4 @@
     });
 
     module.exports = view;
-})();
+//})();

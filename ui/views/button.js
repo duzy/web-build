@@ -29,25 +29,25 @@ var Button = fun.newClass(Base, Focusable, {
             return this.dom().disabled;
         }
         this.dom().disabled = state ? 'disabled' : '';
-        this.toggleClass('uki-button_disabled', state);
+        this.toggleClass('ui-button_disabled', state);
         return this;
     },
 
-    confirm: view.newToggleClassProp('uki-button_confirm'),
+    confirm: view.newToggleClassProp('ui-button_confirm'),
 
     iconSrc: fun.newProp('iconSrc', function(src) {
         dom.removeElement(this._iconDom);
         this._iconSrc = src;
         if (src) {
-            this._iconDom = dom.createElement('img', { className: 'uki-button__icon', src: src });
+            this._iconDom = dom.createElement('img', { className: 'ui-button__icon', src: src });
             this.dom().insertBefore(this._iconDom, this._text);
         }
         updateImageOnly.call(this);
     }),
 
     _createDom: function() {
-        this._text = dom.createElement('span', { className: 'uki-button__text' });
-        this._dom = dom.createElement('button', { className: 'uki-button', tabIndex: -1 }, [this._text]);
+        this._text = dom.createElement('span', { className: 'ui-button__text' });
+        this._dom = dom.createElement('button', { className: 'ui-button', tabIndex: -1 }, [this._text]);
     },
 
     destruct: function() {
@@ -57,8 +57,7 @@ var Button = fun.newClass(Base, Focusable, {
 });
 
 function updateImageOnly () {
-    this.toggleClass('uki-button_image-only', !!(this.iconSrc() && !this.labelHtml()));
+    this.toggleClass('ui-button_image-only', !!(this.iconSrc() && !this.labelHtml()));
 }
-
 
 exports.Button = Button;

@@ -4,7 +4,7 @@
  *    2) http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html
  */
 
-(function() {
+//(function() {
     var utils = require('./utils'),
         fun   = require('./function'),
         dom   = require('./dom'),
@@ -273,4 +273,4 @@
             }
         };
     });
-})();
+//})();

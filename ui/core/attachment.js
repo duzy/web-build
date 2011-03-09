@@ -1,4 +1,4 @@
-(function() {
+//(function() {
     requireCss('./attachment.css');
 
     var utils = require('./utils'),
@@ -68,4 +68,4 @@
 
 
     exports.Attachment = Attachment;
-})();
+//})();
