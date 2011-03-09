@@ -79,20 +79,6 @@
             }
 	},
 
-	/**
-         * Finds views within collection context
-         * @example
-         * c.find('Button')
-         *
-         * @function
-         *
-         * @param {string} selector
-         * @returns {view.Collection} Collection of found items
-         */
-	find: function(selector) {
-            return require('./selector').find(selector, this);
-	},
-
         /**
          * Appends views to the first item in collection
          *

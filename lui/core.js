@@ -2,7 +2,6 @@
     var env        = require('./core/env'),
         utils      = require('./core/utils'),
         builder    = require('./core/builder'),
-        selector   = require('./core/selector'),
         collection = require('./core/collection');
 
     /**
@@ -22,9 +21,10 @@
             var m = val.match(/^#((?:[\w\u00c0-\uFFFF_-]|\\.)+)$/),
             e = m && view.byId(m[1]);
             if (m && !context) {
-		return new collection.Collection(e ? [e] : []);
+	 	return new collection.Collection(e ? [e] : []);
             }
-            return selector.find(val, context);
+	    // TODO: find views by keyword 'val'
+	    return new collection.Collection([]);
 	}
 	if (val.length === undefined) { val = [val]; }
 	if (val.length > 0 && utils.isFunction(val[0].typeName)) {
@@ -38,7 +38,7 @@
     // push everything into core namespace
     utils.extend(
 	ui,
-	utils, builder, selector, collection,
+	utils, builder, collection,
 	require('./core/function'),
 	require('./core/dom'),
 	require('./core/event'),
@@ -48,13 +48,6 @@
 	require('./core/attachment'),
 	require('./core/mustache')
     );
-
-    /*
-    utils.extend(
-	ui,
-	require('./core/dom')
-    )
-    */
 
     var view = require('./core/view');
 

@@ -1,3 +1,12 @@
+/**
+
+Usage:
+  var selector = require('./selector');
+  selector.find('Button', collection);
+  selector.find('Button[text^=hello]', collection);
+
+*/
+
 (function() {
     /**#@+ @ignore */
     var utils = require('./utils'),
