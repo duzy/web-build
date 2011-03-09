@@ -4,8 +4,7 @@
         fun   = require('../function'),
         env   = require('../env'),
         dom   = require('../dom'),
-        evt   = require('../event');
-
+        event = require('../event');
 
     function Base(initArgs) {
         initArgs = initArgs || {};
@@ -117,7 +116,7 @@
             this._eventNames || (this._eventNames = {});
             utils.forEach(names.split(' '), function(name) {
                     this._eventNames[name] = true;
-                    evt.addListener(this.domForEvent(name), name, wrapper);
+                    event.addListener(this.domForEvent(name), name, wrapper);
                 }, this);
         }
         return this;
@@ -132,15 +131,15 @@
         var wrapper = callback && fun.bindOnce(callback, this);
         names || (names = utils.keys(this._eventNames || {}).join(' '));
         utils.forEach(names.split(' '), function(name) {
-                evt.removeListener(this.domForEvent(name), name, wrapper);
+                event.removeListener(this.domForEvent(name), name, wrapper);
             }, this);
         return this;
     };
 
     proto.trigger = function(e) {
         var node = this.domForEvent(e.type);
-        var wrapped = evt.createEvent(e, { target: node });
-        return evt.trigger.call(node, e);
+        var wrapped = event.createEvent(e, { target: node });
+        return event.trigger.call(node, e);
     };
 
     proto.on = proto.addListener;

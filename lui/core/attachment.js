@@ -22,6 +22,7 @@
             }
     });
 
+    // all attached view instances.
     var instances = null;
 
     Attachment.attach = function(dom, view) {
@@ -33,6 +34,7 @@
         return instances[id].appendChild(view);
     };
 
+    // return a copy of attached view array.
     Attachment.instances = function() {
         var atts = [];
         utils.forEach(instances || {}, function(a) { atts.push(a); });
