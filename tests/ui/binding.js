@@ -8,7 +8,7 @@ ui.view(
     require('ui/views/text'),
     require('ui/views/flow')
 );
-ui.view.NativeControl = require('ui/views/nativeControl.js').nativeControl;
+ui.view.NativeControl = require('ui/views/native.js').native;
 
 var Person = fun.newClass(Observable, {
     name: Observable.newProp('name'),

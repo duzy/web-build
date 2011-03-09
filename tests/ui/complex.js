@@ -15,7 +15,7 @@ ui.view(
 
 try {
     var root = ui([
-	{ view: 'Split', pos: 'l:0 t:0 r:0 b:0',
+	{ view: 'Split', pos: 'l:0 t:0 r:0 b:0', 
 	  init: {
 	      vertical: true,
 	      //handleWidth: 1.5,
