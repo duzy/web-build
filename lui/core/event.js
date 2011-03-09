@@ -1,3 +1,9 @@
+/**
+ * Refs:
+ *    1) http://en.wikipedia.org/wiki/DOM_events
+ *    2) http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html
+ */
+
 (function() {
     var utils = require('./utils'),
         fun   = require('./function'),
@@ -7,6 +13,7 @@
         expando = env.expando;
 
     function EventWrapper () {}
+    function DomEventWrapper() {}
 
     var EventMethods = {
         targetView: function() {
@@ -39,10 +46,7 @@
         isPropagationStopped: fun.FF
     };
 
-    function DomEventWrapper() {}
-
     utils.extend(DomEventWrapper.prototype, EventMethods);
-
 
     function normalize(e) {
 	// Fix target property, if necessary
@@ -126,7 +130,7 @@
     function domHandler(e) {
         e = e || env.root.event;
         var wrapped = wrapDomEvent(e);
-        evt.trigger.call(this, normalize(wrapped));
+        event.trigger.call(this, normalize(wrapped));
     }
 
     function wrapDomEvent(baseEvent) {
@@ -155,7 +159,7 @@
         return e;
     }
 
-    var evt = module.exports = {
+    var event = module.exports = {
 
         wrapDomEvent: wrapDomEvent,
 
@@ -168,7 +172,7 @@
         domHandlers: domHandlers,
 
         trigger: function(e) {
-            var listenerForEl = evt.listeners[this[expando]] || {},
+            var listenerForEl = event.listeners[this[expando]] || {},
             listenersForType = listenerForEl[e.type];
 
             listenersForType && utils.forEach(listenersForType, function(l) {
@@ -176,7 +180,7 @@
                 }, this);
 
             if (e.simulateBubbles && !e.isPropagationStopped() && this.parentNode) {
-                evt.trigger(this.parentNode, e);
+                event.trigger(this.parentNode, e);
             }
         },
 
@@ -189,8 +193,8 @@
                 // if this is the first listener added to el for type
                 // then create a handler
                 if (!listeners[id][type]) {
-                    if (evt.special[type]) {
-                        evt.special[type].setup(el);
+                    if (event.special[type]) {
+                        event.special[type].setup(el);
                     } else {
                         domHandlers[id] = domHandlers[id]
 			    || fun.bind(domHandler, el);
@@ -218,8 +222,8 @@
 
                 // when removing the last listener also remove listener from the dom
                 if (!listeners[id][type].length) {
-                    if (evt.special[type]) {
-                        evt.special[type].teardown(el);
+                    if (event.special[type]) {
+                        event.special[type].teardown(el);
                     } else {
                         el.removeEventListener
 			    ? el.removeEventListener(type, domHandlers[id], false)
@@ -236,8 +240,8 @@
         }
     };
 
-    evt.on = evt.addListener;
-    evt.emit = evt.trigger;
+    event.on = event.addListener;
+    event.emit = event.trigger;
 
     utils.forEach({
         mouseover: 'mouseenter',
@@ -255,17 +259,17 @@
 			type: specialName,
 			simulateBubbling: true
 		    });
-                    evt.trigger.call(this, wrapped);
+                    event.trigger.call(this, wrapped);
                 }
             } catch(e) { }
         }
 	
-        evt.special[specialName] = {
+        event.special[specialName] = {
             setup: function(el, listener) {
-                evt.on(el, origName, handler);
+                event.on(el, origName, handler);
             },
             teardown: function( el, listener ){
-                evt.removeListener(el, origName, handler);
+                event.removeListener(el, origName, handler);
             }
         };
     });
