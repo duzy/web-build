@@ -1,13 +1,10 @@
 requireCss('./views/uki.css');
 
-var view = require('./core/view.js'),
-    utils = require('./core/utils.js');
+/*
+var view = require('./core/view.js');
 
 utils.extend(
     view,
-    
-    require('./facet/focusable.js'),
-    require('./facet/selectable.js')
 
     //require('./views/button.js'),
     //require('./views/flow.js'),
@@ -15,10 +12,8 @@ utils.extend(
     //require('./views/text.js'),
     //require('./views/splitPane.js'),
     //require('./views/dataList.js'),
-
     //require('./views/rich.js')
 );
 
-view.extend = function(v) { utils.extend(view, v); }
-
-module.exports = view;
+//module.exports = view;
+*/
