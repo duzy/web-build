@@ -3,8 +3,6 @@ var view  = require('../view'),
     utils = require('../utils'),
     fun   = require('../function'),
     dom   = require('../dom'),
-    C = require('../class'),
-    Class = C.Class,
     Base  = require('./base').Base;
 
 /**
@@ -12,7 +10,7 @@ var view  = require('../view'),
  * @augments Base
  * @name Can
  */
-var Can = new Class(Base, {
+var Can = new Object.Class(Base, {
     name: 'Can',
     typeName: 'Can',
 

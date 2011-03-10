@@ -4,12 +4,12 @@ var view  = require('../view'),
     fun   = require('../function'),
     env   = require('../env'),
     dom   = require('../dom'),
-    C = require('../class'),
-    Class = C.Class,
     event = require('../event');
 
-var Base = new Class({
+var Base = new Object.Class({
     name: 'Base',
+    typeName: 'Base',
+
     init: function(initArgs) {
         initArgs = initArgs || {};
         this._setup(initArgs);
@@ -20,8 +20,6 @@ var Base = new Class({
 });
 
 var proto = Base.prototype;
-
-proto.typeName = 'Base';
 
 proto.destruct = function() {
     view.unregisterId(this);
