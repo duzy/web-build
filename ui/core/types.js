@@ -30,6 +30,18 @@ proto.bind = function(context) {
     return result;
 };
 
+Function.huid = 1;
+proto.bindOnce = function(context) {
+    this.huid = this.huid || Function.huid++;
+    var bindName = '__bind_' + this.huid;
+    // Optimize:
+    // Do not rebind bound functions for the second time
+    // since this will not affect their behaviour
+    context[bindName] = context[bindName] ||
+	(this.bound ? this : this.bind(context));
+    return context[bindName];
+}
+
 // ==== Object.prototype ====
 proto = Object.prototype;
 var hasOwnProperty = proto.hasOwnProperty;

@@ -187,7 +187,7 @@
         addListener: function(el, types, listener) {
             var id = el[expando] = el[expando] || env.guid++;
 
-            utils.forEach(types.split(' '), function(type) {
+            types.split(' ').forEach(function(type) {
                 listeners[id] = listeners[id] || {};
 
                 // if this is the first listener added to el for type
@@ -197,7 +197,7 @@
                         event.special[type].setup(el);
                     } else {
                         domHandlers[id] = domHandlers[id]
-			    || domHandler.bind(el); //fun.bind(domHandler, el);
+			    || domHandler.bind(el);
                         el.addEventListener
 			    ? el.addEventListener(type, domHandlers[id], false)
 			    : el.attachEvent('on' + type, domHandlers[id]);

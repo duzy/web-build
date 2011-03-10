@@ -60,14 +60,16 @@
      *   x.removeListener('click', fun.bindOnce(handler, this));
      */
     fun.bindOnce = function(fn, context) {
-        fn.huid = fn.huid || env.guid++;
-        var bindingName = '__bind_' + fn.huid;
-        // Optimize:
-        // Do not rebind bound functions for the second time
-        // since this will not affect their behaviour
-        context[bindingName] = context[bindingName] ||
-        (fn.bound ? fn : fun.bind(fn, context));
-        return context[bindingName];
+        // fn.huid = fn.huid || env.guid++;
+        // var bindingName = '__bind_' + fn.huid;
+        // // Optimize:
+        // // Do not rebind bound functions for the second time
+        // // since this will not affect their behaviour
+        // context[bindingName] = context[bindingName] ||
+        // (fn.bound ? fn : fun.bind(fn, context));
+        // return context[bindingName];
+	var args = arrayPrototype.slice.call(arguments, 1);
+	return Function.prototype.bindOnce.apply(fn,args);
     };
 
     /**
