@@ -98,7 +98,7 @@ proto.extPositions = function(positions) {
         }, this);
     }
 
-    utils.forEach(this._exts, function(ext) {
+    this._exts.forEach(function(ext) {
         this._handle.removeChild(ext);
     }, this);
 

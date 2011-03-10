@@ -159,9 +159,9 @@ var Text = new Object.Class(NativeControl, {
         var targetStyle = this._placeholderDom.style,
         sourceStyle = dom.computedStyle(this._input);
 	
-        utils.forEach([
+        [
 	    'font', 'fontFamily', 'fontSize', 'paddingLeft', 'paddingTop', 'padding'
-	], function(name) {
+	].forEach(function(name) {
             if (sourceStyle[name] !== undefined) {
                 targetStyle[name] = sourceStyle[name];
             }
@@ -225,7 +225,7 @@ var Select = new Object.Class(NativeControl, {
 
 function appendOptions (root, options) {
     var node;
-    utils.forEach(options, function(option) {
+    options && options.forEach(function(option) {
         if (typeof option === 'string' || typeof option === 'number') {
             option = { text: option, value: option };
         }

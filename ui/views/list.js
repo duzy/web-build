@@ -305,7 +305,7 @@ proto.resized = function() {
 };
 
 proto._reset = function() {
-    utils.forEach(this._packs, dom.removeElement);
+    this._packs.forEach(dom.removeElement);
     this._packs = [];
     this.clearSelection();
     this._allreadyResized = false;
@@ -543,7 +543,7 @@ proto._visChanged = function() {
         }
     };
 
-    utils.forEach(this._packs, function(p, packN) {
+    this._packs.forEach(function(p, packN) {
         if (p.__revision != revision) this._removePack(packN);
     }, this);
 };

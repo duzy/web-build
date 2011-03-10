@@ -29,13 +29,13 @@ module.exports = {
      */
     createElement: function(tagName, options, children) {
         var e = env.doc.createElement(tagName);
-        utils.forEach(options || {}, function(value, name) {
+        options && options.forEach(function(value, name) {
             if (name == 'style') { e.style.cssText = value; }
             else if (name == 'html') { e.innerHTML = value; }
             else if (name == 'className') { e.className = value; }
             else { e.setAttribute(name, value); }
         });
-        children && utils.forEach(children, function(c) {
+        children && children.forEach(function(c) {
             e.appendChild(c);
         });
         return e;

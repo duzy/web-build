@@ -63,7 +63,7 @@ proto._command = function(cmd, arg) {
     }
 }
 
-utils.forEach([
+var commands = [
     'backColor',
     'bold',
     'contentReadOnly',
@@ -106,7 +106,10 @@ utils.forEach([
     'unlink',
     //'useCSS',
     'styleWithCSS'
-], function(cmd,n) { proto[cmd] = function(arg) { this._command(cmd, arg); } });
+];
+commands.forEach(function(cmd,n) {
+    proto[cmd] = function(arg) { this._command(cmd, arg); };
+});
 
 proto._content = function(n,v) {
     var doc = this._doc;
