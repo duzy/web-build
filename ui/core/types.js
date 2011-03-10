@@ -215,6 +215,10 @@ Object.isArray = function(obj) {
     return obj && obj.typename === 'array';
 }
 
+String.prototype.trim = String.prototype.trim || function(s) {
+    return s.replace(/^\s*|\s*$/g, "");
+};
+
 //Arguments.prototype.forEach = Array.prototype.forEach;
 
 // module.exports = {

@@ -3,8 +3,8 @@
     var toString = Object.prototype.toString,
         arrayPrototype = Array.prototype,
         slice = arrayPrototype.slice,
-        utils = exports,
-        compat = require('./compat');
+utils = exports;
+//compat = require('./compat');
 
     var marked = '__marked';
     // dummy subclass
@@ -176,7 +176,7 @@
         return result;
     };
 
-    utils.applyCompat = compat.applyCompat;
+    // utils.applyCompat = compat.applyCompat;
 
     // compat.arrayFunctions.forEach(function(name) {
     //     if (!utils[name]) {
@@ -188,10 +188,10 @@
     //     }
     // });
 
-    utils.keys = compat.keys;
+    //utils.keys = compat.keys;
 
     utils.trim = function(s) {
-        return compat.trim.call(s);
+        return s.trim();
     };
 
 //})();

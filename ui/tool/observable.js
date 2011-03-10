@@ -13,7 +13,7 @@ var Observable = {
 
     removeListener: function(names, callback) {
         if (names) {
-            names = utils.keys(this._listeners || {}).join(' ');
+            names = (this._listeners || {}).keys.join(' ');
         }
 	var ns = names.split(' ');
         ns && ns.forEach(function(name) {
