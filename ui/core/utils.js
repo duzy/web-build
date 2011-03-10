@@ -6,9 +6,6 @@
         utils = exports;
 
     var marked = '__marked';
-    // dummy subclass
-    /** @ignore */
-    function inheritance() {}
 
     /**
      * Sets or retrieves property on an object.
@@ -44,18 +41,11 @@
     };
 
     utils.pluck = function(array, prop) {
-        function prop(v) {
-            return utils.prop(v, prop);
-        };
-	return array.map(prop);
+	return array.map(function(v) { return utils.prop(v, prop); });
     };
 
     utils.without = function(array, value) {
-        function filter(v) {
-            return v !== value;
-        };
-
-        return array.filter ? array.filter(filter) : utils.filter(array, filter);
+        return array.filter(function(v) { return v !== value; });
     };
 
     /**
@@ -161,8 +151,6 @@
         return result;
     };
 
-    utils.trim = function(s) {
-        return s.trim();
-    };
+    utils.trim = function(s) { return s.trim(); };
 
 //})();
