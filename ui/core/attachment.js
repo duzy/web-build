@@ -9,19 +9,19 @@
         Can = require('./view/can').Can;
 
     var Attachment = new Object.Class(Can, {
-            typeName: 'Attachment',
+        typeName: 'Attachment',
 
-            _setup: function(initArgs) {
-                this._dom = initArgs.dom;
-                dom.addClass(this.dom(), 'ui-attachment');
-                Can.prototype._setup.call(this, initArgs);
-            },
+        _setup: function(initArgs) {
+            this._dom = initArgs.dom;
+            dom.addClass(this.dom(), 'ui-attachment');
+            Can.prototype._setup.call(this, initArgs);
+        },
 
-            _createDom: fun.FS,
+        _createDom: fun.FS,
 
-            parent: function() {
-                return null;
-            }
+        parent: function() {
+            return null;
+        }
     });
 
     // all attached view instances.
