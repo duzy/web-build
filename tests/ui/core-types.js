@@ -10,11 +10,11 @@ try {
 var test = require('tool/test');
 var value, obj;
 
-// ==== Object.prototype.type ====
-test.equal(''.type, typeof '', "''.type === string");
-test.equal([].type, 'array', '[].type === array');
-test.equal((0).type, typeof 0, '(0).type === number');
-test.equal(function(){}.type, 'function', 'function(){}.type === function');
+// ==== Object.prototype.typename ====
+test.equal(''.typename,	typeof '',	"''.typename === string");
+test.equal([].typename,	'array',	'[].typename === array');
+test.equal((0).typename,	typeof 0,	'(0).typename === number');
+test.equal(function(){}.typename, 'function', 'function(){}.typename === function');
 
 // ==== Object.prototype.extend ====
 obj = {}
@@ -103,9 +103,9 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
     new types.Type('Widget', Widget);
 
     var w = new Widget;
-    if (w.type != 'Widget') alert('new Type(name, object) failed: '+w.type);
-    if (!w.name || w.name !== 'widget')
-	alert('wrong Type inheritance: w.name: '+w.name);
+    test.equal(w.typename, 'Widget', 'new Type(name, object) failed: '+w.typename);
+    test.check(w.name && w.name === 'widget',
+	       'wrong Type inheritance: w.name: '+w.name);
 }
 
 // ==== Class ====
@@ -130,17 +130,17 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
     var a = new MyClass('foobar');
     var b = new MyClass();
 
-    if (a.type !== 'MyClass') alert('new Class(...) wrong: not inited by "name"');
-    if (b.type !== 'MyClass') alert('new Class(...) wrong: not inited by "name"');
+    test.equal(a.typename, 'MyClass', 'new Class(...) wrong: not inited by "name"');
+    test.equal(b.typename, 'MyClass', 'new Class(...) wrong: not inited by "name"');
 
-    if (a.name !== 'foobar') alert('new Class(...) wrong: not constructed by "init"');
-    if (b.name !== 'Base') alert('new Class(...) wrong: not inherits "Base"');
+    test.equal(a.name, 'foobar', 'new Class(...) wrong: not constructed by "init"');
+    test.equal(b.name, 'Base', 'new Class(...) wrong: not inherits "Base"');
 
-    if (a.foo !== 'Base2') alert('new Class(...) wrong: not mixin Base2');
-    if (b.foo !== 'Base2') alert('new Class(...) wrong: not mixin Base2');
+    test.equal(a.foo, 'Base2', 'new Class(...) wrong: not mixin Base2');
+    test.equal(b.foo, 'Base2', 'new Class(...) wrong: not mixin Base2');
 
-    if (a.extra !== 'mixin') alert('new Class(...) wrong: not mixin the last arg');
-    if (b.extra !== 'mixin') alert('new Class(...) wrong: not mixin the last arg');
+    test.equal(a.extra, 'mixin', 'new Class(...) wrong: not mixin the last arg');
+    test.equal(b.extra, 'mixin', 'new Class(...) wrong: not mixin the last arg');
 }
 
 test.info('PASSED');

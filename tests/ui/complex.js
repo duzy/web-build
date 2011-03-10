@@ -1,3 +1,5 @@
+try {
+
 var ui = require('ui');
 
 /*
@@ -14,7 +16,6 @@ ui.view(
     require('ui/views/text')
 );
 
-try {
     var root = ui([
 	{ view: 'Split', pos: 'l:0 t:0 r:0 b:0', 
 	  init: {

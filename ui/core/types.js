@@ -20,10 +20,12 @@ proto.hook = function(pre, post) {
 proto = Object.prototype;
 var hasOwnProperty = proto.hasOwnProperty;
 
-// allows all objects to access 'obj.type' for the type name
-proto.__defineGetter__('type', function() {
+// allows all objects to access 'obj.typename' for the type name
+proto.__defineGetter__('typename', function() {
     return this.$_type ? this.$_type : typeof this;
 });
+
+proto.__defineSetter__('typename', function() {}); // avoid set error
 
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
 proto.extend = function() {
@@ -32,7 +34,9 @@ proto.extend = function() {
 	if ((object = arguments[i]) != null) {
 	    for (var name in object) {
 		if (!hasOwnProperty.call(object,name)  // only the owned property
-		    || name == '$_type' || name == 'type') // skip protected names
+
+		    // skip protected names
+		    || name == '$_type' || name == 'typename')
 		{
 		    continue;
 		}
@@ -64,6 +68,10 @@ proto.forEach = proto.forEach || function(action, context) {
     }
 };
 
+Object.forEach = function(a,action,context) {
+    a && a.forEach(action,context);
+}
+
 // ==== Array.prototype ====
 proto = Array.prototype;
 proto.$_type = 'array';
@@ -91,7 +99,7 @@ var Type = function(name, object) {
     return object;
 };
 
-new Type('Type', Type);
+global.Type = new Type('Type', Type);
 
 /*
   make a new class:
@@ -101,12 +109,12 @@ new Type('Type', Type);
 		init: function() { }
 	});
 */
-var Class = new Type('Class', function() {
+var Class = global.Class = new Type('Class', function() {
     var len = arguments.length,
         first = arguments[0],
         last = arguments[len - 1],
         className, i = 0,
-        newClass = last && (last.type === 'function' ? last : last.init),
+        newClass = last && (last.typename === 'function' ? last : last.init),
         baseClass = 1 < len && first.prototype && first;
 
     if (!newClass) {
@@ -133,12 +141,12 @@ var Class = new Type('Class', function() {
     }
 
     if (last) {
-	className = last.name || this.type;
+	className = last.name || this.typename;
 	last.name && delete last.name;
 	last.init && delete last.init;
 	newClass.prototype.extend(last);
     } else {
-	className = this.type;
+	className = this.typename;
     }
 
     new Type(className, newClass);
