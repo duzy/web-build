@@ -3,8 +3,7 @@
     var toString = Object.prototype.toString,
         arrayPrototype = Array.prototype,
         slice = arrayPrototype.slice,
-utils = exports;
-//compat = require('./compat');
+        utils = exports;
 
     var marked = '__marked';
     // dummy subclass
@@ -175,20 +174,6 @@ utils = exports;
         }
         return result;
     };
-
-    // utils.applyCompat = compat.applyCompat;
-
-    // compat.arrayFunctions.forEach(function(name) {
-    //     if (!utils[name]) {
-    //         // using temp argument is faster than slicing
-    //         // arguments object
-    //         utils[name] = function(array, a, b) {
-    //             return compat[name].call(array, a, b);
-    //         };
-    //     }
-    // });
-
-    //utils.keys = compat.keys;
 
     utils.trim = function(s) {
         return s.trim();
