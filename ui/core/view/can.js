@@ -32,14 +32,16 @@ var Can = new Object.Class(Base, {
     _resizeSelf: fun.FS,
 
     _resizeChildViews: function() {
-        utils.forEach(this.childViews(), function(view) {
+	var cv = this.childViews();
+        cv && cv.forEach(function(view) {
 	    // do not resize invisible views, save time
-		    view.visible() && view.resized();
+	    view.visible() && view.resized();
 	});
     },
 
     clear: function(destruct) {
-        utils.forEach(this.childViews(), function(child) {
+	var cv = this.childViews();
+        cv && cv.forEach(function(child) {
 	    this.removeChild(child);
 	    if (destruct !== false) child.destruct();
 	}, this);

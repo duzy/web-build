@@ -53,7 +53,7 @@ function createSingle(mlRow) {
 }
 
 function copyAttrs(view, mlRow) {
-    utils.forEach(mlRow, function(value, name) {
+    mlRow.forEach(function(value, name) {
         if (name == 'view' || name == 'init') { return; }
         utils.prop(view, name, value);
     });

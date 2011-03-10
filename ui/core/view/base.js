@@ -111,13 +111,13 @@ proto.domForEvent = function(type) {
  */
 proto.addListener = function(names, callback) {
     if (typeof names === 'object') {
-	utils.forEach(names, function(callback, name) {
+	names.forEach(function(callback, name) {
 	    this.addListener(name, callback);
 	}, this);
     } else {
 	var wrapper = callback.bindOnce(this);
 	this._eventNames || (this._eventNames = {});
-	utils.forEach(names.split(' '), function(name) {
+	names.split(' ').forEach(function(name) {
 	    this._eventNames[name] = true;
 	    event.addListener(this.domForEvent(name), name, wrapper);
 	}, this);
@@ -133,7 +133,7 @@ proto.addListener = function(names, callback) {
 proto.removeListener = function(names, callback) {
     var wrapper = callback && callback.bindOnce(this);
     names || (names = utils.keys(this._eventNames || {}).join(' '));
-    utils.forEach(names.split(' '), function(name) {
+    names.split(' ').forEach(function(name) {
 	event.removeListener(this.domForEvent(name), name, wrapper);
     }, this);
     return this;
@@ -177,7 +177,7 @@ ruleMap = {
 
 proto._styleToPos = function(style) {
     var res = {};
-    utils.forEach(rules, function(rule) {
+    rules.forEach(function(rule) {
 	if (style[rule]) {
 	    res[rule] = style[rule];
 	}
@@ -189,12 +189,12 @@ proto._expandPos = function(pos) {
     if (typeof pos === 'string') {
 	var p = pos;
 	pos = {};
-	utils.forEach(p.split(/\s+/), function(rule) {
+	p.split(/\s+/).forEach(function(rule) {
 	    var parts = rule.split(':');
 	    pos[parts[0]] = parts[1];
 	});
     }
-    utils.forEach(ruleMap, function(longRule, shortRule) {
+    ruleMap && ruleMap.forEach(function(longRule, shortRule) {
 	if (pos[shortRule]) pos[longRule] = pos[shortRule];
     });
     return pos;
@@ -202,7 +202,7 @@ proto._expandPos = function(pos) {
 
 proto._applyPosToStyle = function(pos, style) {
     style.position = 'absolute';
-    utils.forEach(rules, function(rule) {
+    rules && rules.forEach(function(rule) {
 	style[rule] = pos[rule] || '';
     });
 };
