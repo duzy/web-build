@@ -1,17 +1,20 @@
 //var ui = require('ui');
 
+var types;
 try {
-    require('ui/core/types');
+    types = require('ui/core/types');
 } catch(e) {
     alert(e);
 }
 
+var test = require('tool/test');
 var value, obj;
 
 // ==== Object.prototype.type ====
-if (''.type != typeof '') alert('"".type wrong: '+''.type);
-if ([].type != 'array') alert('[].type wrong: '+[].type);
-if ((0).type != typeof 0) alert('(0).type wrong: '+(0).type);
+test.equal(''.type, typeof '', "''.type === string");
+test.equal([].type, 'array', '[].type === array');
+test.equal((0).type, typeof 0, '(0).type === number');
+test.equal(function(){}.type, 'function', 'function(){}.type === function');
 
 // ==== Object.prototype.extend ====
 obj = {}
@@ -81,7 +84,6 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
     }
     var postCall = function(fun) {
 	postCalled = true;
-	alert(fun.called);
     }
 
     /*
@@ -96,9 +98,49 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 // ==== Type ====
 {
     var Widget = function() {}
+    Widget.prototype.name = 'widget';
 
-    new Type('Widget', Widget);
+    new types.Type('Widget', Widget);
 
     var w = new Widget;
-    if (w.type != 'Widgetd') { alert('Type') }
+    if (w.type != 'Widget') alert('new Type(name, object) failed: '+w.type);
+    if (!w.name || w.name !== 'widget')
+	alert('wrong Type inheritance: w.name: '+w.name);
 }
+
+// ==== Class ====
+{
+    var Base = {};
+    Base.prototype = {
+        name: 'Base',
+    };
+
+    var Base2 = {
+	foo: 'Base2',
+    };
+
+    var MyClass = new types.Class(Base, Base2, {
+	name: 'MyClass',
+	init: function(name) {
+	    if (name) this.name = name;
+	},
+	extra: 'mixin',
+    });
+
+    var a = new MyClass('foobar');
+    var b = new MyClass();
+
+    if (a.type !== 'MyClass') alert('new Class(...) wrong: not inited by "name"');
+    if (b.type !== 'MyClass') alert('new Class(...) wrong: not inited by "name"');
+
+    if (a.name !== 'foobar') alert('new Class(...) wrong: not constructed by "init"');
+    if (b.name !== 'Base') alert('new Class(...) wrong: not inherits "Base"');
+
+    if (a.foo !== 'Base2') alert('new Class(...) wrong: not mixin Base2');
+    if (b.foo !== 'Base2') alert('new Class(...) wrong: not mixin Base2');
+
+    if (a.extra !== 'mixin') alert('new Class(...) wrong: not mixin the last arg');
+    if (b.extra !== 'mixin') alert('new Class(...) wrong: not mixin the last arg');
+}
+
+test.info('PASSED');
