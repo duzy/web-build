@@ -175,9 +175,9 @@
             var listenerForEl = event.listeners[this[expando]] || {},
             listenersForType = listenerForEl[e.type];
 
-            listenersForType && utils.forEach(listenersForType, function(l) {
-                    l.call(this, e);
-                }, this);
+            listenersForType && listenersForType.forEach(function(l) {
+                l.call(this, e);
+            }, this);
 
             if (e.simulateBubbles && !e.isPropagationStopped() && this.parentNode) {
                 event.trigger(this.parentNode, e);
@@ -214,7 +214,7 @@
             if (!id || !listeners[id]) return;
         
             types || (types = Object.keys(listeners[id]).join(' '));
-            utils.forEach(types.split(' '), function(type) {
+            types && types.split(' ').forEach(function(type) {
                 if (!listeners[id][type]) return;
 
                 listeners[id][type] = listener
@@ -243,10 +243,10 @@
     event.on = event.addListener;
     event.emit = event.trigger;
 
-    utils.forEach({
+    ({
         mouseover: 'mouseenter',
         mouseout: 'mouseleave'
-    }, function(specialName, origName) {
+    }).forEach(function(specialName, origName) {
         function handler(e) {
             var parent = e.relatedTarget;
             try {

@@ -39,7 +39,7 @@
     // return a copy of attached view array.
     Attachment.instances = function() {
         var atts = [];
-        utils.forEach(instances || {}, function(a) { atts.push(a); });
+        instances && instances.forEach(function(a) { atts.push(a); });
         return atts;
     };
 
@@ -53,10 +53,10 @@
                         timeout = true;
                         setTimeout(function(i, len) {
                                 timeout = false;
-                                utils.forEach(instances, function(a) {
-                                        a.resized();
-                                    });
-                            }, 1);
+                                instances.forEach(function(a) {
+                                    a.resized();
+                                });
+                        }, 1);
                     }
             });
         }

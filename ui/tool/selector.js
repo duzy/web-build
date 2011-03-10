@@ -183,7 +183,7 @@ Usage:
 		
 		while (exprItem) {
 		    found = false;
-		    utils.forEach(regexps, function(row, index) {
+		    regexps.forEach(function(row, index) {
 			
 			/*jsl:ignore*/
 			if (!found && (match = exprItem.match(row.regexp))) {
