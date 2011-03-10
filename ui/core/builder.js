@@ -29,6 +29,7 @@ function createSingle(row) {
     var C = row.view,
         initArgs = row.init || {},
         result, Obj;
+
     if (Object.isFun(C)) {
         result = new C(initArgs);
     } else if (typeof C === 'string') {
