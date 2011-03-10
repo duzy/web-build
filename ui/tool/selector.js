@@ -9,8 +9,8 @@ Usage:
 
 (function() {
     /**#@+ @ignore */
-    var utils = require('./utils'),
-        Collection = require('./collection').Collection,
+    var utils = require('../core/utils'),
+        Collection = require('../core/collection').Collection,
         chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]*['"]|[^[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?/g,  // '
         regexps = [ // enforce order
             { name: 'ID', regexp: /#((?:[\w\u00c0-\uFFFF_-]|\\.)+)/ },
@@ -152,7 +152,7 @@ Usage:
              * @return {Collection} found views
              */
 	    find: function(selector, context, skipFiltering) {
-		context = context || require('./attachment').Attachment.instances();
+		context = context || require('../core/attachment').Attachment.instances();
 		if (context.length === undefined) { context = [context]; }
 		
 		var tokens = Selector.tokenize(selector),

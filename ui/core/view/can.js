@@ -10,7 +10,8 @@ var view  = require('../view'),
  * @augments Base
  * @name Can
  */
-var Can = fun.newClass(Base, {
+var Can = new Object.Class(Base, {
+    name: 'Can',
     typeName: 'Can',
 
     _setup: function(initArgs) {

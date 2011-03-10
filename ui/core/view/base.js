@@ -6,15 +6,16 @@ var view  = require('../view'),
     dom   = require('../dom'),
     event = require('../event');
 
-function ViewProto() {}
-
-function Base(initArgs) {
-    initArgs = initArgs || {};
-    this._setup(initArgs);
-    this._createDom(initArgs);
-    this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;
-    view.register(this);
-}
+var Base = new Object.Class({
+    name: 'Base',
+    init: function(initArgs) {
+        initArgs = initArgs || {};
+        this._setup(initArgs);
+        this._createDom(initArgs);
+        this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;
+        view.register(this);
+    }
+});
 
 var proto = Base.prototype;
 

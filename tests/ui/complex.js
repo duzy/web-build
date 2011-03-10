@@ -1,20 +1,20 @@
 try {
 
-var ui = require('ui');
+    var ui = require('ui');
 
-/*
-// for dragging support:
-require('ui/core/gesture');
-*/
+    /*
+    // for dragging support:
+    require('ui/core/gesture');
+    */
 
-ui.view(
-    require('ui/views/button'),
-    require('ui/views/flow'),
-    require('ui/views/list'),
-    require('ui/views/rich'),
-    require('ui/views/split'),
-    require('ui/views/text')
-);
+    ui.view(
+	require('ui/views/button'),
+	require('ui/views/flow'),
+	require('ui/views/list'),
+	require('ui/views/rich'),
+	require('ui/views/split'),
+	require('ui/views/text')
+    );
 
     var root = ui([
 	{ view: 'Split', pos: 'l:0 t:0 r:0 b:0', 
@@ -62,6 +62,11 @@ ui.view(
     ]).attach();
 
     ui('#cmd').on('click', function() { alert('LiteUI '+ui.version); });
+
+    // var selector = require('ui/tool/selector');
+    // selector.find('Button[text^=Publish]').on('click', function() {
+    // 	alert('LiteUI');
+    // });
 } catch(e) {
     alert(e);
 }

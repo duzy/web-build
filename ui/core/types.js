@@ -68,13 +68,11 @@ proto.forEach = proto.forEach || function(action, context) {
     }
 };
 
-Object.forEach = function(a,action,context) {
-    a && a.forEach(action,context);
-}
-
 // ==== Array.prototype ====
 proto = Array.prototype;
 proto.$_type = 'array';
+
+//TODO: ['indexOf', 'lastIndexOf', 'forEach', 'map', 'filter', 'reduce'];
 
 // iterate in the elements of array
 proto.forEach = proto.forEach || function(action,context) {
