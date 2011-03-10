@@ -192,8 +192,8 @@ var Class = Object.Class = new Type('Class', function() {
     }
 
     if (last) {
-	className = last.typeName || this.typename;
-	last.typeName && delete last.typeName;
+	className = last.name || last.typeName || this.typename;
+	last.name && delete last.name;
 	last.init && delete last.init;
 	newClass.prototype.extend(last);
     } else {
