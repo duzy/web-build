@@ -93,7 +93,7 @@ proto._moveHandle = function() {
  */
 proto.extPositions = function(positions) {
     if (positions === undefined) {
-        return utils.map(this._exts, function(ext) {
+        return this._exts.map(function(ext) {
             return this._styleToPos(ext.style);
         }, this);
     }

@@ -475,7 +475,7 @@ proto._updatePack = function(packN, revision, rows) {
 };
 
 proto._renderPack = function(rows) {
-    var formated = utils.map(rows, function(r, i) {
+    var formated = rows.map(function(r, i) {
         return { value: this._formatRow(r), index: i, even: i & 1 };
     }, this);
 

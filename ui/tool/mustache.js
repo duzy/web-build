@@ -115,10 +115,10 @@
                                             }
                                         } else if(type == "#") { // normal section
                                             if(is_array(value)) { // Enumerable, Let's loop!
-                                                return utils.map(value, function(row) {
-                                                        return that.render(content, that.create_context(row),
-                                                                           partials, true);
-                                                    }).join("");
+                                                return value.map(function(row) {
+                                                    return that.render(content, that.create_context(row),
+                                                                       partials, true);
+                                                }).join("");
                                             } else if(is_object(value)) { // Object, Use it as subcontext!
                                                 return that.render(content, that.create_context(value),
                                                                    partials, true);

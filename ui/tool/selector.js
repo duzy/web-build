@@ -108,7 +108,7 @@ Usage:
 
             "~": function(context) {
 		return utils.unique(flatten(
-                    utils.map(context, function(view) {
+                    context.map(function(view) {
 			return view.parent().childViews().
                             slice((view._viewIndex || 0) + 1);
                     })
@@ -117,7 +117,7 @@ Usage:
 	};
 
         function recChildren(views) {
-	    return flatten(utils.map(views, function(view) {
+	    return flatten(views.map(function(view) {
 		return [view].concat(recChildren(utils.prop(view, 'childViews')));
 	    }));
 	}
