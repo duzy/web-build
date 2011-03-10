@@ -99,7 +99,7 @@ var Type = function(name, object) {
     return object;
 };
 
-global.Type = new Type('Type', Type);
+Object.Type = new Type('Type', Type);
 
 /*
   make a new class:
@@ -109,7 +109,7 @@ global.Type = new Type('Type', Type);
 		init: function() { }
 	});
 */
-var Class = global.Class = new Type('Class', function() {
+var Class = Object.Class = new Type('Class', function() {
     var len = arguments.length,
         first = arguments[0],
         last = arguments[len - 1],
