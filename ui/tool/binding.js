@@ -2,7 +2,7 @@
     var fun   = require('../core/function'),
         utils = require('../core/utils');
 
-    var Binding = fun.newClass({
+    var Binding = new Object.Class({
         view: null,
         model: null,
         modelProp: 'value',
@@ -20,10 +20,8 @@
             }
 
             if (this.model && this.view) {
-                this.view.on(this.viewEvent,
-                             fun.bindOnce(this.updateModel, this));
-                this.model.on(this.modelEvent,
-                              fun.bindOnce(this.updateView, this));
+                this.view.on(this.viewEvent, this.updateModel.bindOnce(this));
+                this.model.on(this.modelEvent, this.updateView.bindOnce(this));
                 if (this.sync !== false) {
                     this.updateView();
                 }
@@ -31,10 +29,8 @@
         },
 
         destruct: function() {
-            this.view.removeListener(this.viewEvent,
-                                     fun.bindOnce(this.updateModel, this));
-            this.model.removeListener(this.modelEvent,
-                                      fun.bindOnce(this.updateView, this));
+            this.view.removeListener(this.viewEvent, this.updateModel.bindOnce(this));
+            this.model.removeListener(this.modelEvent, this.updateView.bindOnce(this));
         },
 
         viewValue: function(value) {

@@ -1,3 +1,4 @@
+try {
 requireCss('./binding.css');
 
 var ui = require('ui'),
@@ -10,7 +11,7 @@ ui.view(
 );
 ui.view.NativeControl = require('ui/views/native.js').native;
 
-var Person = fun.newClass(Observable, {
+var Person = new Object.Class(Observable, {
     name: Observable.newProp('name'),
     age: Observable.newProp('age')
 });
@@ -19,8 +20,6 @@ global.bob = new Person();
 bob.name('Bob').age(27);
 
 var options = [1,2,3,4,5,6,7,8,9,10]; //ui.range(10, 99);
-
-try {
 
     ui([
 	{ view: 'Header', text: 'Two forms bound to the same data' },
@@ -41,3 +40,4 @@ try {
 } catch(e) {
     alert(e);
 }
+

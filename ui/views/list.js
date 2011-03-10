@@ -14,7 +14,7 @@ var env   = require('../core/env'),
     Selectable = require('../facet/selectable').Selectable;
     
 
-var DataList = fun.newClass(Base, Focusable, Selectable, {}),
+var DataList = new Object.Class(Base, Focusable, Selectable, {}),
     proto = DataList.prototype;
     
 
@@ -279,8 +279,8 @@ proto.editSelected = function() {
     this.dom().appendChild(this.editor().dom());
     
     this.editor()
-    .on('finishEdit', fun.bindOnce(this._editorBlur, this))
-    .on('move', fun.bindOnce(this._editorMove, this))
+    .on('finishEdit', this._editorBlur.bindOnce(this))
+    .on('move', this._editorMove.bindOnce(this))
     .pos({ top: t+'px', left: 0+'px', right: 0+'px', height: this.rowHeight() + 'px' })
     .visible(true)
     .parent(this)
@@ -311,7 +311,7 @@ proto._reset = function() {
     this._allreadyResized = false;
     if (this._scrollableParent())
 	this._scrollableParent().removeListener(
-	    'scroll', utils.bindOnce(this._scroll, this));
+            'scroll', this._scroll.bindOnce(this));
 };
 
 proto._setup = function(initArgs) {
@@ -347,8 +347,8 @@ proto._editorBlur = function(e) {
 	
 	this.editor()
 	.parent(null)
-	.removeListener('move', fun.bindOnce(this._editorMove, this))
-	.removeListener('finishEdit', fun.bindOnce(this._editorBlur, this));
+	.removeListener('move', this._editorMove.bindOnce(this))
+	.removeListener('finishEdit', this._editorBlur.bindOnce(this));
 	
 	dom.removeElement(this.editor().dom());
 	if (e && e.remainFocused) this.focus();
@@ -374,7 +374,7 @@ proto._firstResize = function() {
     this._calcRowHeight();
     if (this.rowHeight()) {
 	this._allreadyResized = true;
-	this._scrollableParent().on('scroll', fun.bindOnce(this._scroll, this));
+	this._scrollableParent().on('scroll', this._scroll.bindOnce(this));
 	this._updateHeight();
     }
     return true;
@@ -445,7 +445,7 @@ proto._schedulePackRender = function(packN, revision) {
     if (this.data().loadRange) {
 	this.data().loadRange(
 	    from, this.packSize() + from,
-	    fun.bind(this._updatePack, this, packN, revision)
+	    this._updatePack.bind(this, packN, revision)
 	);
     } else {
 	this._updatePack(packN, revision,

@@ -19,7 +19,7 @@ var dom  = require('../core/dom'),
     Base = require('../core/view/base').Base,
     Focusable = require('../facet/focusable').Focusable;
 
-var RichEdit = fun.newClass(Base, Focusable, {}),
+var RichEdit = new Object.Class(Base, Focusable, {}),
     proto = RichEdit.prototype;
 
 RichEdit.guid = 1;

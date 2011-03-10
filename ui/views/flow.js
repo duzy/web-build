@@ -8,7 +8,7 @@ var fun   = require('../core/function'),
     Can = require('../core/view/can').Can;
 
 
-var Flow = fun.newClass(Can, {
+var Flow = new Object.Class(Can, {
     typeName: 'Flow',
 
     spacing: view.newClassMapProp({

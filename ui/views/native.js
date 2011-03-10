@@ -18,7 +18,7 @@ var ieResize = env.ua.match(/MSIE 6|7/);
      * Base class for native control wrappers.
      * Map common dom attributes and add binding
      */
-var NativeControl = fun.newClass(Base, Focusable, {
+var NativeControl = new Object.Class(Base, Focusable, {
     bindingOptions: fun.newProp('bindingOptions'),
 
     binding: fun.newProp('binding', function(val) {
@@ -50,7 +50,7 @@ fun.delegateProp(NativeControl.prototype,
  * Radio button with a label
  * build({ view: 'nativeControl.Radio', name: 'color', value: 'red', text: 'Red' })
  */
-var Radio = fun.newClass(NativeControl, {
+var Radio = new Object.Class(NativeControl, {
     typeName: 'nativeControl.Radio',
 
     _createDom: function(initArgs) {
@@ -76,7 +76,7 @@ fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
      * Checkbox with a label
      * build({ view: 'nativeControl.Checkbox', name: 'color', value: 'red', text: 'Red' })
      */
-var Checkbox = fun.newClass(NativeControl, {
+var Checkbox = new Object.Class(NativeControl, {
         typeName: 'nativeControl.Checkbox',
 
         _createDom: function(initArgs) {
@@ -100,7 +100,7 @@ fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
      * Text input
      * build({ view: 'nativeControl.Text', value: 'John Smith', placeholder: 'Name?' })
      */
-var Text = fun.newClass(NativeControl, {
+var Text = new Object.Class(NativeControl, {
     typeName: 'nativeControl.Text',
     
     _createDom: function(initArgs) {
@@ -141,9 +141,8 @@ var Text = fun.newClass(NativeControl, {
 	    className: 'ui-nc-text__placholder'
 	});
         this.dom().insertBefore(this._placeholderDom, this.dom().firstChild);
-        evt.on(this._placeholderDom, 'click', fun.bindOnce(function() {
-            this.focus();
-        }, this));
+        evt.on(this._placeholderDom, 'click',
+	       function() { this.focus(); }.bindOnce(this));
         this.on('focus blur change keyup', this._updatePlaceholderVis);
         if (this._input.offsetHeight) {
             this._updatePlaceholderHeight();
@@ -181,7 +180,7 @@ var Text = fun.newClass(NativeControl, {
      * Native browser button
      * build({ view: 'nativeControl.Button', value: 'Work!'})
      */
-var Button = fun.newClass(NativeControl, {
+var Button = new Object.Class(NativeControl, {
     typeName: 'nativeControl.Button',
 
     _createDom: function(initArgs) {
@@ -207,7 +206,7 @@ var Button = fun.newClass(NativeControl, {
  *   { text: 'Custom', value: '' }
  * ]})
  */
-var Select = fun.newClass(NativeControl, {
+var Select = new Object.Class(NativeControl, {
     typeName: 'nativeControl.Select',
 
     _createDom: function(initArgs) {

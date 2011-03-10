@@ -12,7 +12,7 @@ var fun   = require('../core/function'),
     Focusable = require('../facet/focusable').Focusable;
 
 
-var Split = fun.newClass(Can, Focusable, {}),
+var Split = new Object.Class(Can, Focusable, {}),
     proto = Split.prototype;
 
 proto.typeName = 'Split';

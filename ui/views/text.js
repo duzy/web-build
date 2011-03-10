@@ -7,7 +7,7 @@ var fun  = require('../core/function'),
     Base = require('../core/view/base').Base;
 
 
-var Text = fun.newClass(Base, {
+var Text = new Object.Class(Base, {
     typeName: 'Text',
 
     _createDom: function() {
@@ -16,7 +16,7 @@ var Text = fun.newClass(Base, {
 });
 
 
-var P = fun.newClass(Base, {
+var P = new Object.Class(Base, {
     typeName: 'P',
 
     _createDom: function() {
@@ -25,7 +25,7 @@ var P = fun.newClass(Base, {
 });
 
 
-var Label = fun.newClass(Base, {
+var Label = new Object.Class(Base, {
     typeName: 'Label',
 
     _createDom: function(initArgs) {
@@ -35,7 +35,7 @@ var Label = fun.newClass(Base, {
 fun.delegateProp(Label.prototype, 'for', '_dom');
 
 
-var Header = fun.newClass(Base, {
+var Header = new Object.Class(Base, {
     typeName: 'Header',
 
     _createDom: function() {

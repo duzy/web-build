@@ -21,13 +21,13 @@
 
     Focusable._initFocusEvents = function() {
         this._focusEventsInited = true;
-        this.on('focus', fun.bindOnce(this._focus, this));
-        this.on('blur', fun.bindOnce(this._blur, this));
+        this.on('focus', this._focus.bindOnce(this));
+        this.on('blur', this._blur.bindOnce(this));
     };
 
     Focusable._destruct = function() {
-        this.removeListener('focus', fun.bindOnce(this._focus, this));
-        this.removeListener('blur', fun.bindOnce(this._blur, this));
+        this.removeListener('focus', this._focus.bindOnce(this));
+        this.removeListener('blur', this._blur.bindOnce(this));
     };
 
     Focusable._focus = function() {

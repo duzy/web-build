@@ -8,7 +8,7 @@ var fun  = require('../core/function'),
     Focusable = require('../facet/focusable').Focusable;
 
 
-var Button = fun.newClass(Base, Focusable, {
+var Button = new Object.Class(Base, Focusable, {
     typeName: 'Button',
 
     labelHtml: function(value) {
