@@ -215,6 +215,8 @@ Object.isArray = function(obj) {
     return obj && obj.typename === 'array';
 }
 
+//Arguments.prototype.forEach = Array.prototype.forEach;
+
 // module.exports = {
 //     Type: Type,
 //     Class: Class,

@@ -8,7 +8,7 @@ var registry = {},
 
 /** @namespace */
 var view = function() {
-    utils.forEach(arguments, function(v) { utils.extend(view, v) });
+    arguments.forEach(function(v) { view.extend(v) });
 }
 
 utils.extend(view, {
@@ -77,7 +77,7 @@ utils.extend(view, {
 	return function(state) {
 	    if (state === undefined) {
 		var res;
-		utils.forEach(classMap, function(clasName, enumName) {
+		classMap.forEach(function(clasName, enumName) {
 		    if (this.hasClass(clasName)) {
 			res = enumName;
 			return false;
@@ -86,7 +86,7 @@ utils.extend(view, {
 		return res;
 	    }
 	    
-	    utils.forEach(classMap, function(className, enumName) {
+	    classMap.forEach(function(className, enumName) {
 		this.toggleClass(className, state === enumName);
 	    }, this);
 	    return this;
