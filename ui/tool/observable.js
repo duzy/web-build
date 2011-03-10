@@ -104,7 +104,7 @@
     Observable.addProps = Observable.addProp =
         function(proto, prop, setter) {
 
-        if (utils.isArray(prop)) {
+        if (Object.isArray(prop)) {
             for (var i = 0, len = prop.length; i < len; i++) {
                 proto[prop[i]] = newProp(prop[i], setter && setter[i]);
             }

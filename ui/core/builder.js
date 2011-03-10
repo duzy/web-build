@@ -29,7 +29,7 @@ function createSingle(mlRow) {
     var C = mlRow.view,
     initArgs = mlRow.init || {},
     result, Obj;
-    if (utils.isFunction(C)) {
+    if (Object.isFun(C)) {
         result = new C(initArgs);
     } else if (typeof C === 'string') {
         for (var i = 0, ns = viewNamespaces, length = ns.length;

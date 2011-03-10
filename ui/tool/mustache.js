@@ -21,7 +21,7 @@
         tagRegex = new RegExp(otag + "(=|!|>|\\{|%)?([^\\/#\\^]+?)\\1?" +
                               ctag + "+", "g"),
 
-        is_array = utils.isArray,
+        is_array = Object.isArray,
     
         trim = utils.trim;
 

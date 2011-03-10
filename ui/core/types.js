@@ -112,7 +112,7 @@ var Class = Object.Class = new Type('Class', function() {
         first = arguments[0],
         last = arguments[len - 1],
         className, i = 0,
-        newClass = last && (last.typename === 'function' ? last : last.init),
+        newClass = last && (Object.isFun(last) ? last : last.init),
         baseClass = 1 < len && first.prototype && first;
 
     if (!newClass) {
@@ -139,8 +139,8 @@ var Class = Object.Class = new Type('Class', function() {
     }
 
     if (last) {
-	className = last.name || this.typename;
-	last.name && delete last.name;
+	className = last.typeName || this.typename;
+	last.typeName && delete last.typeName;
 	last.init && delete last.init;
 	newClass.prototype.extend(last);
     } else {
@@ -151,6 +151,16 @@ var Class = Object.Class = new Type('Class', function() {
 
     return newClass;
 });
+
+Object.isFun = function(obj) {
+    //return toString.call(obj) === "[object Function]";
+    return obj && obj.typename === 'function';
+}
+
+Object.isArray = function(obj) {
+    //return toString.call(obj) === "[object Array]";
+    return obj && obj.typename === 'array';
+}
 
 // module.exports = {
 //     Type: Type,

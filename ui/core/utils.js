@@ -44,30 +44,6 @@
         }
     };
 
-    /**
-     * Checks if obj is a function
-     *
-     * @param {object} object Object to check
-     * @returns {boolean}
-     */
-    utils.isFunction = function(obj) {
-        return toString.call(obj) === "[object Function]";
-    };
-
-    /**
-     * Checks if obj is an Array
-     *
-     * @param {object} object Object to check
-     * @returns {boolean}
-     */
-    utils.isArray = function(obj) {
-        return toString.call(obj) === "[object Array]";
-    };
-
-    utils.toArray = function(array) {
-        return slice.call(array, 0);
-    };
-
     utils.pluck = function(array, prop) {
         function prop(v) {
             return utils.prop(v, prop);

@@ -15,7 +15,7 @@ var ui = module.exports = function(val, context) {
 	return new Collection([]);
     }
     if (val.length === undefined) { val = [val]; }
-    if (val.length > 0 && utils.isFunction(val[0].typeName)) {
+    if (val.length > 0 && Object.isFun(val[0].typeName)) {
 	return new Collection(val);
     }
     return builder.build(val);

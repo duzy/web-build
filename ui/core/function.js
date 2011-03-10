@@ -38,7 +38,7 @@
         result = args.length ?
         function() {
             return fn.apply(context || this,
-                            args.concat(utils.toArray(arguments)));
+                            args.concat(arrayPrototype.slice.call(arguments, 0)));
         } :
         function() {
             return fn.apply(context || this, arguments);
@@ -125,7 +125,7 @@
         length = arguments.length,
         first = arguments[0],
         last = arguments[length - 1],
-        klass = utils.isFunction(last) ? last : last.init,
+        klass = Object.isFun(last) ? last : last.init,
         baseClass = length > 1 && first.prototype && first;
 
         // if nothing was provided create an empty constructor
@@ -150,7 +150,7 @@
         }
 
         // if class description was provides
-        if (!utils.isFunction(last)) {
+        if (!Object.isFun(last)) {
             utils.extend(klass.prototype, last);
         }
 
@@ -197,7 +197,7 @@
      * @returns {function(object=):object}
      */
     fun.addProp = fun.addProps = function(source, prop, setter) {
-        if (utils.isArray(prop)) {
+        if (Object.isArray(prop)) {
             for (var i = 0, len = prop.length; i < len; i++) {
                 source[prop[i]] = newProp(prop[i], setter && setter[i]);
             }
@@ -220,7 +220,7 @@
     fun.newDelegateProp = newDelegateProp;
 
     fun.delegateProp = function(source, name, target, targetName) {
-        if (utils.isArray(name)) {
+        if (Object.isArray(name)) {
             utils.forEach(name, function(n, i) {
                     fun.delegateProp(source, n, target, targetName && targetName[i]);
                 });
@@ -240,7 +240,7 @@
     fun.newDelegateCall = newDelegateCall;
 
     fun.delegateCall = function(source, name, target, targetName) {
-        if (utils.isArray(name)) {
+        if (Object.isArray(name)) {
             utils.forEach(name, function(n, i) {
                     fun.delegateCall(source, n, target, targetName && targetName[i]);
                 });
