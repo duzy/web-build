@@ -32,10 +32,7 @@ var Collection = new Object.Class(Array, {
      * @param {function(view.Base, number):boolean} callback
      * @returns {view.Collection} created collection
      */
-    // filter: function(callback, context) {
-    //     return new Collection(Array.prototype.filter.call(this, callback, context));
-    // },
-
+    // filter: function(callback, context)
     // map: function(callback, context)
 
     /**

@@ -52,7 +52,7 @@ try {
 		    { view: 'RichEdit', id: 'rich', name: 'rich',
 		      pos: 'l:0 t:26px w:95% h:90%',
 		    },
-		    { view: 'Button', text: 'Publish',
+		    { view: 'Button', text: 'Publish', id: 'pub',
 		      pos: 'l:0 t:95% w:200 h:25px',
 		    },
 		]
@@ -63,13 +63,11 @@ try {
 
     ui('#cmd').on('click', function() { alert('LiteUI '+ui.version); });
 
-    //alert(Object.prototype.toString.call(root));
-    alert(root);
-
     var selector = require('ui/tool/selector');
-    selector.find('Button[text^=Publish]',root).on('click', function() {
+    selector.find('#pub',root).on('click', function() {
     	alert('LiteUI');
     });
+    //'Button[text^=Publish]'
 } catch(e) {
     alert(e);
 }
