@@ -7,7 +7,7 @@ var env   = require('../core/env'),
     dom   = require('../core/dom'),
     evt   = require('../core/event'),
     build = require('../core/builder').build,
-    
+
     Mustache   = require('../tool/mustache').Mustache,
     Base       = require('../core/view/base').Base,
     Focusable  = require('../facet/focusable').Focusable,
@@ -138,7 +138,7 @@ proto._changeOnKeys = [];
  */
 fun.addProp(proto, 'binding', function(val) {
     if (this._binding) this._binding.destruct();
-    this._binding = val && new require('./dataList/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
+    this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
     if (val) this.data(val.model);
 });
 
