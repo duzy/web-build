@@ -69,23 +69,23 @@
      *                         If not specified context will be set to current item
      * @returns {object}
      */
-    utils.forEach = function(object, callback, context) {
-        var name, i = 0, length = object.length;
+    // utils.forEach = function(object, callback, context) {
+    //     var name, i = 0, length = object.length;
 
-        if (length === undefined) {
-            for (name in object) {
-                if (!name || object[name] === undefined ||
-                    !object.hasOwnProperty(name)) {
-                    continue;
-                }
-                if (callback.call(context || object[name],
-                                  object[name], name) === false) { break; }
-            }
-        } else {
-            compat.forEach.call(object, callback, context);
-        }
-        return object;
-    };
+    //     if (length === undefined) {
+    //         for (name in object) {
+    //             if (!name || object[name] === undefined ||
+    //                 !object.hasOwnProperty(name)) {
+    //                 continue;
+    //             }
+    //             if (callback.call(context || object[name],
+    //                               object[name], name) === false) { break; }
+    //         }
+    //     } else {
+    //         compat.forEach.call(object, callback, context);
+    //     }
+    //     return object;
+    // };
 
     /**
      * Returns unique elements in array
@@ -206,7 +206,7 @@
 
     utils.applyCompat = compat.applyCompat;
 
-    utils.forEach(compat.arrayFunctions, function(name) {
+    compat.arrayFunctions.forEach(function(name) {
         if (!utils[name]) {
             // using temp argument is faster than slicing
             // arguments object
