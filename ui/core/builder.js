@@ -3,7 +3,7 @@
 var utils      = require('./utils'),
     Collection = require('./collection').Collection;
 
-var viewNamespaces = [global];
+var NS = [global]; // view namespaces
 
 /**
  * Creates view tree from JSON-like markup
@@ -18,24 +18,22 @@ function build(ml) {
 };
 
 function createMulti(ml) {
-    return ml.map(function(mlRow) { return createSingle(mlRow); });
+    return ml.map(function(row) { return createSingle(row); });
 }
 
-function createSingle(mlRow) {
-    if (mlRow.typeName) {
-        return mlRow;
+function createSingle(row) {
+    if (row.typeName) {
+        return row;
     }
 
-    var C = mlRow.view,
-    initArgs = mlRow.init || {},
-    result, Obj;
+    var C = row.view,
+        initArgs = row.init || {},
+        result, Obj;
     if (Object.isFun(C)) {
         result = new C(initArgs);
     } else if (typeof C === 'string') {
-        for (var i = 0, ns = viewNamespaces, length = ns.length;
-	     i < length; i++) {
-	    
-	    Obj = utils.path2obj(C, ns[i]);
+        for (var i = 0, ns = NS, length = ns.length; i < length; i++) {
+	    Obj = Object.get(C, ns[i]);
 	    if (Obj) {
                 result = new Obj(initArgs);
                 break;
@@ -48,12 +46,12 @@ function createSingle(mlRow) {
         result = C;
     }
     
-    copyAttrs(result, mlRow);
+    copyAttrs(result, row);
     return result;
 }
 
-function copyAttrs(view, mlRow) {
-    mlRow.forEach(function(value, name) {
+function copyAttrs(view, row) {
+    row.forEach(function(value, name) {
         if (name == 'view' || name == 'init') { return; }
         utils.prop(view, name, value);
     });
@@ -61,5 +59,5 @@ function copyAttrs(view, mlRow) {
 }
 
 exports.build = build;
-exports.NS = viewNamespaces;
+exports.NS = NS;
 //})();

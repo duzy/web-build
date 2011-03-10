@@ -215,6 +215,13 @@ Object.isArray = function(obj) {
     return obj && obj.typename === 'array';
 }
 
+// find object via a path like 'ui.view.Split'
+Object.get = function(path, context) {
+    context = context || global;
+    path.split('.').forEach(function(ns){ context = context[ns] });
+    return context;
+}
+
 String.prototype.trim = String.prototype.trim || function(s) {
     return s.replace(/^\s*|\s*$/g, "");
 };

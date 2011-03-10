@@ -84,9 +84,7 @@ var Collection = new Object.Class(Array, {
 	
     appendTo: function(target) {
         target = require('./builder').build(target)[0];
-        this.forEach(function(view) {
-	    target.appendChild(view);
-        });
+        this.forEach(function(view) { target.appendChild(view); });
         return this;
     },
 

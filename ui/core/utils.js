@@ -130,17 +130,6 @@
         });
     };
 
-    utils.path2obj = function(path, context) {
-        var parts = path.split('.');
-
-        context = context || global;
-
-        for (var i = 0, l = parts.length; context && i < l; i++) {
-            context = context[parts[i]];
-        }
-        return context;
-    };
-
     utils.range = function(from, to) {
         var result = new Array(to - from);
         for (var idx = 0; from <= to; from++, idx++) {
