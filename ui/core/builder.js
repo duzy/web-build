@@ -18,7 +18,7 @@ function build(ml) {
 };
 
 function createMulti(ml) {
-    return utils.map(ml, function(mlRow) { return createSingle(mlRow); });
+    return ml.map(function(mlRow) { return createSingle(mlRow); });
 }
 
 function createSingle(mlRow) {

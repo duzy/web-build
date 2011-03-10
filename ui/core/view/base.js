@@ -4,9 +4,11 @@ var view  = require('../view'),
     fun   = require('../function'),
     env   = require('../env'),
     dom   = require('../dom'),
+    C = require('../class'),
+    Class = C.Class,
     event = require('../event');
 
-var Base = new Object.Class({
+var Base = new Class({
     name: 'Base',
     init: function(initArgs) {
         initArgs = initArgs || {};

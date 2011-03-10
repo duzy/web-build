@@ -6,9 +6,11 @@
         evt   = require('./event'),
         dom   = require('./dom'),
         fun   = require('./function'),
+        C = require('./class'),
+        Class = C.Class,
         Can = require('./view/can').Can;
 
-    var Attachment = fun.newClass(Can, {
+    var Attachment = new Class(Can, {
             typeName: 'Attachment',
 
             _setup: function(initArgs) {

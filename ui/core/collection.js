@@ -2,6 +2,8 @@
 
 var fun = require('./function'),
     utils = require('./utils'),
+    C = require('./class'),
+    Class = C.Class,
     arrayPrototype = Array.prototype;
 
     /**
@@ -17,7 +19,7 @@ var fun = require('./function'),
      * @constructor
      * @class
      */
-var Collection = new Object.Class(Array, {
+var Collection = new Class(Array, {
 
     init: function(views) {
         this.length = 0;
