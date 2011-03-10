@@ -63,8 +63,11 @@ try {
 
     ui('#cmd').on('click', function() { alert('LiteUI '+ui.version); });
 
+    //alert(Object.prototype.toString.call(root));
+    alert(root);
+
     var selector = require('ui/tool/selector');
-    selector.find('Button[text^=Publish]').on('click', function() {
+    selector.find('Button[text^=Publish]',root).on('click', function() {
     	alert('LiteUI');
     });
 } catch(e) {

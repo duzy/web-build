@@ -11,7 +11,6 @@ var view  = require('../view'),
  * @name Can
  */
 var Can = new Object.Class(Base, {
-    name: 'Can',
     typeName: 'Can',
 
     _setup: function(initArgs) {

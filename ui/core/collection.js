@@ -1,8 +1,7 @@
 //(function() {
 
 var fun = require('./function'),
-    utils = require('./utils'),
-    arrayPrototype = Array.prototype;
+    utils = require('./utils');
 
     /**
      * Collection performs group operations on view objects.
@@ -18,10 +17,11 @@ var fun = require('./function'),
      * @class
      */
 var Collection = new Object.Class(Array, {
+    typeName: 'Collection',
 
     init: function(views) {
         this.length = 0;
-        arrayPrototype.push.apply(this, views);
+        Array.prototype.push.apply(this, views);
     },
 
     /**
@@ -32,7 +32,10 @@ var Collection = new Object.Class(Array, {
      * @param {function(view.Base, number):boolean} callback
      * @returns {view.Collection} created collection
      */
-    // filter: function(callback, context)
+    // filter: function(callback, context) {
+    //     return new Collection(Array.prototype.filter.call(this, callback, context));
+    // },
+
     // map: function(callback, context)
 
     /**

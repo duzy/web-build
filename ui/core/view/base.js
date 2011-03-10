@@ -7,7 +7,6 @@ var view  = require('../view'),
     event = require('../event');
 
 var Base = new Object.Class({
-    name: 'Base',
     typeName: 'Base',
 
     init: function(initArgs) {

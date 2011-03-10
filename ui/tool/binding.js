@@ -10,6 +10,8 @@
         modelEvent: '',
         viewEvent: 'blur',
 
+        typeName: 'Binding',
+
         init: function(view, model, options) {
             utils.extend(this, options);
 

@@ -150,7 +150,8 @@ Usage:
              * @return {Collection} found views
              */
 	    find: function(selector, context, skipFiltering) {
-		context = context || require('../core/attachment').Attachment.instances();
+		context = context ||
+		    require('../core/attachment').Attachment.instances();
 		if (context.length === undefined) { context = [context]; }
 		
 		var tokens = Selector.tokenize(selector),
