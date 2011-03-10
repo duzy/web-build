@@ -197,7 +197,7 @@
                         event.special[type].setup(el);
                     } else {
                         domHandlers[id] = domHandlers[id]
-			    || fun.bind(domHandler, el);
+			    || domHandler.bind(el); //fun.bind(domHandler, el);
                         el.addEventListener
 			    ? el.addEventListener(type, domHandlers[id], false)
 			    : el.attachEvent('on' + type, domHandlers[id]);

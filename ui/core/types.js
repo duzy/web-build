@@ -3,8 +3,8 @@
 var proto;
 
 // ==== Function.prototype ====
-/*
 proto = Function.prototype;
+/*
 proto.hook = function(pre, post) {
     var self = this;
     return function() {
@@ -15,6 +15,20 @@ proto.hook = function(pre, post) {
     }
 };
 */
+proto.bind = function(context) {
+    var self = this;
+    var args = Array.prototype.slice.call(arguments,1);
+    result = args.length ?
+	function() {
+	    args.concat(Array.prototype.slice.call(arguments,0));
+	    return self.apply(context || this, args);
+	} :
+    function() {
+	return self.apply(context || this, arguments);
+    };
+    result.bound = true;
+    return result;
+};
 
 // ==== Object.prototype ====
 proto = Object.prototype;

@@ -162,8 +162,8 @@ proto._createHandle = function() {
         handle.className += ' ' + 'ui-split-handle_thin';
     }
 
-    utils.forEach(['draggesturestart', 'draggesture', 'draggestureend'], function(name) {
-        evt.on(handle, name, fun.bind(this['_' + name], this));
+    ['draggesturestart', 'draggesture', 'draggestureend'].forEach(function(name) {
+        evt.on(handle, name, this['_' + name].bind(this));
     }, this);
 
     return handle;

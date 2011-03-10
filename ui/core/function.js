@@ -31,21 +31,23 @@
      * obj.bar === 'bar';
      */
     fun.bind = function(fn, context) {
-        // Optimize:
-        // Do not transform and concat arguments array
-        // if optional arguments are not provided
-        var args = arrayPrototype.slice.call(arguments, 2),
-        result = args.length ?
-        function() {
-            return fn.apply(context || this,
-                            args.concat(arrayPrototype.slice.call(arguments, 0)));
-        } :
-        function() {
-            return fn.apply(context || this, arguments);
-        };
-        // mark bound function so we can optimize later
-        result.bound = true;
-        return result;
+        // // Optimize:
+        // // Do not transform and concat arguments array
+        // // if optional arguments are not provided
+        //var args = arrayPrototype.slice.call(arguments, 2),
+        // result = args.length ?
+        // function() {
+        //     return fn.apply(context || this,
+        //                     args.concat(arrayPrototype.slice.call(arguments, 0)));
+        // } :
+        // function() {
+        //     return fn.apply(context || this, arguments);
+        // };
+        // // mark bound function so we can optimize later
+        // result.bound = true;
+        // return result;
+	var args = arrayPrototype.slice.call(arguments, 1);
+	return Function.prototype.bind.apply(fn,args);
     };
 
     /**
