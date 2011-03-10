@@ -74,9 +74,9 @@
 
     fun.delegateProp = function(source, name, target, targetName) {
         if (Object.isArray(name)) {
-            utils.forEach(name, function(n, i) {
-                    fun.delegateProp(source, n, target, targetName && targetName[i]);
-                });
+            name.forEach(function(n, i) {
+                fun.delegateProp(source, n, target, targetName && targetName[i]);
+            });
         } else {
             targetName = targetName || name;
             source[name] = newDelegateProp(target, targetName);
@@ -94,9 +94,9 @@
 
     fun.delegateCall = function(source, name, target, targetName) {
         if (Object.isArray(name)) {
-            utils.forEach(name, function(n, i) {
-                    fun.delegateCall(source, n, target, targetName && targetName[i]);
-                });
+            name.forEach(function(n, i) {
+                fun.delegateCall(source, n, target, targetName && targetName[i]);
+            });
         } else {
             targetName = targetName || name;
             source[name] = newDelegateCall(target, targetName);
