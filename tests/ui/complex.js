@@ -6,10 +6,11 @@ require('ui/core/gesture');
 */
 
 ui.view(
-    require('ui/views/split'),
-    require('ui/views/flow'),
     require('ui/views/button'),
+    require('ui/views/flow'),
+    require('ui/views/list'),
     require('ui/views/rich'),
+    require('ui/views/split'),
     require('ui/views/text')
 );
 
@@ -29,7 +30,14 @@ try {
 			  { view: 'Button', label: 'test', id:'cmd' },
 		      ]
 		    },
-		    { view: 'P', html: '<b>LiteUI</b>, '+ui.version }
+		    { view: 'P', html: '<b>LiteUI</b>, '+ui.version },
+		    { view: 'Can', addClass: 'scrollable',
+		      childViews: [
+			  { view: 'Button', label: 'fooooooooooooooooooooo', },
+			  { view: 'List', id:'list', data: 
+			    "abcdefghijklmnopqrstuvwxyz0123456789".split('') },
+		      ]
+		    }
 		]
 	      }
 	  ],

@@ -222,10 +222,11 @@ proto.scrollToPosition = function(position) {
     minY = position*this._rowHeight;
     
     if (maxY >= pxs[1]) {
-	this._scrollableParent().scroll(0, maxY - pxs[1] +
-					// hackish overflow to compensate for bottom scroll bar
-					(position === this.data().length - 1 ? 100 : 0)
-					);
+	this._scrollableParent().scroll(
+	    0, maxY - pxs[1] +
+		// hackish overflow to compensate for bottom scroll bar
+		(position === this.data().length - 1 ? 100 : 0)
+	);
     } else if (minY < pxs[0]) {
 	this._scrollableParent().scroll(0, minY - pxs[0]);
     }
@@ -309,7 +310,8 @@ proto._reset = function() {
     this.clearSelection();
     this._allreadyResized = false;
     if (this._scrollableParent())
-	this._scrollableParent().removeListener('scroll', utils.bindOnce(this._scroll, this));
+	this._scrollableParent().removeListener(
+	    'scroll', utils.bindOnce(this._scroll, this));
 };
 
 proto._setup = function(initArgs) {

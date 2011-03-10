@@ -7,5 +7,5 @@
     exports.ua      = exports.nav.userAgent;
 
     exports.guid = 1;
-    exports.expando = 'uki' + (+new Date);
+    exports.expando = 'ui' + (+new Date);
 //})();
