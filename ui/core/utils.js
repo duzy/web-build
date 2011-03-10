@@ -107,22 +107,8 @@
      * @returns Describe what it returns
      */
     utils.extend = function() {
-        var target = arguments[0] || {}, i = 1, length = arguments.length, options;
-
-        for (; i < length; i++) {
-            if ((options = arguments[i]) != null) {
-
-                for (var name in options) {
-                    var copy = options[name];
-
-                    if (copy !== undefined) {
-                        target[name] = copy;
-                    }
-
-                }
-            }
-        }
-
+        var target = arguments[0] || {};
+        Object.prototype.extend.apply(target, slice.call(arguments,1));
         return target;
     };
 
