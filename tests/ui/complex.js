@@ -53,7 +53,7 @@ try {
 		      pos: 'l:0 t:26px w:95% h:90%',
 		    },
 		    { view: 'Button', text: 'Publish',
-		      pos: 'l:0 t:95% w:1 h:25px',
+		      pos: 'l:0 t:95% w:200 h:25px',
 		    },
 		]
 	      },
@@ -63,10 +63,10 @@ try {
 
     ui('#cmd').on('click', function() { alert('LiteUI '+ui.version); });
 
-    // var selector = require('ui/tool/selector');
-    // selector.find('Button[text^=Publish]').on('click', function() {
-    // 	alert('LiteUI');
-    // });
+    var selector = require('ui/tool/selector');
+    selector.find('Button[text^=Publish]').on('click', function() {
+    	alert('LiteUI');
+    });
 } catch(e) {
     alert(e);
 }

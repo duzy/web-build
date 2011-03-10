@@ -1,8 +1,6 @@
 //(function() {
 
-    var toString = Object.prototype.toString,
-        arrayPrototype = Array.prototype,
-        slice = arrayPrototype.slice,
+    var slice = Array.prototype.slice,
         utils = exports;
 
     var marked = '__marked';

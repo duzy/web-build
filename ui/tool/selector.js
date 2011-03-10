@@ -123,9 +123,7 @@ Usage:
 	}
 
         function flatten(array) {
-	    return utils.reduce(array, function(x, e) {
-		return x.concat(e);
-	    }, []);
+	    return array.reduce(function(x, e) { return x.concat(e); }, []);
 	}
 
         /**#@-*/
@@ -189,7 +187,7 @@ Usage:
 			if (!found && (match = exprItem.match(row.regexp))) {
 			    /*jsl:end*/
 			    found = true;
-			    context = utils.filter(context, function(view, index) {
+			    context = context.filter(function(view, index) {
 				return reducers[row.name](view, match, index, context);
 			    });
 			    exprItem = exprItem.replace(row.regexp, '');
