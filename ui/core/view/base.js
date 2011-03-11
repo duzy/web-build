@@ -44,9 +44,7 @@ proto.resized = fun.FS;
  * Get views container dom node.
  * @returns {Element} dom
  */
-proto.dom = function() {
-    return this._dom;
-};
+proto.dom = function() { return this._dom; };
 
 
 fun.delegateProp(proto, 'html', '_dom', 'innerHTML');

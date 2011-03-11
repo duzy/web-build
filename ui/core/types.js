@@ -166,20 +166,17 @@ var Class = Object.Class = new Type('Class', function() {
         last = arguments[len - 1],
         className, i = 0,
         newClass = last && (Object.isFun(last) ? last : last.init),
-        baseClass = 1 < len && first.prototype && first;
+        superClass = 1 < len && first.prototype && first;
 
     if (!newClass) {
-	if (baseClass) {
-	    newClass = function() { baseClass.apply(this, arguments); };
-	} else {
-	    newClass = function() {};
-	}
+	newClass = superClass ? function() { superClass.apply(this, arguments); }
+	                      : function() {};
     }
 
     // implements(real inheritance) the first base class
-    if (baseClass) {
+    if (superClass) {
 	var T = function(){}
-	T.prototype = baseClass.prototype
+	T.prototype = superClass.prototype
 	newClass.prototype = new T;
 	i = 1; // start mixin from the second arg
     }
