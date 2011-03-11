@@ -14,7 +14,6 @@
         init: function(initArgs) {
             this._dom = initArgs.dom;
             dom.addClass(this.dom(), 'ui-attachment');
-            Can.prototype._setup.call(this, initArgs);
 	},
 
         parent: function() {

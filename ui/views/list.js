@@ -14,8 +14,16 @@ var env   = require('../core/env'),
     Selectable = require('../facet/selectable').Selectable;
     
 
-var DataList = new Object.Class(Base, Focusable, Selectable, {}),
-    proto = DataList.prototype;
+var DataList = new Object.Class(Base, Focusable, Selectable, {
+    init: function(initArgs) {
+	this._data = [];
+	this._packs = {};
+    
+	this._packSize  = initArgs.packSize || this._packSize;
+	this._rowTemplate = initArgs.rowTemplate || this._rowTemplate;
+    },
+}),
+proto = DataList.prototype;
     
 
 /* --------------- Setup --------------*/
@@ -312,16 +320,6 @@ proto._reset = function() {
     if (this._scrollableParent())
 	this._scrollableParent().removeListener(
             'scroll', this._scroll.bindOnce(this));
-};
-
-proto._setup = function(initArgs) {
-    this._data = [];
-    this._packs = {};
-    
-    this._packSize  = initArgs.packSize || this._packSize;
-    this._rowTemplate = initArgs.rowTemplate || this._rowTemplate;
-    
-    Base.prototype._setup.call(this, initArgs);
 };
 
 proto._createDom = function(initArgs) {

@@ -12,8 +12,15 @@ var fun   = require('../core/function'),
     Focusable = require('../facet/focusable').Focusable;
 
 
-var Split = new Object.Class(Can, Focusable, {}),
-    proto = Split.prototype;
+var Split = new Object.Class(Can, Focusable, {
+    init: function(initArgs) {
+	this._vertical = initArgs.vertical || this._vertical;
+	this._handleWidth = initArgs.handleWidth || this._handleWidth;
+	this._originalWidth = 0;
+	this._exts = [];
+    },
+}),
+proto = Split.prototype;
 
 proto.typeName = 'Split';
 
@@ -25,14 +32,6 @@ proto._handleWidth = 1;
 proto._leftMin = 100;
 proto._rightMin = 100;
 proto._vertical = false;
-
-proto._setup = function(initArgs) {
-    this._vertical = initArgs.vertical || this._vertical;
-    this._handleWidth = initArgs.handleWidth || this._handleWidth;
-    this._originalWidth = 0;
-    this._exts = [];
-    Can.prototype._setup.call(this, initArgs);
-};
 
 /**
 * @function

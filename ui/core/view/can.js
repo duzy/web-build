@@ -17,10 +17,6 @@ var Can = new Object.Class(Base, {
         this._childViews = [];
     },
 
-    _setup: function(initArgs) {
-        Base.prototype._setup.call(this, initArgs);
-    },
-
     destruct: function() {
         this.clear(true);
         Base.destruct.call(this);

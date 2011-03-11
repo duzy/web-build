@@ -16,7 +16,22 @@ proto.hook = function(pre, post) {
 };
 */
 
-    /**
+/*
+proto.derive = function(name,defer) {
+    var self = this;
+    return function() {
+	if (this.prototype.hasOwnProperty(name)) {
+	    var f = this.prototype[name];
+	    if (!Object.isFun(f)) f = null;
+	    if (!defer) f.apply(this, arguments);
+	    self.apply(this.arguments);
+	    if (defer) f.apply(this, arguments);
+	}
+    };
+};
+*/
+
+/**
      * Bind a function to a context and optional arguments.
      *
      * function modifyProp(prop, value) {

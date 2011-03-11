@@ -13,7 +13,6 @@ var Base = new Object.Class({
     },
 
     $create: function(initArgs) {
-        this._setup(initArgs);
         this._createDom(initArgs);
         this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;
         view.register(this);
@@ -28,8 +27,6 @@ proto.destruct = function() {
     this.removeListener();
     this.destructed = true;
 };
-
-proto._setup = fun.FS;
 
 /**#@+ @memberOf view.Base# */
 
