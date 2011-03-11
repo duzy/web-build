@@ -13,6 +13,7 @@ var fun   = require('../core/function'),
 
 
 var Split = new Object.Class(Can, Focusable, {
+    typeName: 'Split',
     init: function(initArgs) {
 	this._vertical = initArgs.vertical || this._vertical;
 	this._handleWidth = initArgs.handleWidth || this._handleWidth;
@@ -21,8 +22,6 @@ var Split = new Object.Class(Can, Focusable, {
     },
 }),
 proto = Split.prototype;
-
-proto.typeName = 'Split';
 
 proto._throttle = 0; // do not try to render more often than every Xms
 proto._handlePosition = 200;
@@ -33,26 +32,6 @@ proto._leftMin = 100;
 proto._rightMin = 100;
 proto._vertical = false;
 
-/**
-* @function
-* @name view.Split#leftMin
-*/
-/**
-* @function
-* @name view.Split#rightMin
-*/
-/**
-* @function
-* @name view.Split#autogrowLeft
-*/
-/**
-* @function
-* @name view.Split#autogrowRight
-*/
-/**
-* @function
-* @name view.Split#throttle
-*/
 fun.addProps(proto, ['leftMin', 'rightMin', 'leftSpeed', 'rightSpeed', 'throttle']);
 proto.topMin = proto.leftMin;
 proto.bottomMin = proto.rightMin;
@@ -113,17 +92,8 @@ proto.extPositions = function(positions) {
     return this;
 };
 
-/**
-* @function
-* @name view.Split#handleWidth
-*/
-proto.handleWidth = function() {
-    return this._handleWidth;
-};
-
-proto.vertical = function() {
-    return this._vertical;
-};
+proto.handleWidth = function() { return this._handleWidth; };
+proto.vertical = function() { return this._vertical; };
 
 /**
  * Treat all splitPanes as vertical (pane|pane)
