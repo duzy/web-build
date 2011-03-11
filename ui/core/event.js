@@ -12,9 +12,6 @@ var utils = require('./utils'),
 
     expando = env.expando;
 
-function EventWrapper () {}
-function DomEventWrapper() {}
-
 var EventMethods = {
     targetView: function() {
         return require('./view').closest(this.target);
@@ -46,6 +43,8 @@ var EventMethods = {
     isPropagationStopped: fun.FF
 };
 
+function EventWrapper () {}
+function DomEventWrapper() {}
 DomEventWrapper.prototype.extend(EventMethods);
 
 function normalize(e) {
