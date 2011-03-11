@@ -12,16 +12,10 @@
         typeName: 'Attachment',
 
         init: function(initArgs) {
-	    this._setup(initArgs); //or: this.$create(initArgs);
-	},
-
-        _setup: function(initArgs) {
             this._dom = initArgs.dom;
             dom.addClass(this.dom(), 'ui-attachment');
             Can.prototype._setup.call(this, initArgs);
-        },
-
-        _createDom: fun.FS,
+	},
 
         parent: function() {
             return null;

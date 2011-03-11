@@ -10,7 +10,6 @@ var Base = new Object.Class({
     typeName: 'Base',
 
     init: function(initArgs) {
-        //initArgs = initArgs || {};
     },
 
     $create: function(initArgs) {
