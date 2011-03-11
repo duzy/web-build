@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 var view  = require('../view'),
     utils = require('../utils'),
@@ -27,6 +28,11 @@ var Base = new Object.Class({
     $create: function(initArgs) {
         this._createDom(initArgs);
         this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;
+
+        initArgs.css && initArgs.css.forEach(function(value,name){
+            this.dom().style[name] = value;
+        },this);
+
         view.register(this);
     },
 
@@ -140,10 +146,10 @@ var Base = new Object.Class({
     },
 
     /**
- * Shortcut to set absolute positioning props
- * @param {string|object} p Position string in the form of
- *                          'l:10px t:10px r:30% h:200px'
- */
+     * Shortcut to set absolute positioning props
+     * @param {string|object} p Position string in the form of
+     *                          'l:10px t:10px r:30% h:200px'
+     */
     pos: function(pos) {
 	if (pos === undefined) {
 	    return this._styleToPos(this.dom().style);

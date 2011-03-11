@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 
 var utils      = require('./utils'),
@@ -29,6 +30,9 @@ function createSingle(row) {
     var C = row.view,
         initArgs = row.init || {},
         result, Obj;
+
+    initArgs.css = initArgs.css || row.css;
+    (initArgs.css !== row.css) && initArgs.css.extend(row.css);
 
     if (Object.isFun(C)) {
         result = new C(initArgs);

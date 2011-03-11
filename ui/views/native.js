@@ -48,10 +48,10 @@ fun.delegateProp(NativeControl.prototype,
 
 /**
  * Radio button with a label
- * build({ view: 'nativeControl.Radio', name: 'color', value: 'red', text: 'Red' })
+ * build({ view: 'native.Radio', name: 'color', value: 'red', text: 'Red' })
  */
 var Radio = new Object.Class(NativeControl, {
-    typeName: 'nativeControl.Radio',
+    typeName: 'native.Radio',
 
     _createDom: function(initArgs) {
         this._input = dom.createElement('input', {
@@ -72,12 +72,12 @@ var Radio = new Object.Class(NativeControl, {
 fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
 
 
-    /**
-     * Checkbox with a label
-     * build({ view: 'nativeControl.Checkbox', name: 'color', value: 'red', text: 'Red' })
-     */
+/**
+ * Checkbox with a label
+ * build({ view: 'native.Checkbox', name: 'color', value: 'red', text: 'Red' })
+ */
 var Checkbox = new Object.Class(NativeControl, {
-        typeName: 'nativeControl.Checkbox',
+        typeName: 'native.Checkbox',
 
         _createDom: function(initArgs) {
             this._input = dom.createElement('input', {
@@ -96,12 +96,12 @@ var Checkbox = new Object.Class(NativeControl, {
 fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
 
 
-    /**
-     * Text input
-     * build({ view: 'nativeControl.Text', value: 'John Smith', placeholder: 'Name?' })
-     */
+/**
+ * Text input
+ * build({ view: 'native.Text', value: 'John Smith', placeholder: 'Name?' })
+ */
 var Text = new Object.Class(NativeControl, {
-    typeName: 'nativeControl.Text',
+    typeName: 'native.Text',
     
     _createDom: function(initArgs) {
         this._input = dom.createElement('input', {
@@ -176,12 +176,12 @@ var Text = new Object.Class(NativeControl, {
 });
 
 
-    /**
-     * Native browser button
-     * build({ view: 'nativeControl.Button', value: 'Work!'})
-     */
+/**
+ * Native browser button
+ * build({ view: 'native.Button', value: 'Work!'})
+ */
 var Button = new Object.Class(NativeControl, {
-    typeName: 'nativeControl.Button',
+    typeName: 'native.Button',
 
     _createDom: function(initArgs) {
         this._dom = this._input = dom.createElement('input', {
@@ -193,7 +193,7 @@ var Button = new Object.Class(NativeControl, {
 
 /**
  * Native browser select
- * build({ view: 'nativeControl.Select', options: [
+ * build({ view: 'native.Select', options: [
  *   { text: 'Default', options: [
  *       'red',
  *       'blue',
@@ -207,7 +207,7 @@ var Button = new Object.Class(NativeControl, {
  * ]})
  */
 var Select = new Object.Class(NativeControl, {
-    typeName: 'nativeControl.Select',
+    typeName: 'native.Select',
 
     _createDom: function(initArgs) {
         this._input = this._dom = dom.createElement('select', {
