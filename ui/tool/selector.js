@@ -102,7 +102,7 @@ Usage:
 
             "": function(context) {
 		return utils.unique(recChildren(flatten(
-                    utils.pluck(context, 'childViews')
+		    utils.pluck(context, 'childViews')
 		)));
             },
 
@@ -123,7 +123,7 @@ Usage:
 	}
 
         function flatten(array) {
-	    return array.reduce(function(x, e) { return x.concat(e); }, []);
+	    return array.reduce(function(x, e, i) { return  x.concat(e); }, []);
 	}
 
         /**#@-*/
@@ -159,7 +159,7 @@ Usage:
                     extra  = tokens[1],
                     result = context,
                     mapper;
-		
+
 		while (expr.length > 0) {
 		    mapper = mappers[expr[0]] ? mappers[expr.shift()] : mappers[''];
 		    result = mapper(result);

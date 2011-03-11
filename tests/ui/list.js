@@ -7,8 +7,11 @@ ui.view(
     require('ui/views/text')
 );
 
-var data = 'abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890'
-    .split('');
+var s = 'abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890';
+s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
+s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
+s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
+var data = s.split('');
 
 ui([
     { view: 'Split', pos: 'l:0 t:0 r:0 b:0',

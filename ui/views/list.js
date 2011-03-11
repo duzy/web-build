@@ -5,7 +5,7 @@ var env   = require('../core/env'),
     fun   = require('../core/function'),
     utils = require('../core/utils'),
     dom   = require('../core/dom'),
-    evt   = require('../core/event'),
+    event = require('../core/event'),
     build = require('../core/builder').build,
 
     Mustache   = require('../tool/mustache').Mustache,
@@ -330,7 +330,7 @@ proto._createDom = function(initArgs) {
     this._initSelectable();
     
     // prevent dragging of selection
-    this.on('selectstart dragstart', evt.preventDefaultHandler);
+    this.on('selectstart dragstart', event.preventDefaultHandler);
 };
 
 proto.triggerSelection = function() {
@@ -396,9 +396,13 @@ proto._calcRowHeight = function() {
 
 proto._updateHeight = function() {
     this.dom().style.height = this.data().length * this.rowHeight() + 'px';
+    // setTimeout(function(){
+    // 	this.dom().style.height = this.data().length * this.rowHeight() + 'px';
+    // }.bind(this), 0);
 };
 
 proto._scroll = function() {
+    //setTimeout(function() { this._visChanged(); }.bind(this), 0);
     this._visChanged();
 };
 
@@ -440,6 +444,7 @@ proto._packsToRender = function() {
 };
 
 proto._schedulePackRender = function(packN, revision) {
+    //setTimeout(function(){
     var from = packN * this.packSize();
 
     if (this.data().loadRange) {
@@ -451,6 +456,7 @@ proto._schedulePackRender = function(packN, revision) {
 	this._updatePack(packN, revision,
 			 this.data().slice(from, from + this.packSize()));
     }
+    //}.bind(this), 0);
 };
 
 proto._removePack = function(packN) {
@@ -556,7 +562,6 @@ proto.domForEvent = function(type) {
     return Focusable._domForEvent.call(this, type) ||
         Base.prototype.domForEvent.call(this, type);
 };
-
 
 exports.List = DataList;
 //})();

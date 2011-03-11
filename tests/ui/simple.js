@@ -6,8 +6,11 @@
     );
 
     var root = ui([
+	// BUG: selector.find needs a 'Can' 
+	//{ view: 'Can', childViews: [
 	{ view: 'Button', id:'cmd', label: 'label' },
 	{ view: 'Button', id:'pub', text: 'text' },
+	//]}
     ]).attach();
 
     var cmd_clicked = 0, pub_clicked = 0;

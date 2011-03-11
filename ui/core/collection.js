@@ -3,20 +3,21 @@
 var fun = require('./function'),
     utils = require('./utils');
 
-    /**
-     * Collection performs group operations on view objects.
-     * <p>Behaves much like result jQuery(dom nodes).
-     * Most methods are chainable like
-     *   .prop('text', 'somevalue').on('click', function() { ... })</p>
-     *
-     * <p>Its easier to call build([view1, view2]) or find('selector')
-     * instead of creating collection directly</p>
-     *
-     * @author voloko
-     * @constructor
-     * @class
-     */
+/**
+ * Collection performs group operations on view objects.
+ * <p>Behaves much like result jQuery(dom nodes).
+ * Most methods are chainable like
+ *   .prop('text', 'somevalue').on('click', function() { ... })</p>
+ *
+ * <p>Its easier to call build([view1, view2]) or find('selector')
+ * instead of creating collection directly</p>
+ *
+ * @author voloko
+ * @constructor
+ * @class
+ */
 var Collection = new Object.Class(Array, {
+    name: 'Collection',
     typeName: 'Collection',
 
     init: function(views) {
@@ -34,6 +35,11 @@ var Collection = new Object.Class(Array, {
      */
     // filter: function(callback, context)
     // map: function(callback, context)
+
+    // reduce: function() {
+    // 	alert('coll.reduce');
+    // 	Array.prototype.reduce.apply(this, arguments);
+    // },
 
     /**
      * Sets an attribute on all views or gets the value of the attribute

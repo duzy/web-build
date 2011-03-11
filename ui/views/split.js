@@ -17,6 +17,7 @@ var Split = new Object.Class(Can, Focusable, {
     init: function(initArgs) {
 	this._vertical = initArgs.vertical || this._vertical;
 	this._handleWidth = initArgs.handleWidth || this._handleWidth;
+	this._fixed = initArgs.fixed || this._fixed;
 	this._originalWidth = 0;
 	this._exts = [];
     },
@@ -31,6 +32,7 @@ proto._handleWidth = 1;
 proto._leftMin = 100;
 proto._rightMin = 100;
 proto._vertical = false;
+proto._fixed = false;
 
 fun.addProps(proto, ['leftMin', 'rightMin', 'leftSpeed', 'rightSpeed', 'throttle']);
 proto.topMin = proto.leftMin;
@@ -122,9 +124,16 @@ proto._createHandle = function() {
         handle.className += ' ' + 'ui-split-handle_thin';
     }
 
-    ['draggesturestart', 'draggesture', 'draggestureend'].forEach(function(name) {
-        event.on(handle, name, this['_' + name].bind(this));
-    }, this);
+    if (this._fixed) {
+	handle.style['cursor'] = 'default';
+    } else {
+	handle.style['cursor'] = this.vertical() ? 'row-resize' : 'col-resize';
+	[
+	    'draggesturestart', 'draggesture', 'draggestureend'
+	].forEach(function(name) {
+	    event.on(handle, name, this['_' + name].bind(this));
+	}, this);
+    }
 
     return handle;
 };
