@@ -1,4 +1,4 @@
-try {
+//try {
 
     var ui = require('ui');
 
@@ -68,6 +68,6 @@ try {
     	alert('LiteUI');
     });
     //'Button[text^=Publish]'
-} catch(e) {
-    alert(e);
-}
+// } catch(e) {
+//     alert(e);
+// }

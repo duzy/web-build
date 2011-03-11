@@ -170,7 +170,7 @@ var Class = Object.Class = new Type('Class', function() {
 
     if (superClass) {
 	var ctr = newClass;
-	newClass = function() {
+	newClass = function() { // TODO: usning ctr.hook(superClass);
 	    superClass.apply(this, arguments);
 	    ctr.apply(this, arguments);
 	};

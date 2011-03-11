@@ -11,6 +11,10 @@
     var Attachment = new Object.Class(Can, {
         typeName: 'Attachment',
 
+        init: function(initArgs) {
+	    this._setup(initArgs); //or: this.$create(initArgs);
+	},
+
         _setup: function(initArgs) {
             this._dom = initArgs.dom;
             dom.addClass(this.dom(), 'ui-attachment');

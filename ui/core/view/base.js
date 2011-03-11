@@ -10,7 +10,10 @@ var Base = new Object.Class({
     typeName: 'Base',
 
     init: function(initArgs) {
-        initArgs = initArgs || {};
+        //initArgs = initArgs || {};
+    },
+
+    $create: function(initArgs) {
         this._setup(initArgs);
         this._createDom(initArgs);
         this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;

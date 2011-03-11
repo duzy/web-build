@@ -12,20 +12,20 @@ var view = function() {
 }
 
 utils.extend(view, {
-    register: function(view) {
-	registry[view.dom()[env.expando]] = view;
+    register: function(v) {
+	registry[v.dom()[env.expando]] = v;
     },
 
-    unregister: function(view) {
-	delete registry[view.dom()[env.expando]];
+    unregister: function(v) {
+	delete registry[v.dom()[env.expando]];
     },
 	
-    registerId: function(view) {
-	ids[utils.prop(view, 'id')] = view;
+    registerId: function(v) {
+	ids[utils.prop(v, 'id')] = v;
     },
 	
-    unregisterId: function(view) {
-	delete ids[utils.prop(view, 'id')];
+    unregisterId: function(v) {
+	delete ids[utils.prop(v, 'id')];
     },
 	
     byId: function(id) {

@@ -1,4 +1,4 @@
-try {
+//try {
     var ui = require('ui');
 
     ui.view(
@@ -33,6 +33,6 @@ try {
 	check(pub && pub.length == 1, "#pub count: "+pub.length);
 	check(pub_clicked == 1, "#pub click(): "+pub_clicked);
     }, 1000);
-} catch(e) {
-    alert(e);
-}
+// } catch(e) {
+//     alert(e);
+// }

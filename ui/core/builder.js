@@ -37,6 +37,7 @@ function createSingle(row) {
 	    Obj = Object.get(C, ns[i]);
 	    if (Obj) {
                 result = new Obj(initArgs);
+		if (result.$create) result.$create(initArgs);
                 break;
 	    }
         }
