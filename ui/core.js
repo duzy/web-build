@@ -37,4 +37,5 @@ view(
     require('./core/view/base'),
     require('./core/view/can')
 );
+
 //})();

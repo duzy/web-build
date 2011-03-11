@@ -269,5 +269,5 @@ fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
 proto.on = proto.addListener,
 proto.emit = proto.trigger,
 
-exports.Base = Base;
+module.exports.Base = Base;
 //})();

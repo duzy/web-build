@@ -127,7 +127,7 @@ proto._createHandle = function() {
     if (this._fixed) {
 	handle.style['cursor'] = 'default';
     } else {
-	handle.style['cursor'] = this.vertical() ? 'row-resize' : 'col-resize';
+	handle.style['cursor'] = this.vertical() ? 'col-resize' : 'row-resize';
 	[
 	    'draggesturestart', 'draggesture', 'draggestureend'
 	].forEach(function(name) {

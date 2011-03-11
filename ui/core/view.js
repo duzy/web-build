@@ -8,7 +8,8 @@ var registry = {},
 
 /** @namespace */
 var view = function() {
-    arguments.forEach(function(v) { view.extend(v) });
+    //arguments.forEach.call(function(v) { view.extend(v) });
+    Array.prototype.forEach.call(arguments, function(v) { view.extend(v) });
 }
 
 view.extend({
