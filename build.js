@@ -76,5 +76,5 @@ cli.main(function(args, flags) {
 	return;
     }
 
-    fs.writeFileSync(name + ext, code, "utf8");
+    fs.writeFileSync(outname, code, "utf8");
 });

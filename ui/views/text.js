@@ -49,7 +49,6 @@ var Header = new Object.Class(Base, {
     })
 });
 
-
 exports.Text   = Text;
 exports.P      = P;
 exports.Label  = Label;

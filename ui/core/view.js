@@ -11,7 +11,7 @@ var view = function() {
     arguments.forEach(function(v) { view.extend(v) });
 }
 
-utils.extend(view, {
+view.extend({
     register: function(v) {
 	registry[v.dom()[env.expando]] = v;
     },

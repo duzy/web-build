@@ -1,5 +1,6 @@
 (function(){
     var uki = require("uki");
+    requireCss('./data-list/datalist.css');
 
     /*
     var data = uki.map(uki.range(1, 1000), function(n) {
@@ -7,7 +8,7 @@
     });
     */
     var data = [];
-    for (n=1; n < 30; ++n) { data.push('row #' + n) };
+    for (n=1; n < 3000; ++n) { data.push('row #' + n) };
     
     var views = uki([
 	{ view: 'SplitPane', pos: 'l:0 t:0 r:0 b:0',

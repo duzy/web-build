@@ -230,6 +230,8 @@ Object.isArray = function(obj) {
     return obj && obj.typename === 'array';
 }
 
+//if (Object.get) throw('Object.get already defined!');
+
 // find object via a path like 'ui.view.Split'
 Object.get = function(path, context) {
     context = context || global;
