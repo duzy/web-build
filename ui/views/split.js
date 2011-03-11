@@ -63,7 +63,9 @@ proto._normalizeHandlePosition = function(pos) {
 };
 
 proto._moveHandle = function() {
-    this._handle.style[this._x_leftName()] = this.handlePosition() + 'px';
+    setTimeout(function() {
+	this._handle.style[this._x_leftName()] = this.handlePosition() + 'px';
+    }.bind(this), 0);
 };
 
 /**
@@ -139,7 +141,7 @@ proto._createDom = function() {
 };
 
 proto._scheduleChildResize = function() {
-    this._resizeChildViews();
+    setTimeout(function(){ this._resizeChildViews(); }.bind(this), 0);
 };
 
 proto._resizeSelf = function() {
@@ -184,8 +186,13 @@ proto._draggestureend = function(e) {
 proto._updatePositionOnDrag = function(e, stop) {
     var pos = this._positionBeforeDrag + e.dragOffset[this._x_xName()];
     this._handlePosition = this._normalizeHandlePosition(pos);
+
     this._moveHandle();
     this._scheduleChildResize();
+    // setTimeout(function(){
+    // 	this._moveHandle();
+    // 	this._scheduleChildResize();
+    // }.bind(this), 0);
 
     this.trigger({
         type: stop ? 'handleStop' : 'handleMove',
