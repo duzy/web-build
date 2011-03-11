@@ -47,7 +47,8 @@ var Button = new Object.Class(Base, Focusable, {
 
     _createDom: function() {
         this._text = dom.createElement('span', { className: 'ui-button__text' });
-        this._dom = dom.createElement('button', { className: 'ui-button', tabIndex: -1 }, [this._text]);
+        this._dom = dom.createElement('button', { className: 'ui-button', tabIndex: -1 },
+				      [this._text]);
     },
 
     destruct: function() {

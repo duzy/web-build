@@ -13,6 +13,9 @@ var view  = require('../view'),
 var Can = new Object.Class(Base, {
     typeName: 'Can',
 
+    init: function(initArgs) {
+    },
+
     _setup: function(initArgs) {
         Base.prototype._setup.call(this, initArgs);
         this._childViews = [];
