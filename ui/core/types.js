@@ -237,6 +237,13 @@ Object.get = function(path, context) {
     return context;
 }
 
+//https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/keys
+Object.keys = Object.keys || function(obj) {
+    var a = [], p;
+    for (p in o) o.hasOwnProperty.call(p) && a.push[p];
+    return a;
+};
+
 String.prototype.trim = String.prototype.trim || function(s) {
     return s.replace(/^\s*|\s*$/g, "");
 };

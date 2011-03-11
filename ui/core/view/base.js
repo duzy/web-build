@@ -128,7 +128,7 @@ proto.addListener = function(names, callback) {
  */
 proto.removeListener = function(names, callback) {
     var wrapper = callback && callback.bindOnce(this);
-    names || (names = (this._eventNames || {}).keys.join(' '));
+    names || (names = Object.keys((this._eventNames || {})).join(' '));
     names.split(' ').forEach(function(name) {
 	event.removeListener(this.domForEvent(name), name, wrapper);
     }, this);

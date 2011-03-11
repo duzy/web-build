@@ -287,12 +287,14 @@ proto.editSelected = function() {
     this.dom().appendChild(this.editor().dom());
     
     this.editor()
-    .on('finishEdit', this._editorBlur.bindOnce(this))
-    .on('move', this._editorMove.bindOnce(this))
-    .pos({ top: t+'px', left: 0+'px', right: 0+'px', height: this.rowHeight() + 'px' })
-    .visible(true)
-    .parent(this)
-    .edit({ model: this.selectedRow(), modelProp: this.key() });
+	.on('finishEdit', this._editorBlur.bindOnce(this))
+	.on('move', this._editorMove.bindOnce(this))
+	.pos({ top: t+'px', left: 0+'px',
+	       right: 0+'px', height: this.rowHeight() + 'px'
+	     })
+	.visible(true)
+	.parent(this)
+	.edit({ model: this.selectedRow(), modelProp: this.key() });
     
     this.lastClickIndex(this.selectedIndex());
     return this;

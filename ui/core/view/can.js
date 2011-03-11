@@ -19,7 +19,7 @@ var Can = new Object.Class(Base, {
 
     destruct: function() {
         this.clear(true);
-        Base.destruct.call(this);
+        Base.prototype.destruct.call(this);
     },
 
     resized: function() {
