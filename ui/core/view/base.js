@@ -6,11 +6,11 @@ var view  = require('../view'),
     dom   = require('../dom'),
     event = require('../event');
 
-var rules = [
+var POS_RULES = [
     'top', 'right', 'left', 'bottom', 'width', 'height',
     'marginLeft', 'marginTop', 'marginBottom', 'marginRight'
 ],
-ruleMap = {
+POS_MAP = {
     t: 'top', r: 'right',
     l: 'left', b: 'bottom',
     w: 'width', h: 'height',
@@ -155,7 +155,7 @@ var Base = new Object.Class({
 
     _styleToPos: function(style) {
 	var res = {};
-	rules.forEach(function(rule) {
+	POS_RULES.forEach(function(rule) {
 	    if (style[rule]) {
 		res[rule] = style[rule];
 	    }
@@ -172,7 +172,7 @@ var Base = new Object.Class({
 		pos[parts[0]] = parts[1];
 	    });
 	}
-	ruleMap && ruleMap.forEach(function(longRule, shortRule) {
+	POS_MAP.forEach(function(longRule, shortRule) {
 	    if (pos[shortRule]) pos[longRule] = pos[shortRule];
 	});
 	return pos;
@@ -180,7 +180,7 @@ var Base = new Object.Class({
 
     _applyPosToStyle: function(pos, style) {
 	style.position = 'absolute';
-	rules && rules.forEach(function(rule) {
+	POS_RULES.forEach(function(rule) {
 	    style[rule] = pos[rule] || '';
 	});
     },
