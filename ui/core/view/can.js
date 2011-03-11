@@ -14,11 +14,11 @@ var Can = new Object.Class(Base, {
     typeName: 'Can',
 
     init: function(initArgs) {
+        this._childViews = [];
     },
 
     _setup: function(initArgs) {
         Base.prototype._setup.call(this, initArgs);
-        this._childViews = [];
     },
 
     destruct: function() {
