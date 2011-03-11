@@ -153,9 +153,9 @@ function createEvent(baseEvent, options) {
     // from base event.
     EventWrapper.prototype = baseEvent;
     e = new EventWrapper();
-    utils.extend(e.prototype, EventMethods);
+    e.extend(EventMethods);
     e.baseEvent = baseEvent;
-    utils.extend(e, options);
+    e.extend(options || {});
     return e;
 }
 
@@ -172,8 +172,8 @@ var event = module.exports = {
     domHandlers: domHandlers,
 
     trigger: function(e) {
-        var listenerForEl = event.listeners[this[expando]] || {},
-        listenersForType = listenerForEl[e.type];
+        var listenerForEle = event.listeners[this[expando]] || {},
+            listenersForType = listenerForEle[e.type];
 	
         listenersForType && listenersForType.forEach(function(l) {
             l.call(this, e);
@@ -184,27 +184,27 @@ var event = module.exports = {
         }
     },
 
-    addListener: function(el, types, listener) {
-        var id = el[expando] = el[expando] || env.guid++;
+    addListener: function(ele, types, listener) {
+        var id = ele[expando] = ele[expando] || env.guid++;
 	
         types.split(' ').forEach(function(type) {
             listeners[id] = listeners[id] || {};
 	    
-            // if this is the first listener added to el for type
+            // if this is the first listener added to ele for type
             // then create a handler
             if (!listeners[id][type]) {
+		listeners[id][type] = [];
+
                 if (event.special[type]) {
-                    event.special[type].setup(el);
+                    event.special[type].setup(ele);
                 } else {
-                    domHandlers[id] = domHandlers[id]
-			|| domHandler.bind(el);
-                    el.addEventListener
-			? el.addEventListener(type, domHandlers[id], false)
-			: el.attachEvent('on' + type, domHandlers[id]);
+                    domHandlers[id] = domHandlers[id] || domHandler.bind(ele);
+                    ele.addEventListener
+			? ele.addEventListener(type, domHandlers[id], false)
+			: ele.attachEvent('on' + type, domHandlers[id]);
                 }
             }
 		
-            listeners[id][type] = listeners[id][type] || [];
             listeners[id][type].push(listener);
         });
     },

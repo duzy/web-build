@@ -3,7 +3,7 @@ requireCss('./split/split.css');
 var fun   = require('../core/function'),
     utils = require('../core/utils'),
     view  = require('../core/view'),
-    evt   = require('../core/event'),
+    event = require('../core/event'),
     dom   = require('../core/dom'),
     build = require('../core/builder').build,
 
@@ -103,21 +103,10 @@ proto._x_width = function() {
     return this.vertical() ? this.dom().offsetWidth : this.dom().offsetHeight;
 };
 
-proto._x_widthName = function() {
-    return this.vertical() ? 'width' : 'height';
-};
-
-proto._x_leftName = function() {
-    return this.vertical() ? 'left' : 'top';
-};
-
-proto._x_type = function() {
-    return this.vertical() ? 'v' : 'h';
-};
-
-proto._x_xName = function() {
-    return this.vertical() ? 'x' : 'y';
-};
+proto._x_widthName = function() { return this.vertical() ? 'width' : 'height'; };
+proto._x_leftName = function() { return this.vertical() ? 'left' : 'top'; };
+proto._x_type = function() { return this.vertical() ? 'v' : 'h'; };
+proto._x_xName = function() { return this.vertical() ? 'x' : 'y'; };
 
 proto._createHandle = function() {
     var handle = dom.fromHTML(Mustache.to_html(
@@ -132,7 +121,7 @@ proto._createHandle = function() {
     }
 
     ['draggesturestart', 'draggesture', 'draggestureend'].forEach(function(name) {
-        evt.on(handle, name, this['_' + name].bind(this));
+        event.on(handle, name, this['_' + name].bind(this));
     }, this);
 
     return handle;
