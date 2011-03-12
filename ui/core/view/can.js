@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 var view  = require('../view'),
     utils = require('../utils'),

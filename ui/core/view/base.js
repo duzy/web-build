@@ -199,12 +199,12 @@ var Base = new Object.Class({
 	});
     },
 
-/**
- * Accessor for view visibility.
- *
- * @param {boolean=} state
- * @returns {boolean|view.Base} current visibility state of self
- */
+    /**
+     * Accessor for view visibility.
+     *
+     * @param {boolean=} state
+     * @returns {boolean|view.Base} current visibility state of self
+     */
     visible: function(state) {
 	if (state === undefined) {
 	    return this.dom().style.display != 'none';
