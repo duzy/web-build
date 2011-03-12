@@ -27,11 +27,14 @@ var Base = new Object.Class({
 
     $create: function(initArgs) {
         this._createDom(initArgs);
-        this.dom()[env.expando] = this.dom()[env.expando] || env.guid++;
+        var d = this.dom();
+        d[env.expando] = d[env.expando] || env.guid++;
 
-        initArgs.css && initArgs.css.forEach(function(value,name){
-            this.dom().style[name] = value;
+        initArgs.style && initArgs.style.forEach(function(value,name){
+            d.style[name] = value;
         },this);
+
+        d.onselectstart = fun.FF; // disable selection
 
         view.register(this);
     },
@@ -47,6 +50,11 @@ var Base = new Object.Class({
 	this._dom = dom.createElement(initArgs.tagName || 'div');
     },
 
+    // noselect: function(v) {
+    //     var d = this._dom;
+    //     d.onselectstart = d.onmousedown = v ? fun.FF : fun.FS;
+    // },
+    
     /**
      * Called when view was resized
      */
@@ -62,11 +70,11 @@ var Base = new Object.Class({
 
     /* ----------------------- Common settings --------------------------------*/
     /**
- * Used for fast (on hash lookup) view searches: build('#view_id');
- *
- * @param {string=} id New id value
- * @returns {string|view.Base} current id or self
- */
+     * Used for fast (on hash lookup) view searches: build('#view_id');
+     *
+     * @param {string=} id New id value
+     * @returns {string|view.Base} current id or self
+     */
     id: function(id) {
 	if (id === undefined) { return this.dom().id; }
 	if (this.dom().id) { view.unregisterId(this); }
@@ -76,11 +84,11 @@ var Base = new Object.Class({
     },
 
     /**
- * Accessor for dom().className
- * @param {string=} className
- *
- * @returns {string|view.Base} className or self
- */
+     * Accessor for dom().className
+     * @param {string=} className
+     *
+     * @returns {string|view.Base} className or self
+     */
 
     addClass: function(className) {
 	dom.addClass(this.dom(), className);
@@ -105,10 +113,10 @@ var Base = new Object.Class({
 	return this.dom();
     },
 
-/**
- * @param {String} name Event name, or space separated names
- * @param {function()} callback
- */
+    /**
+     * @param {String} name Event name, or space separated names
+     * @param {function()} callback
+     */
     addListener: function(names, callback) {
 	if (typeof names === 'object') {
 	    names.forEach(function(callback, name) {
@@ -125,11 +133,11 @@ var Base = new Object.Class({
 	return this;
     },
 
-/**
- * @param {String} name Event name, or space separated names,
- *                      or null to remove from all types
- * @param {function()} callback or null to remove all callbacks
- */
+    /**
+     * @param {String} name Event name, or space separated names,
+     *                      or null to remove from all types
+     * @param {function()} callback or null to remove all callbacks
+     */
     removeListener: function(names, callback) {
 	var wrapper = callback && callback.bindOnce(this);
 	names || (names = Object.keys((this._eventNames || {})).join(' '));
@@ -215,13 +223,13 @@ var Base = new Object.Class({
 
 /* ----------------------------- Container api ------------------------------*/
 
-/**
- * Accessor attribute for parent view. When parent is set view appends its #dom
- * to parents #dom
- *
- * @param {?view.Base=} parent
- * @returns {view.Base} parent or self
- */
+    /**
+     * Accessor attribute for parent view. When parent is set view appends its #dom
+     * to parents #dom
+     *
+     * @param {?view.Base=} parent
+     * @returns {view.Base} parent or self
+     */
     parent: function(parent) {
 	if (parent === undefined) {
 	    return this._parent;
@@ -231,19 +239,19 @@ var Base = new Object.Class({
 	return this;
     },
 
-/**
- * Reader for previous view
- * @returns {view.Base}
- */
+    /**
+     * Reader for previous view
+     * @returns {view.Base}
+     */
     prevView: function() {
 	if (!this.parent()) { return null; }
 	return this.parent().childViews()[this._viewIndex - 1] || null;
     },
 
     /**
- * Reader for next view
- * @returns {view.Base}
- */
+     * Reader for next view
+     * @returns {view.Base}
+     */
     nextView: function() {
 	if (!this.parent()) { return null; }
 	return this.parent().childViews()[this._viewIndex + 1] || null;

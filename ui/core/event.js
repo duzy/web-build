@@ -1,3 +1,4 @@
+// -*- javascript -*-
 /**
  * Refs:
  *    1) http://en.wikipedia.org/wiki/DOM_events
@@ -186,7 +187,7 @@ var event = module.exports = {
     addListener: function(ele, types, listener) {
         var id = ele[expando] = ele[expando] || env.guid++;
 	
-        types.split(' ').forEach(function(type) {
+        types && types.split(' ').forEach(function(type) {
             listeners[id] = listeners[id] || {};
 	    
             // if this is the first listener added to ele for type

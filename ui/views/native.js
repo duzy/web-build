@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 requireCss('./native/native.css');
 
@@ -14,10 +15,10 @@ var fun   = require('../core/function'),
 
 var ieResize = env.ua.match(/MSIE 6|7/);
 
-    /**
-     * Base class for native control wrappers.
-     * Map common dom attributes and add binding
-     */
+/**
+ * Base class for native control wrappers.
+ * Map common dom attributes and add binding
+ */
 var NativeControl = new Object.Class(Base, Focusable, {
     bindingOptions: fun.newProp('bindingOptions'),
 
@@ -54,14 +55,10 @@ var Radio = new Object.Class(NativeControl, {
     typeName: 'native.Radio',
 
     _createDom: function(initArgs) {
-        this._input = dom.createElement('input', {
-	    className: 'ui-nc-radio__input', type: 'radio'
-	});
-        this._label = dom.createElement('span',	{
-	    className: 'ui-nc-radio__label'
-	});
+        this._input = dom.createElement('input', { type: 'radio' });
+        this._label = dom.createElement('span',	{ name: 'label' });
         this._dom = dom.createElement(initArgs.tagName || 'label', {
-	    className: 'ui-nc-radio'
+	    className: 'ui-native-radio'
 	}, [this._input, this._label]);
     },
     
@@ -77,22 +74,18 @@ fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
  * build({ view: 'native.Checkbox', name: 'color', value: 'red', text: 'Red' })
  */
 var Checkbox = new Object.Class(NativeControl, {
-        typeName: 'native.Checkbox',
+    typeName: 'native.Checkbox',
 
-        _createDom: function(initArgs) {
-            this._input = dom.createElement('input', {
-		className: 'ui-nc-checkbox__input', type: 'checkbox'
-	    });
-            this._label = dom.createElement('span', {
-		className: 'ui-nc-checkbox__label'
-	    });
-            this._dom = dom.createElement(initArgs.tagName || 'label', {
-		className: 'ui-nc-checkbox'
-	    }, [this._input, this._label]);
-        },
+    _createDom: function(initArgs) {
+        this._input = dom.createElement('input', { type: 'checkbox' });
+        this._label = dom.createElement('span', { name: 'label' });
+        this._dom = dom.createElement(initArgs.tagName || 'label', {
+	    className: 'ui-native-checkbox'
+	}, [this._input, this._label]);
+    },
 
-        _bindingOptions: Radio.prototype._bindingOptions
-    });
+    _bindingOptions: Radio.prototype._bindingOptions
+});
 fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
 
 
@@ -104,11 +97,9 @@ var Text = new Object.Class(NativeControl, {
     typeName: 'native.Text',
     
     _createDom: function(initArgs) {
-        this._input = dom.createElement('input', {
-	    className: 'ui-nc-text__input', type: 'text'
-	});
+        this._input = dom.createElement('input', { type: 'text' });
         this._dom = dom.createElement(initArgs.tagName || 'span', {
-	    className: 'ui-nc-text'
+	    className: 'ui-native-text'
 	});
         this.dom().appendChild(this._input);
     },
@@ -136,9 +127,9 @@ var Text = new Object.Class(NativeControl, {
         if (this._initedPlaceholder) return;
 	
         this._initedPlaceholder = true;
-        this.addClass('ui-nc-text_with-placeholder');
+        this.addClass('ui-native-text-with-placeholder');
         this._placeholderDom = dom.createElement('span', {
-	    className: 'ui-nc-text__placholder'
+	    name: 'placeholder'
 	});
         this.dom().insertBefore(this._placeholderDom, this.dom().firstChild);
         evt.on(this._placeholderDom, 'click',
@@ -185,7 +176,7 @@ var Button = new Object.Class(NativeControl, {
 
     _createDom: function(initArgs) {
         this._dom = this._input = dom.createElement('input', {
-	    className: 'ui-nc-button', type: 'button'
+	    className: 'ui-native-button', type: 'button'
 	});
     }
 });
@@ -211,7 +202,7 @@ var Select = new Object.Class(NativeControl, {
 
     _createDom: function(initArgs) {
         this._input = this._dom = dom.createElement('select', {
-	    className: 'ui-nc-select ui-nc-select__input'
+	    className: 'ui-native-select'
 	});
     },
 

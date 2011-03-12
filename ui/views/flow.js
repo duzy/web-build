@@ -1,3 +1,4 @@
+// -*- javascript -*-
 requireCss('./flow/flow.css');
 
 var fun   = require('../core/function'),

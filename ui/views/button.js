@@ -1,3 +1,4 @@
+// -*- javascript -*-
 requireCss('./button/button.css');
 
 var fun  = require('../core/function'),

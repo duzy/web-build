@@ -1,3 +1,4 @@
+// -*- javascript -*-
 var cli    = require("cli");
 
 /*var flags =*/ cli.parse({
@@ -20,8 +21,10 @@ function compileFile(filePath, options) {
 
 function makeHtmlCode(title, js) {
     var code = '<!DOCTYPE html>';
-    code    += '<html><head><title>' + title + '</title></head>';
-    code    += '<html><body><div id="main"></div>'
+    code    += '<html><head>';
+    code    += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> ';
+    code    += '<title>' + title + '</title>';
+    code    += '</head><body><div id="main"></div>'
     code    += '<script lang="javascript">' + js + '</script>';
     code    += '</body></html>'
     return code;

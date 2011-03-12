@@ -12,6 +12,7 @@ requireCss("./rich/rich.css");
 
 var dom  = require('../core/dom'),
     env  = require('../core/env'),
+    event= require('../core/event'),
     fun  = require('../core/function'),
     utils= require('../core/utils'),
     view = require('../core/view'),
@@ -33,6 +34,7 @@ proto._createDom = function() {
     this._dom = dom.createElement('iframe', {
 	name: name, className: 'ui-richedit'
     });
+    //this._dom = dom.createElement('div', {}, [this._iframe]);
 }
     
 proto.focusableDom = function() { return this._frame || this._dom; }
@@ -50,6 +52,24 @@ proto.resized = function() {
 	    doc.body.contentEditable = true;
 	}
         */
+
+	// var f = function(e) {
+	//     var s = e.mimic ? "mimic\n" : '';
+	//     e.forEach(function(value,name){ s += name + ':' + value + "\n"  });
+	//     this._test.innerText = s;
+	//     //e.stop();
+	// }.bind(this);
+	// //event.on(doc, 'mousemove', f);
+	// //event.on(this._iframe, 'mousemove', f);
+	// //event.on(this._dom, 'mousemove', f);
+	// event.on(env.doc, 'mousemove', f);
+	// event.on(doc, 'mousemove', function(e) {
+	//     var s = "<iframe>\n";
+	//     e.forEach(function(value,name){ s += name + ':' + value + "\n"  });
+	//     this._test.innerText = s;
+	//     e.bubbles = false;
+	//     e.stop();
+	// }.bind(this));
     }
     return this;
 }

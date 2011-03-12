@@ -1,3 +1,4 @@
+// -*- javascript -*-
 requireCss('./split/split.css');
 
 var fun   = require('../core/function'),
@@ -139,11 +140,11 @@ proto._createHandle = function() {
 };
 
 proto._createDom = function() {
-    this._dom = dom.createElement('div', { className: 'splitPane' });
+    this._dom = dom.createElement('div', { className: 'ui-split' });
 
     build([
-        { view: 'Can', addClass: 'ui-split-container ui-split-container_left' },
-        { view: 'Can', addClass: 'ui-split-container ui-split-container_right' }
+        { view: 'Can', addClass: 'ui-split-can ui-split-can-a' },
+        { view: 'Can', addClass: 'ui-split-can ui-split-can-b' }
     ]).appendTo(this);
 
     this._dom.appendChild(this._handle = this._createHandle());

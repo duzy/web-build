@@ -31,8 +31,8 @@ function createSingle(row) {
         initArgs = row.init || {},
         result, Obj;
 
-    initArgs.css = initArgs.css || row.css;
-    (initArgs.css !== row.css) && initArgs.css.extend(row.css);
+    initArgs.style = initArgs.style || row.style;
+    (initArgs.style !== row.style) && initArgs.style.extend(row.style);
 
     if (Object.isFun(C)) {
         result = new C(initArgs);

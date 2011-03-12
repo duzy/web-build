@@ -1,17 +1,16 @@
 .ui-split-handle,
 .ui-split-handle-bar {
-    z-index: 200;
+    z-index: 999;
     position: absolute;
 }
 
 .ui-split-handle {
-    background: #999;
-
+    background: #CCC;
 }
 
 .ui-split-handle-bar {
     display: none;
-    background: #999;
+    background: #CCC;
     overflow: hidden;
 }
 
@@ -70,3 +69,14 @@
     height: 5px !important;
     margin-top: -2px;
 }
+
+/*
+
+  more style:
+
+.ui-split {}
+.ui-split-can {}
+.ui-split-can-a {}
+.ui-split-can-b {}
+
+ */

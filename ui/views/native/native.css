@@ -1,28 +1,69 @@
-.ui-nc-select {
+.ui-native-select {
     margin: 0;
 }
 
 
-.ui-nc-text {
+.ui-native-text {
     display: inline-block;
     *display: inline;
     *zoom: 1;
+
+    border: solid 1px #BDBDBD;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    /* -webkit-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
+    /* -moz-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
+    /* box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
 }
 
-.ui-nc-text__input {
+.ui-native-text > input {
     margin: 0;
+    padding: 2px;
     width: 100%;
     *width: auto;
+
+    border: solid 1px #EEE;
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    border-radius: inherit;
+
+    font-size: 12px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.ui-nc-text_with-placeholder {
-    position: relative;
-}
-
-.ui-nc-text__placholder {
+.ui-native-text > *[name=placholder] {
     position: absolute;
     color: #888;
 }
+
+.ui-native-text-with-placeholder {
+    position: relative;
+}
+
+/*
+  all native control style:
+
+.ui-native-radio {}
+.ui-native-radio > input {}
+.ui-native-radio > *[name=label] {}
+
+.ui-native-checkbox {}
+.ui-native-checkbox > input {}
+.ui-native-checkbox > *[name=label] {}
+
+.ui-native-text {}
+.ui-native-text > input {}
+.ui-native-text > *[name=placeholder] {}
+
+.ui-native-text-with-placeholder {}
+
+.ui-native-button {}
+
+.ui-native-select {}
+
+*/
+

@@ -74,6 +74,7 @@ function dragGesture (e) {
         x: e.pageX - gesture.position.x,
         y: e.pageY - gesture.position.y
     };
+
     event.trigger.call(gesture.draggable, e);
 	
     if (e.isDefaultPrevented()) stopGesture(gesture.draggable);

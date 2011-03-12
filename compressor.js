@@ -1,3 +1,4 @@
+// -*- javascript -*-
 (function() {
     var jsp  = require('uglify-js').parser,
         pro  = require('uglify-js').uglify,

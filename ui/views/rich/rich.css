@@ -1,12 +1,12 @@
 .ui-richedit {
-    border: 1px solid #777;
+    padding: 0;
+
+    border: 1px solid #BDBDBD;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
 
-    padding: 0;
-
-    -webkit-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset;
-    -moz-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset;
-    box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset;
+    /* -webkit-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
+    /* -moz-box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
+    /* box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
 }
