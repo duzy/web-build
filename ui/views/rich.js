@@ -1,4 +1,4 @@
-/**
+/**                                                        -*- javascript -*-
  * A WYCIWYG editor.
  * 
  * Refs:
@@ -31,16 +31,32 @@ proto._doc = null;
 
 proto._createDom = function() {
     var name = 're-' + (RichEdit.guid++);
-    this._dom = dom.createElement('iframe', {
-	name: name, className: 'ui-richedit'
-    });
-    //this._dom = dom.createElement('div', {}, [this._iframe]);
+    this._iframe = dom.createElement('iframe', { name: name });
+    this._dom = dom.createElement('span', {
+        className: 'ui-richedit'
+    }, [this._iframe]);
 }
     
-proto.focusableDom = function() { return this._frame || this._dom; }
+proto.placeholder = fun.newProp('placeholder', function(v) {
+    this._placeholder = v;
+    this._initPlaceholder();
+    this._placeholderDom.innerHTML = v; //dom.escapeHTML(v);
+});
+
+proto._initPlaceholder = function() {
+    if (this._placeholderDom) return;
+    var d = this._placeholderDom = dom.createElement('span', {
+	name: 'placeholder'
+    });
+    this.dom().insertBefore(d, this.dom().firstChild);
+
+    event.on(d, 'click', function() { this.focus(); }.bindOnce(this));
+};
+
+proto.focusableDom = function() { return this._frame || this._iframe; }
 
 proto.resized = function() {
-    var frame = this._frame = env.root.frames[this._dom.name];
+    var frame = this._frame = this._frame || env.root.frames[this._iframe.name];
     if (frame) {
 	var doc = this._doc = frame.document;
 	if (doc.designMode !== 'on') {
@@ -53,28 +69,24 @@ proto.resized = function() {
 	}
         */
 
-	// var f = function(e) {
-	//     var s = e.mimic ? "mimic\n" : '';
-	//     e.forEach(function(value,name){ s += name + ':' + value + "\n"  });
-	//     this._test.innerText = s;
-	//     //e.stop();
-	// }.bind(this);
-	// //event.on(doc, 'mousemove', f);
-	// //event.on(this._iframe, 'mousemove', f);
-	// //event.on(this._dom, 'mousemove', f);
-	// event.on(env.doc, 'mousemove', f);
-	// event.on(doc, 'mousemove', function(e) {
-	//     var s = "<iframe>\n";
-	//     e.forEach(function(value,name){ s += name + ':' + value + "\n"  });
-	//     this._test.innerText = s;
-	//     e.bubbles = false;
-	//     e.stop();
-	// }.bind(this));
+        event.on(frame, 'focus blur change keyup', function(e) {
+            this._placeholderDom.style.display = (e.type !== 'blur')
+                || doc.body.firstChild ? 'none' : '';
+        }.bindOnce(this));
+
+        with(this._placeholderDom.style) {
+            //border = '1px solid #E00';
+            position = 'absolute';
+            color = '#888';
+            padding = '5px';
+            //padding = this._iframe.style.padding;
+            //padding = frame.style.padding;
+        }
     }
     return this;
 }
 
-fun.delegateProp(proto, 'name', '_dom');
+fun.delegateProp(proto, 'name', '_iframe');
 
 proto._command = function(cmd, arg) {
     var doc = this._doc;
