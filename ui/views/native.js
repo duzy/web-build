@@ -95,9 +95,10 @@ fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
  */
 var Text = new Object.Class(NativeControl, {
     typeName: 'native.Text',
-    
+
     _createDom: function(initArgs) {
-        this._input = dom.createElement('input', { type: 'text' });
+        this._inputTag = this._inputTag || 'input';
+        this._input = dom.createElement(this._inputTag, { type: 'text' });
         this._dom = dom.createElement(initArgs.tagName || 'span', {
 	    className: 'ui-native-text'
 	});
@@ -166,6 +167,13 @@ var Text = new Object.Class(NativeControl, {
     }
 });
 
+var TextArea = new Object.Class(Text, {
+    typeName: 'native.TextArea',
+
+    init: function(initArgs) {
+        this._inputTag = 'textarea';
+    },
+});
 
 /**
  * Native browser button
@@ -242,6 +250,7 @@ exports.native = {
     Checkbox:      Checkbox,
     Text:          Text,
     Button:        Button,
-    Select:        Select
+    Select:        Select,
+    TextArea:      TextArea,
 };
 //})();

@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 
 var proto;
@@ -32,21 +33,21 @@ proto.derive = function(name,defer) {
 */
 
 /**
-     * Bind a function to a context and optional arguments.
-     *
-     * function modifyProp(prop, value) {
-     *   this[prop] = value;
-     * }
-     * var obj = {};
-     *
-     * // bind modifyFoo to obj (this == obj)
-     * // with first argument (prop) equals to 'foo'
-     * var modifyFoo = fun.bind(modifyFoo, obj, 'foo');
-     *
-     * // obj['foo'] = 'bar'
-     * modifyFoo('bar');
-     * obj.bar === 'bar';
-     */
+ * Bind a function to a context and optional arguments.
+ *
+ * function modifyProp(prop, value) {
+ *   this[prop] = value;
+ * }
+ * var obj = {};
+ *
+ * // bind modifyFoo to obj (this == obj)
+ * // with first argument (prop) equals to 'foo'
+ * var modifyFoo = fun.bind(modifyFoo, obj, 'foo');
+ *
+ * // obj['foo'] = 'bar'
+ * modifyFoo('bar');
+ * obj.bar === 'bar';
+ */
 proto.bind = function(context) {
     var self = this;
     var args = Array.prototype.slice.call(arguments,1);
@@ -64,15 +65,15 @@ proto.bind = function(context) {
 
 Function.huid = 1;
 
-    /**
-     * Special version of bind. Guarantied to provide the same result
-     * for the same fn and context pair provided. Cannot bind arguments
-     *
-     * Useful for event handlers:
-     *   x.on('click', fun.bindOnce(handler, this));
-     *   // will unbind bound function here
-     *   x.removeListener('click', fun.bindOnce(handler, this));
-     */
+/**
+ * Special version of bind. Guarantied to provide the same result
+ * for the same fn and context pair provided. Cannot bind arguments
+ *
+ * Useful for event handlers:
+ *   x.on('click', fun.bindOnce(handler, this));
+ *   // will unbind bound function here
+ *   x.removeListener('click', fun.bindOnce(handler, this));
+ */
 proto.bindOnce = function(context) {
     this.huid = this.huid || Function.huid++;
     var bindName = '__bind_' + this.huid;
@@ -114,6 +115,8 @@ proto.extend = function() {
 		    // skip getters?
 		    continue;
 		}
+                /*
+                */
 
 		var copy = object[name];
 		if (copy === this) { continue } // prevent dead-loop, (by jQuery)

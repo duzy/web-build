@@ -7,10 +7,10 @@
 
     var root = ui([
 	// BUG: selector.find needs a 'Can' 
-	//{ view: 'Can', childViews: [
+	{ view: 'Can', childViews: [
 	{ view: 'Button', id:'cmd', label: 'label' },
 	{ view: 'Button', id:'pub', text: 'text' },
-	//]}
+	]}
     ]).attach();
 
     var cmd_clicked = 0, pub_clicked = 0;
@@ -30,12 +30,14 @@
 	else {	    doc.write("<font color=red>FAILED: </font>"+msg+"</br>") }
     }
 
+/*
     setTimeout(function(){
 	check(cmd_clicked == 1, "#cmd click(): "+cmd_clicked);
 	check(pub !== undefined, "#pub");
 	check(pub && pub.length == 1, "#pub count: "+pub.length);
 	check(pub_clicked == 1, "#pub click(): "+pub_clicked);
     }, 1000);
+*/
 // } catch(e) {
 //     alert(e);
 // }

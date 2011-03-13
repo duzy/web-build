@@ -18,11 +18,13 @@
     /* box-shadow: rgba(0, 0, 0, 0.33) -1px -1px 1px inset; */
 }
 
-.ui-native-text > input {
+.ui-native-text > input, textarea
+{
     margin: 0;
     padding: 2px;
     width: 100%;
     *width: auto;
+    height: 100%;
 
     border: solid 1px #EEE;
     -webkit-border-radius: inherit;
