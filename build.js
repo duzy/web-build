@@ -2,7 +2,8 @@
 var cli    = require("cli");
 
 /*var flags =*/ cli.parse({
-    output:    ['o', 'Set compiled output file', 'string']
+    output:     ['o', 'Set compiled output file', 'string'],
+    debug:      ['d', 'Build a "debug" version for debugging in browsers']
 });
 
 var fs     = require("fs"),
@@ -12,20 +13,23 @@ var fs     = require("fs"),
 require.paths.unshift(__dirname);
 require.paths.unshift("/home/duzy/open/uki/src");
 
-var comp   = require("compressor");
-
-function compileFile(filePath, options) {
-    var code = comp.compile(filePath, options);
-    return code;
-}
-
-function makeHtmlCode(title, js) {
+function makeHtmlCode(title, js, debugmode) {
     var code = '<!DOCTYPE html>';
     code    += '<html><head>';
     code    += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> ';
     code    += '<title>' + title + '</title>';
-    code    += '</head><body><div id="main"></div>'
-    code    += '<script lang="javascript">' + js + '</script>';
+
+    if (debugmode) {
+        //code+= '<script lang="javascript" src="'+ js +'"></script>';
+    }
+
+    code    += '</head>';
+    code    += '<body><div id="main"></div>'
+
+    if (!debugmode) {
+        code+= '<script lang="javascript">' + js + '</script>';
+    }
+
     code    += '</body></html>'
     return code;
 }
@@ -59,20 +63,21 @@ cli.main(function(args, flags) {
 	space_colon: false
     };
 
-    var code = compileFile(inname, codegen_options);
+    var comp = require("compressor");
+    var code = comp.compile(inname, codegen_options);
     if (!code || code == "") {
 	sys.error('No code generated.');
 	return;
     }
 
-    switch(ext.toLowerCase()) {
+    switch (ext.toLowerCase()) {
     case ".js":
 	if (outname == path.basename(args[0])) {
 	    name = name + ".compiled"
 	}
 	break;
     case ".html":
-	code = makeHtmlCode(title, code);
+	code = makeHtmlCode(title, code, flags.debug);
 	break;
     default:
 	sys.error('Unsupported extname "' + ext + '".');

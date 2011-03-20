@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //try {
     var ui = require('ui');
 
@@ -8,8 +9,9 @@
     var root = ui([
 	// BUG: selector.find needs a 'Can' 
 	{ view: 'Can', childViews: [
-	{ view: 'Button', id:'cmd', label: 'label' },
-	{ view: 'Button', id:'pub', text: 'text' },
+	    { view: 'Button', id:'cmd', label: 'label' },
+	    { view: 'Button', id:'pub', text: 'text' },
+            { view: 'Button', iconSrc: '../button/settings.png' },
 	]}
     ]).attach();
 
