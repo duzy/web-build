@@ -26,7 +26,7 @@ var Base = new Object.Class({
     },
 
     destroy: function() {
-    }
+    },
 
     $create: function(initArgs) {
         this._createDom(initArgs);
