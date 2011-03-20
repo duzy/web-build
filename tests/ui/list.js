@@ -1,3 +1,4 @@
+// -*- javascript -*-
 var ui = require('ui');
 requireCss('../data-list/datalist.css');
 
