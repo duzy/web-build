@@ -186,22 +186,22 @@ var Class = Object.Class = new Type('Class', function() {
         className,
         newClass = (last && (Object.isFun(last) ? last : last.init)) || function() {},
         superClass = 1 < len && first.prototype && first, i = superClass ? 1 : 0,
-        superCtr, superDtr;
+        superCtr, superDtr, isFun = Object.isFun;
 
     // implements(real inheritance) the first base class
     if (superClass) {
-        superCtr = Object.isFun(superClass) ? superClass
-            : Object.isFun(superClass.prototype.init) ? superClass.prototype.init
+        superCtr = isFun(superClass) ? superClass
+            : isFun(superClass.prototype.init) ? superClass.prototype.init
             : undefined;
-        superDtr = Object.isFun(superClass.prototype.destroy)
+        superDtr = isFun(superClass.prototype.destroy)
             ? superClass.prototype.destroy : undefined;
     }
 
     // chain 'init' and 'destroy' of mixins
     for (; i < len - 1; ++i) {
 	var b = arguments[i];
-        superCtr = Object.isFun(b.init)    ? b.init.chain(superCtr)    : superCtr;
-        superDtr = Object.isFun(b.destroy) ? b.destroy.chain(0,superDtr) : superDtr;
+        superCtr = isFun(b.init)    ? b.init.chain(superCtr)    : superCtr;
+        superDtr = isFun(b.destroy) ? b.destroy.chain(0,superDtr) : superDtr;
     }
 
     if (i = superClass ? 1 : 0) { // reset 'i' to extend from the second arg
@@ -226,13 +226,13 @@ var Class = Object.Class = new Type('Class', function() {
     }
 
     if (last) {
-	className = last.name || this.typename || last.typeName;
-	last.name && delete last.name; // FIXME: don't do this!!
+	className = /*last.name || */last._typename || last.typeName;
+	//last.name && delete last.name; // FIXME: don't do this!!
 	//last.init && delete last.init;
 
 	newClass.prototype.extend(last);
 
-        var dtr = Object.isFun(last.destroy)
+        var dtr = isFun(last.destroy)
             ? last.destroy.chain(0,superDtr) : superDtr;
 
         newClass.prototype.destroy = dtr ? function() {

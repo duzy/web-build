@@ -17,6 +17,7 @@ var test = require('tool/test');
 
     var Base = {}; //function(){};
     Base.prototype = { // NOTE: assign to 'Base.prototype', not 'Base'
+        _typename: 'Base',
         name: 'Base',
         init: function(name) {
             test.info("Base.prototype.init");
@@ -28,6 +29,7 @@ var test = require('tool/test');
     };
 
     var Base2 = {
+        _typename: 'Base2',
 	foo: 'Base2',
         init: function(name) {
             test.info("Base2.init");
@@ -39,7 +41,7 @@ var test = require('tool/test');
     };
 
     var MyClass = new types.Class(Base, Base2, {}, {
-	name: 'MyClass',
+	_typename: 'MyClass',
 	init: function(name) {
             test.info("MyClass.prototype.init");
 	    if (name) this.name = name;
@@ -97,11 +99,11 @@ var test = require('tool/test');
     test.equal(a.destroy.invoked != undefined, true, 'a.destroy.invoked is: '+a.destroy.invoked);
     test.equal(b.destroy.invoked != undefined, true, 'b.destroy.invoked is: '+a.destroy.invoked);
 
-    test.equal(a.typename, 'MyClass', 'new Class(...) inited by "name"');
-    test.equal(b.typename, 'MyClass', 'new Class(...) inited by "name"');
+    test.equal(a.typename, 'MyClass', 'a.typename: '+a.typename);
+    test.equal(b.typename, 'MyClass', 'b.typename: '+b.typename);
 
-    test.equal(a.name, 'foobar', 'new Class(...) constructed by "init"');
-    test.equal(b.name, 'Base', 'new Class(...) inherits "Base"');
+    test.equal(a.name, 'foobar', 'constructed by "init"');
+    test.equal(b.name, 'Base', 'inherits "Base"');
 
     test.equal(a.foo, 'Base2', 'a.foo is: '+a.foo);
     test.equal(b.foo, 'Base2', 'b.foo is: '+b.foo);
