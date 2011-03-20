@@ -5,17 +5,18 @@ var proto;
 
 // ==== Function.prototype ====
 proto = Function.prototype;
-/*
-proto.hook = function(pre, post) {
-    var self = this;
-    return function() {
-	if (pre  && typeof pre  == 'function') pre(self);
-	var result = self.apply(self, arguments);
-	if (post && typeof post == 'function') post(self);
-	return result;
-    }
+proto.chain = function(pre, post) {
+    var self = this,
+        fun = Object.isFun(pre) ? (function() {
+            pre.apply(this, arguments);
+            self.apply(this, arguments);
+        }) : self;
+
+    return Object.isFun(post) ? (function() {
+        fun.apply(this, arguments);
+        post.apply(this, arguments);
+    }) : fun;
 };
-*/
 
 /*
 proto.derive = function(name,defer) {
@@ -182,27 +183,42 @@ var Class = Object.Class = new Type('Class', function() {
     var len = arguments.length,
         first = arguments[0],
         last = arguments[len - 1],
-        className, i = 0,
+        className,
         newClass = (last && (Object.isFun(last) ? last : last.init)) || function() {},
-        superClass = 1 < len && first.prototype && first;
-
-    if (superClass) {
-	var ctr = newClass;
-	newClass = function() { // TODO: usning ctr.hook(superClass);
-	    superClass.apply(this, arguments);
-	    ctr.apply(this, arguments);
-	};
-    }
+        superClass = 1 < len && first.prototype && first, i = superClass ? 1 : 0,
+        superCtr, superDtr;
 
     // implements(real inheritance) the first base class
     if (superClass) {
+        superCtr = Object.isFun(superClass) ? superClass
+            : Object.isFun(superClass.prototype.init) ? superClass.prototype.init
+            : undefined;
+        superDtr = Object.isFun(superClass.prototype.destroy)
+            ? superClass.prototype.destroy : undefined;
+    }
+
+    // chain 'init' and 'destroy' of mixins
+    for (; i < len - 1; ++i) {
+	var b = arguments[i];
+        superCtr = Object.isFun(b.init)    ? b.init.chain(superCtr)    : superCtr;
+        superDtr = Object.isFun(b.destroy) ? b.destroy.chain(0,superDtr) : superDtr;
+    }
+
+    if (i = superClass ? 1 : 0) { // reset 'i' to extend from the second arg
+        if (superCtr) {
+	    var ctr = newClass;
+	    newClass = function() { // TODO: usning ctr.hook(superClass) ?
+	        superCtr.apply(this, arguments);
+	        ctr.apply(this, arguments);
+	    };
+        }
+
 	var T = function(){};
 	T.prototype = superClass.prototype
 	newClass.prototype = new T;
-	i = 1; // start mixin from the second arg
     }
 
-    newClass.prototype.extend(this);
+    newClass.prototype.extend(this); // extends the Class instance
 
     // mixin (see uki:functions.js)
     for (; i < len - 1; ++i) {
@@ -210,13 +226,29 @@ var Class = Object.Class = new Type('Class', function() {
     }
 
     if (last) {
-	className = last.name || last.typeName || this.typename;
-	last.name && delete last.name;
-	last.init && delete last.init;
+	className = last.name || this.typename || last.typeName;
+	last.name && delete last.name; // FIXME: don't do this!!
+	//last.init && delete last.init;
+
 	newClass.prototype.extend(last);
+
+        var dtr = Object.isFun(last.destroy)
+            ? last.destroy.chain(0,superDtr) : superDtr;
+
+        newClass.prototype.destroy = dtr ? function() {
+            if (!this.destroy.invoked) {
+                dtr.apply(this, arguments);
+                this.destroy = function(){};
+                this.destroy.invoked = dtr;
+            }
+        }
+        : function() {};
     } else {
 	className = this.typename;
+        newClass.prototype.destroy = superDtr;
     }
+
+    newClass.prototype.init = undefined; // hide any 'init' methods
 
     new Type(className, newClass);
 
@@ -255,9 +287,9 @@ String.prototype.trim = String.prototype.trim || function(s) {
 
 //Arguments.prototype.forEach = Array.prototype.forEach;
 
-// module.exports = {
-//     Type: Type,
-//     Class: Class,
-// }
+module.exports = {
+    Type: Type,
+    Class: Class,
+}
 
 //})();

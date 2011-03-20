@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //var ui = require('ui');
 
 var types;
@@ -5,6 +6,7 @@ try {
     types = require('ui/core/types');
 } catch(e) {
     alert(e);
+    return;
 }
 
 var test = require('tool/test');
@@ -97,26 +99,44 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 
 // ==== Type ====
 {
+    test.equal(types.Type != undefined, true, 'types.Type defined');
+
     var Widget = function() {}
     Widget.prototype.name = 'widget';
 
     new types.Type('Widget', Widget);
 
     var w = new Widget;
-    test.equal(w.typename, 'Widget', 'new Type(name, object) failed: '+w.typename);
+    test.equal(w.typename, 'Widget', 'new Type("Widget", object) is: '+w.typename);
     test.check(w.name && w.name === 'widget',
 	       'wrong Type inheritance: w.name: '+w.name);
 }
 
 // ==== Class ====
 {
-    var Base = {};
-    Base.prototype = {
+    test.equal(types.Class != undefined, true, 'types.Class defined');
+
+    var BaseDestroyed = 0, Base2Destroyed = 0, MyClassDestroyed = 0;
+
+    var Base = {}; //function(){};
+    Base.prototype = { // NOTE: assign to 'Base.prototype', not 'Base'
         name: 'Base',
+        init: function(name) {
+        },
+        destroy: function() {
+            ++BaseDestroyed;
+            test.info("Base.prototype.destroy");
+        },
     };
 
     var Base2 = {
 	foo: 'Base2',
+        init: function(name) {
+        },
+        destroy: function() {
+            ++Base2Destroyed;
+            //test.info("Base2.destroy");
+        },
     };
 
     var MyClass = new types.Class(Base, Base2, {
@@ -124,11 +144,45 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 	init: function(name) {
 	    if (name) this.name = name;
 	},
+        destroy: function() {
+            ++MyClassDestroyed;
+            //test.info("MyClass.prototype.destroy");
+        },
 	extra: 'mixin',
     });
 
+    test.info("test Class.init and Class.destroy");
+
     var a = new MyClass('foobar');
     var b = new MyClass();
+
+    test.equal(a.init, undefined, 'a.init hidden');
+    test.equal(b.init, undefined, 'b.init hidden');
+    test.equal(a.destroy != undefined, true, 'a.destroy explosed');
+    test.equal(b.destroy != undefined, true, 'b.destroy explosed');
+
+    a.destroy();
+    test.equal(BaseDestroyed, 1, 'Base.destroy invoked');
+    test.equal(Base2Destroyed, 1, 'Base2.destroy invoked');
+    test.equal(MyClassDestroyed, 1, 'MyClass.destroy invoked');
+
+    a.destroy(); // invoke again will take effect
+    test.equal(BaseDestroyed, 1, 'Base.destroy reinvoke harmed');
+    test.equal(Base2Destroyed, 1, 'Base2.destroy reinvoke harmed');
+    test.equal(MyClassDestroyed, 1, 'MyClass.destroy reinvoke harmed');
+
+    b.destroy();
+    test.equal(BaseDestroyed, 2, 'Base.destroy invoked');
+    test.equal(Base2Destroyed, 2, 'Base2.destroy invoked');
+    test.equal(MyClassDestroyed, 2, 'MyClass.destroy invoked');
+
+    b.destroy(); // invoke again will take effect
+    test.equal(BaseDestroyed, 2, 'Base.destroy reinvoke harmed');
+    test.equal(Base2Destroyed, 2, 'Base2.destroy reinvoke harmed');
+    test.equal(MyClassDestroyed, 2, 'MyClass.destroy reinvoke harmed');
+
+    test.equal(a.destroy.invoked != undefined, true, 'a.destroy.invoked is undefined');
+    test.equal(b.destroy.invoked != undefined, true, 'b.destroy.invoked is undefined');
 
     test.equal(a.typename, 'MyClass', 'new Class(...) wrong: not inited by "name"');
     test.equal(b.typename, 'MyClass', 'new Class(...) wrong: not inited by "name"');

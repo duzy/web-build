@@ -1,3 +1,4 @@
+// -*- javascript -*-
 var doc = window.document;
 
 function info(msg) {
