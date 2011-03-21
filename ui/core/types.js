@@ -1,7 +1,7 @@
 // -*- javascript -*-
 //(function() {
 
-var proto;
+var proto, NOOP = function() { return function() {} }, noop = NOOP();
 
 // ==== Function.prototype ====
 proto = Function.prototype;
@@ -95,7 +95,7 @@ proto.__defineGetter__('typename', function() {
     return this.$_type ? this.$_type : typeof this;
 });
 
-proto.__defineSetter__('typename', function() {}); // avoid set error
+proto.__defineSetter__('typename', noop); // avoid set error
 
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
 proto.extend = function() {
@@ -129,6 +129,20 @@ proto.extend = function() {
     }
     return this;
 }
+
+/*
+proto.clone = function() {
+    // http://my.opera.com/GreyWyvern/blog/show.dml/1725165
+    //var newObj = (this instanceof Array) ? [] : {}, a, i;
+    var newObj = (typeof this ==='array') ? [] : {}, a, i;
+    for (i in this) {
+        if (i !== 'clone' && (a = this[i])) {
+            newObj[i] = (typeof a === 'object') ? a.clone() : a;
+        }
+    }
+    return newObj;
+}
+*/
 
 // iterate in object's properties
 proto.forEach = proto.forEach || function(action, context) {
@@ -183,82 +197,80 @@ Object.Type = new Type('Type', Type);
         var a = new MyClass(), b = new MyClass2(), c = new MyClass3();
 */
 var Class = Object.Class = new Type('Class', function() {
-    var len = arguments.length, isFun = Object.isFun, arg0 = arguments[0],
+    var args = arguments, len = args.length, isFun = Object.isFun, arg0 = args[0],
         className = (arg0 && typeof arg0 === 'string') ? arg0 : '',
         superPos = (className ? 1 : 0),
-        first = arguments[superPos],
-        last = arguments[len - 1],
-        newClass = (last && (isFun(last) ? last : last.init)) || function() {},
+        first = args[superPos],
+        last = args[len - 1],
+        newClass = (last && (isFun(last) ? last : last.init)) || NOOP(),
+        proto = newClass.prototype,
         superClass = (superPos + 1) < len && first.prototype && first,
         i = superClass ? superPos + 1 : superPos,
-        superCtr, superDtr;
+        superCtr, superDtr, ctr, dtr, a/* temporary */;
 
     // implements(real inheritance) the first base class
     if (superClass) {
+        a = superClass.prototype;
         superCtr = isFun(superClass) ? superClass
-            : isFun(superClass.prototype.init) ? superClass.prototype.init
-            : undefined;
-        superDtr = isFun(superClass.prototype.destroy)
-            ? superClass.prototype.destroy : undefined;
+            : isFun(a.init) ? a.init : undefined;
+        superDtr = isFun(a.destroy) ? a.destroy : undefined;
     }
 
     // chain 'init' and 'destroy' of mixins
-    for (; i < len - superPos - 1; ++i) {
-	var b = arguments[i];
-        superCtr = isFun(b.init)    ? b.init.chain(superCtr)    : superCtr;
-        superDtr = isFun(b.destroy) ? b.destroy.chain(0,superDtr) : superDtr;
+    for (; i < len - 1; ++i) {
+	a = args[i];
+        if (a) {
+            superCtr = isFun(a.init)    ? a.init.chain(superCtr)    : superCtr;
+            superDtr = isFun(a.destroy) ? a.destroy.chain(0,superDtr) : superDtr;
+        }
     }
 
     if (superClass) {
         if (superCtr) {
-	    var ctr = newClass;
+	    ctr = newClass;
 	    newClass = function() { // TODO: usning ctr.hook(superClass) ?
 	        superCtr.apply(this, arguments);
 	        ctr.apply(this, arguments);
 	    };
         }
 
-	var T = function(){};
-	T.prototype = superClass.prototype
-	newClass.prototype = new T;
+	a = NOOP();
+	a.prototype = superClass.prototype
+	newClass.prototype = proto = new a;
     }
 
-    newClass.prototype.extend(this); // extends the Class instance
+    proto.extend(this); // extends the Class instance
 
     // reset 'i' to extend from the second arg
     i = superClass ? superPos + 1 : superPos;
 
     // mixin (see uki:functions.js)
-    for (; i < len - superPos - 1; ++i) {
-	newClass.prototype.extend(arguments[i]);
+    for (; i < len - 1; ++i) {
+        a = args[i];
+	a && proto.extend(a);
     }
 
+    // extends more on newClass.prototype
     if (last) {
-	//className = className || /*last.name || last._typename ||*/ last.typeName;
-	//last.name && delete last.name; // FIXME: don't do this!!
-	//last.init && delete last.init;
+	proto.extend(last);
 
-	newClass.prototype.extend(last);
+        dtr = isFun(last.destroy) ? last.destroy.chain(0,superDtr) : superDtr;
 
-        var dtr = isFun(last.destroy)
-            ? last.destroy.chain(0,superDtr) : superDtr;
-
-        newClass.prototype.destroy = dtr ? function() {
+        proto.destroy = dtr ? function() {
             if (!this.destroy.invoked) {
                 dtr.apply(this, arguments);
-                this.destroy = function(){};
+                this.destroy = noop;
                 this.destroy.invoked = dtr;
             }
         }
-        : function() {};
+        : noop;
     } else {
-        newClass.prototype.destroy = superDtr;
+        proto.destroy = superDtr;
     }
 
-    newClass.prototype.init = undefined; // hide any 'init' methods
+    proto.init = undefined; // hide any 'init' methods
 
-    className = className || this.typename;
-    new Type(className, newClass);
+    new Type(className || this.typename, newClass);
 
     return newClass;
 });

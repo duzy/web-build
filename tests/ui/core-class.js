@@ -13,7 +13,7 @@ var test = require('tool/test');
 {
     test.equal(types.Class != undefined, true, 'types.Class defined');
 
-    var BaseDestroyed = 0, Base2Destroyed = 0, MyClassDestroyed = 0;
+    var BaseDestroyed = 0, Base2Destroyed = 0, Base3Destroyed = 0, MyClassDestroyed = 0;
 
     var Base = {}; //function(){};
     Base.prototype = { // NOTE: assign to 'Base.prototype', not 'Base'
@@ -40,7 +40,20 @@ var test = require('tool/test');
         },
     };
 
-    var MyClass = new types.Class('MyClass', Base, Base2, {}, {
+    var Base3 = new types.Class('Base3', {
+        init: function(name) {
+            test.info("Base3.prototype.init: "+name);
+        },
+        destroy: function() {
+            ++Base3Destroyed;
+            test.info("Base3.prototype.destroy");
+        },
+    });
+
+    var b3 = new Base3('foo');
+
+    // NOTE: the Base3.prototype.init and Base3.prototype.destroy is not chained!
+    var MyClass = new types.Class('MyClass', Base, Base2, Base3, {
 	//_typename: 'MyClass',
 	init: function(name) {
             test.info("MyClass.prototype.init");
@@ -65,14 +78,18 @@ var test = require('tool/test');
 
     test.equal(a.init, undefined, 'a.init hidden');
     test.equal(b.init, undefined, 'b.init hidden');
+    test.equal(b3.init, undefined, 'b3.init hidden');
     test.equal(a.destroy != undefined, true, 'a.destroy explosed');
     test.equal(b.destroy != undefined, true, 'b.destroy explosed');
+    test.equal(b3.destroy != undefined, true, 'b3.destroy explosed');
+    test.equal(Base3.prototype.destroy != undefined, true, 'Base3.prototype.destroy explosed');
 
     test.info("====== a.destroy()");
     a.destroy();
     test.info("=============");
     test.equal(BaseDestroyed, 1, 'Base.destroy invoked');
     test.equal(Base2Destroyed, 1, 'Base2.destroy invoked');
+    test.equal(Base3Destroyed, 0, 'Base3.destroy not invoked');
     test.equal(MyClassDestroyed, 1, 'MyClass.destroy invoked');
 
     test.info("====== a.destroy() == EMPTY");
@@ -80,6 +97,7 @@ var test = require('tool/test');
     test.info("=============");
     test.equal(BaseDestroyed, 1, 'Base.destroy reinvoke');
     test.equal(Base2Destroyed, 1, 'Base2.destroy reinvoke');
+    test.equal(Base3Destroyed, 0, 'Base3.destroy reinvoke');
     test.equal(MyClassDestroyed, 1, 'MyClass.destroy reinvoke');
 
     test.info("====== b.destroy()");
@@ -87,6 +105,7 @@ var test = require('tool/test');
     test.info("=============");
     test.equal(BaseDestroyed, 2, 'Base.destroy invoked');
     test.equal(Base2Destroyed, 2, 'Base2.destroy invoked');
+    test.equal(Base3Destroyed, 0, 'Base3.destroy not invoked');
     test.equal(MyClassDestroyed, 2, 'MyClass.destroy invoked');
 
     test.info("====== b.destroy() == EMPTY");
@@ -94,6 +113,7 @@ var test = require('tool/test');
     test.info("=============");
     test.equal(BaseDestroyed, 2, 'Base.destroy reinvoke');
     test.equal(Base2Destroyed, 2, 'Base2.destroy reinvoke');
+    test.equal(Base3Destroyed, 0, 'Base3.destroy reinvoke');
     test.equal(MyClassDestroyed, 2, 'MyClass.destroy reinvoke');
 
     test.equal(a.destroy.invoked != undefined, true, 'a.destroy.invoked is: '+a.destroy.invoked);
@@ -101,6 +121,7 @@ var test = require('tool/test');
 
     test.equal(a.typename, 'MyClass', 'a.typename: '+a.typename);
     test.equal(b.typename, 'MyClass', 'b.typename: '+b.typename);
+    test.equal(b3.typename, 'Base3', 'class with no bases: '+b3.typename);
 
     test.equal(a.name, 'foobar', 'constructed by "init"');
     test.equal(b.name, 'Base', 'inherits "Base"');
@@ -113,5 +134,4 @@ var test = require('tool/test');
 }
 
 test.info('PASSED');
-
 

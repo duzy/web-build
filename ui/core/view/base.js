@@ -19,7 +19,7 @@ POS_MAP = {
     mt: 'marginTop', mb: 'marginBottom'
 };
 
-var Base = new Object.Class({
+var Base = new Object.Class('Base', {
     typeName: 'Base',
 
     $create: function(initArgs) {
