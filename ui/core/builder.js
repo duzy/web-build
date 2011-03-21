@@ -23,7 +23,7 @@ function createMulti(ml) {
 }
 
 function createSingle(row) {
-    if (row.typeName) {
+    if (row.typeName) { // FIXME: typeName removed!
         return row;
     }
 

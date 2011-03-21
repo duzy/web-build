@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //try {
 
 var ui = require('ui');

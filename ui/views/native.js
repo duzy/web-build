@@ -23,7 +23,7 @@ var NativeControl = new Object.Class(Base, Focusable, {
     bindingOptions: fun.newProp('bindingOptions'),
 
     binding: fun.newProp('binding', function(val) {
-        if (this._binding) this._binding.destruct();
+        if (this._binding) this._binding.destroy();
 
         this._binding = val && new Binding(this, val.model,
                                            utils.extend(this._bindingOptions, val));

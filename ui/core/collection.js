@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 
 var fun = require('./function'),
@@ -16,10 +17,7 @@ var fun = require('./function'),
  * @constructor
  * @class
  */
-var Collection = new Object.Class(Array, {
-    name: 'Collection',
-    typeName: 'Collection',
-
+var Collection = exports.Collection = new Object.Class('Collection', Array, {
     init: function(views) {
         this.length = 0;
         Array.prototype.push.apply(this, views);
@@ -128,6 +126,4 @@ var proto = Collection.prototype;
         return this;
     };
 });
-
-exports.Collection = Collection;
 //})();

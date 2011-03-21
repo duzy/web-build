@@ -35,11 +35,11 @@ var Can = new Object.Class('Can', Base, {
 	});
     },
 
-    clear: function(destruct) {
+    clear: function(destroy) {
 	var cv = this.childViews();
         cv && cv.forEach(function(child) {
 	    this.removeChild(child);
-	    if (destruct !== false) child.destruct();
+	    if (destroy !== false) child.destroy();
 	}, this);
     },
 
@@ -49,9 +49,9 @@ var Can = new Object.Class('Can', Base, {
      *
      * Note: if setting on view with child views, all child view will be removed
      */
-    childViews: function(val, destruct/*=true*/) {
+    childViews: function(val, destroy/*=true*/) {
         if (val === undefined) return this._childViews;
-        this.clear(destruct);
+        this.clear(destroy);
         require('../builder').build(val).forEach(function(child) {
 	    this.appendChild(child);
 	}, this);

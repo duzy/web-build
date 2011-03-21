@@ -146,7 +146,7 @@ proto._changeOnKeys = [];
  * #TBD
  */
 fun.addProp(proto, 'binding', function(val) {
-    if (this._binding) this._binding.destruct();
+    if (this._binding) this._binding.destroy();
     this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
     if (val) this.data(val.model);
 });

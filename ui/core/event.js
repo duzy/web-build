@@ -204,7 +204,7 @@ var event = module.exports = {
 			: ele.attachEvent('on' + type, domHandlers[id]);
                 }
             }
-		
+	    
             listeners[id][type].push(listener);
         });
     },
