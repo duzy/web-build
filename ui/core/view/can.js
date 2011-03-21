@@ -11,7 +11,7 @@ var view  = require('../view'),
  * @augments Base
  * @name Can
  */
-var Can = new Object.Class('Can', Base, {
+var Can = exports.Can = new Object.Class('Can', Base, {
     init: function(initArgs) {
         this._childViews = [];
     },
@@ -137,6 +137,4 @@ var Can = new Object.Class('Can', Base, {
         return this.dom();
     }
 });
-
-exports.Can = Can;
 //})();

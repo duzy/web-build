@@ -55,16 +55,24 @@ obj = {
     name: 'foo',
     age: 100,
 };
-if (!obj.forEach) { alert('Object.prototype.forEach: undefined') }
+test.equal(obj.forEach !== undefined, true, 'obj.forEach');
 obj.forEach(function(v,n) {
     if (typeof v == 'number') value += v;
     if (typeof v == 'string') value += v.length;
     if (!(n in obj)) {
-	alert('Object.prototype.forEach: bad name: '+n);
+	test.error('Object.prototype.forEach: bad name: '+n);
     }
 });
+test.equal(Object.isFun !== undefined, true, 'Object.isFun');
+test.equal(Object.isFun(function(){}), true, 'Object.isFun(function(){}) = '+Object.isFun(function(){}));
+test.equal(Object.isArray !== undefined, true, 'Object.isArray');
+test.equal(Object.isArray([]), true, 'Object.isArray([]) = '+Object.isArray([]));
+test.equal(Object.get !== undefined, true, 'Object.get');
+test.equal(Object.get('name', obj), 'foo', 'Object.get("name",obj) = '+Object.get('name',obj));
+test.equal(Object.keys !== undefined, true, 'Object.keys');
+//test.equal(Object.keys(obj) === ['name', 'age'], true, 'Object.keys(obj): '+Object.keys(obj));
 if (value != obj.name.length + obj.age) {
-    alert("Object.prototype.forEach: test failed: "+value);
+    test.error("Object.prototype.forEach: test failed: "+value);
 }
 
 // ==== Array.prototype.forEach ====
@@ -88,13 +96,16 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 	postCalled = true;
     }
 
-    /*
-    var f = function(){
+    var f = function() {
 	inCalled = true;
 	this.called = 'yes';
-    }.hook(preCall, postCall);
+    }.chain(preCall, postCall);
+
     f(1,2,3);
-    */
+
+    test.equal(preCalled, true, 'chain pre-call');
+    test.equal(postCalled, true, 'chain post-call');
+    test.equal(inCalled, true, 'chain in-call');
 }
 
 // ==== Type ====
@@ -139,8 +150,7 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
         },
     };
 
-    var MyClass = new types.Class(Base, Base2, {
-	name: 'MyClass',
+    var MyClass = new types.Class('MyClass', Base, Base2, {
 	init: function(name) {
 	    if (name) this.name = name;
 	},
