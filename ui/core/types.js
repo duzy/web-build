@@ -322,9 +322,9 @@ var Class = Object.Class = new Type('Class', function() {
 
 //Arguments.prototype.forEach = Array.prototype.forEach;
 
-module.exports = {
-    Type: Type,
-    Class: Class,
-}
+// module.exports = {
+//     Type: Type,
+//     Class: Class,
+// }
 
 //})();

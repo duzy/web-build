@@ -11,7 +11,7 @@ var test = require('tool/test');
 
 // ==== Class ====
 {
-    test.equal(types.Class != undefined, true, 'types.Class defined');
+    test.equal(Object.Class != undefined, true, 'Object.Class defined');
 
     var BaseDestroyed = 0, Base2Destroyed = 0, Base3Destroyed = 0, MyClassDestroyed = 0;
 
@@ -40,7 +40,7 @@ var test = require('tool/test');
         },
     };
 
-    var Base3 = new types.Class('Base3', {
+    var Base3 = new Object.Class('Base3', {
         init: function(name) {
             test.info("Base3.prototype.init: "+name);
         },
@@ -53,7 +53,7 @@ var test = require('tool/test');
     var b3 = new Base3('foo');
 
     // NOTE: the Base3.prototype.init and Base3.prototype.destroy is not chained!
-    var MyClass = new types.Class('MyClass', Base, Base2, Base3, {
+    var MyClass = new Object.Class('MyClass', Base, Base2, Base3, {
 	//_typename: 'MyClass',
 	init: function(name) {
             test.info("MyClass.prototype.init");

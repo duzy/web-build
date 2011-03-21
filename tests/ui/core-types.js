@@ -111,12 +111,12 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 
 // ==== Type ====
 {
-    test.equal(types.Type != undefined, true, 'types.Type defined');
+    test.equal(Object.Type != undefined, true, 'Object.Type defined');
 
     var Widget = function() {}
     Widget.prototype.name = 'widget';
 
-    new types.Type('Widget', Widget);
+    new Object.Type('Widget', Widget);
 
     var w = new Widget;
     test.equal(w.typename, 'Widget', 'new Type("Widget", object) is: '+w.typename);
@@ -126,7 +126,7 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
 
 // ==== Class ====
 {
-    test.equal(types.Class != undefined, true, 'types.Class defined');
+    test.equal(Object.Class != undefined, true, 'Object.Class defined');
 
     var BaseDestroyed = 0, Base2Destroyed = 0, MyClassDestroyed = 0;
 
@@ -151,7 +151,7 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
         },
     };
 
-    var MyClass = new types.Class('MyClass', Base, Base2, {
+    var MyClass = new Object.Class('MyClass', Base, Base2, {
 	init: function(name) {
 	    if (name) this.name = name;
 	},
