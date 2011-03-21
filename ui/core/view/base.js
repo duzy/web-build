@@ -29,6 +29,10 @@ var Base = new Object.Class('Base', {
         args.nodettach || dom.removeElement(this._dom);
     },
 
+    $: {
+        name: function(v) {}
+    },
+
     $create: function(initArgs) {
         this._createDom(initArgs);
         var d = this.dom();

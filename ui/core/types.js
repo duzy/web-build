@@ -8,10 +8,10 @@ proto = Object.prototype,  hasOwnProperty = proto.hasOwnProperty,
 
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
 extend = proto.extend = function() {
-    var length = arguments.length, object, i = 0;
+    var args = arguments, length = args.length, object, i = 0, name;
     for (; i < length; ++i) {
-	if ((object = arguments[i]) != null) {
-	    for (var name in object) {
+	if ((object = args[i]) != null) {
+	    for (name in object) {
 		if (!hasOwnProperty.call(object,name)  // only the owned property
 
 		    // skip protected names
@@ -29,9 +29,13 @@ extend = proto.extend = function() {
                 */
 
 		var copy = object[name];
-		if (copy === this) { continue } // prevent dead-loop, (by jQuery)
-		if (copy !== undefined) {
-		    this[name] = copy;
+
+                // 'copy !== this' prevents dead-loop, (by jQuery)
+		if (copy !== this && copy !== undefined) {
+                    //this[name] = copy;
+                    ( name === '$' )
+                        ? ( this.props(copy) )
+                        : ( this[name] = copy );
 		}
 	    }
 	}
@@ -71,14 +75,37 @@ proto.extend({
     },
     */
 
-    /*
     prop: function(name, funs) {
-        if (name !== 'prop') {
-            funs.get && this.__defineGetter__(name, funs.get);
-            this.__defineSetter__(name, funs.set || noop);
+        if (name !== 'prop' && name !== 'props' && !this[name]) {
+            var g, s, f = Object.isFun(funs);
+            g = f ? funs : funs.get;
+            s = f ? funs : funs.set;
+            this.__defineGetter__(name, g || NOOP());
+            this.__defineSetter__(name, s || NOOP());
         }
     },
-    */
+
+    props: function(ps) {
+        var name, names, f, funs, pn;
+        for(name in ps) {
+            if (hasOwnProperty.call(ps,name) && (f = ps[name])) {
+                names = name.split(' ');
+                if (names.length == 1) { // one single property name
+                    this.prop(name, f);
+                } else { // multiple or ZERO property names
+                    for (i=0; i < names.length; ++i) {
+                        pn = names[i];
+                        funs = Object.isFun(f) ? f.bind(null, pn)
+                            : {
+                                get: f.get && f.get.bind(null, pn),
+                                set: f.set && f.set.bind(null, pn),
+                            };
+                        this.prop(pn, funs);
+                    }
+                }
+            }
+        }
+    },
 });
 
 Object.extend({
@@ -163,7 +190,7 @@ Function.__huid = 1;
         var args = Array.prototype.slice.call(arguments,1);
         result = args.length ?
 	    function() {
-	        args.concat(Array.prototype.slice.call(arguments,0));
+	        args = args.concat(Array.prototype.slice.call(arguments,0));
 	        return self.apply(context || this, args);
 	    } :
         function() {
@@ -257,8 +284,8 @@ var Class = Object.Class = new Type('Class', function() {
     if (superClass) {
         a = superClass.prototype;
         superCtr = isFun(superClass) ? superClass
-            : isFun(a.init) ? a.init : undefined;
-        superDtr = isFun(a.destroy) ? a.destroy : undefined;
+            : isFun(a.init) ? a.init : null;
+        superDtr = isFun(a.destroy) ? a.destroy : null;
     }
 
     // chain 'init' and 'destroy' of mixins

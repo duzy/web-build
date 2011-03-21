@@ -26,6 +26,9 @@ var test = require('tool/test');
             ++BaseDestroyed;
             test.info("Base.prototype.destroy");
         },
+
+        // TODO:
+        //  $: { props... }
     };
 
     var Base2 = {
@@ -63,7 +66,40 @@ var test = require('tool/test');
             ++MyClassDestroyed;
             test.info("MyClass.prototype.destroy");
         },
+
 	extra: 'mixin',
+
+        $: {
+            // multiple property names bind to one single function
+            'name1 name2 name3 name4': function(name,value) {
+                name = '_' + name;
+                if (value !== undefined) this[name] = value;
+                return this[name];
+            },
+
+            // multiple property names bind to a setter/getter(with 'name') pair
+            'foo1 foo2': {
+                get: function(name) {
+                    name = '_' + name;
+                    return this[name];
+                },
+                set: function(name, value) {
+                    return (this['_'+name] = value);
+                },
+            },
+
+            // single name bind to a single function
+            bar: function(value) {
+                if (value !== undefined) this._bar = value;
+                return this._bar;
+            },
+
+            // single name bind to a setter/getter(without 'name') pair
+            foobar: {
+                get: function() { return this._foobar; },
+                set: function(value) { return (this._foobar = value); },
+            },
+        },
     });
 
     test.info("====== new MyClass('foobar')");
@@ -74,6 +110,26 @@ var test = require('tool/test');
 
     var b = new MyClass();
 
+    test.info("=============");
+
+    test.info("====== check properties ");
+    // 'name1 name2 name3 name4', 'foo1 foo2', bar, foobar
+    a.name1 = 'abc1';
+    a.name2 = 'abc2';
+    a.name3 = 'abc3';
+    a.name4 = 'abc4';
+    test.equal(a.name1, 'abc1', 'a.name1 = '+a.name1);
+    test.equal(a.name2, 'abc2', 'a.name2 = '+a.name2);
+    test.equal(a.name3, 'abc3', 'a.name3 = '+a.name3);
+    test.equal(a.name4, 'abc4', 'a.name4 = '+a.name4);
+    a.foo1 = 'abc1';
+    a.foo2 = 'abc2';
+    test.equal(a.foo1, 'abc1', 'a.foo1 = '+a.foo1);
+    test.equal(a.foo2, 'abc2', 'a.foo2 = '+a.foo2);
+    a.bar = 'abc1';
+    test.equal(a.bar, 'abc1', 'a.bar = '+a.bar);
+    a.foobar = 'foobar';
+    test.equal(a.foobar, 'foobar', 'a.foobar = '+a.foobar);
     test.info("=============");
 
     test.equal(a.init, undefined, 'a.init hidden');
