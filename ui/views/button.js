@@ -11,7 +11,7 @@ var fun  = require('../core/function'),
 
 var Button = exports.Button = new Object.Class('Button', Base, Focusable, {
     destroy: function() {
-        alert('Button.destroy');
+        //alert('Button.destroy');
     },
 
     labelHtml: function(value) {

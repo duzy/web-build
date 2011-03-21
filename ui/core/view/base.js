@@ -22,12 +22,11 @@ POS_MAP = {
 var Base = new Object.Class('Base', {
     //init: NOOP(); 
 
-    destroy: function() {
+    destroy: function(args) {
 	view.unregisterId(this);
 	view.unregister(this);
-        // TODO: detach from DOM
 	this.removeListener();
-        alert('Base.destroy');
+        args.nodettach || dom.removeElement(this._dom);
     },
 
     $create: function(initArgs) {

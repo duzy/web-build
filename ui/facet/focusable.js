@@ -8,7 +8,7 @@ var Focusable = exports.Focusable = {
     destroy: function() {
         this.removeListener('focus', this._focus.bindOnce(this));
         this.removeListener('blur', this._blur.bindOnce(this));
-        alert('Focusable.destroy');
+        //alert('Focusable.destroy');
     },
 
     focusableDom: function() {

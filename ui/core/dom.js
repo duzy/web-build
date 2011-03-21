@@ -43,9 +43,12 @@ module.exports = {
     },
 
     removeElement: function(element) {
+        /*
         if (element && element.parentNode) {
             element.parentNode.removeChild(element);
-        }
+        }*/
+        element && element.parentNode
+            && element.parentNode.removeChild(element);
     },
 
     createStylesheet: function(code) {
