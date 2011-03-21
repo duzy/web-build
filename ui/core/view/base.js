@@ -20,7 +20,15 @@ POS_MAP = {
 };
 
 var Base = new Object.Class('Base', {
-    typeName: 'Base',
+    //init: NOOP(); 
+
+    destroy: function() {
+	view.unregisterId(this);
+	view.unregister(this);
+        // TODO: detach from DOM
+	this.removeListener();
+        alert('Base.destroy');
+    },
 
     $create: function(initArgs) {
         this._createDom(initArgs);
@@ -34,13 +42,6 @@ var Base = new Object.Class('Base', {
         d.onselectstart = fun.FF; // disable selection
 
         view.register(this);
-    },
-
-    destruct: function() {
-	view.unregisterId(this);
-	view.unregister(this);
-	this.removeListener();
-	this.destructed = true;
     },
 
     _createDom: function(initArgs) {

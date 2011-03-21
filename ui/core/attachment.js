@@ -1,45 +1,48 @@
 // -*- javascript -*-
 //(function() {
-    requireCss('./attachment.css');
+requireCss('./attachment.css');
 
-    var utils = require('./utils'),
-        env   = require('./env'),
-        evt   = require('./event'),
-        dom   = require('./dom'),
-        fun   = require('./function'),
-        Can = require('./view/can').Can;
+var utils = require('./utils'),
+    env   = require('./env'),
+    evt   = require('./event'),
+    dom   = require('./dom'),
+    fun   = require('./function'),
+    Can = require('./view/can').Can;
 
-    var Attachment = new Object.Class(Can, {
-        typeName: 'Attachment',
+// all attached view instances.
+var instances = null;
 
-        init: function(initArgs) {
-            this._dom = initArgs.dom;
-            dom.addClass(this.dom(), 'ui-attachment');
-	},
+var Attachment = exports.Attachment = new Object.Class('Attachment', Can, {
+    typeName: 'Attachment',
 
-        parent: function() {
-            return null;
-        }
-    });
+    init: function(initArgs) {
+        this._dom = initArgs.dom;
+        dom.addClass(this.dom(), 'ui-attachment');
+    },
 
-    // all attached view instances.
-    var instances = null;
+    parent: function() {
+        return null;
+    },
 
-    Attachment.attach = function(dom, view) {
+});
+
+Attachment.extend({
+    attach: function(dom, view) {
         dom = dom || env.doc.body;
         var id = dom[env.expando] = dom[env.expando] || env.guid++;
         if (!instances || !instances[id]) {
             register(new Attachment({ dom: dom }));
         }
         return instances[id].appendChild(view);
-    };
+    },
 
     // return a copy of attached view array.
-    Attachment.instances = function() {
+    instances: function() {
         var atts = [];
         instances && instances.forEach(function(a) { atts.push(a); });
         return atts;
-    };
+    },
+});
 
     function register(a) {
         if (!instances) {
@@ -63,7 +66,4 @@
 
         return (instances[id] = a);
     }
-
-
-    exports.Attachment = Attachment;
 //})();

@@ -9,8 +9,10 @@ var fun  = require('../core/function'),
     Focusable = require('../facet/focusable').Focusable;
 
 
-var Button = new Object.Class('Button', Base, Focusable, {
-    typeName: 'Button',
+var Button = exports.Button = new Object.Class('Button', Base, Focusable, {
+    destroy: function() {
+        alert('Button.destroy');
+    },
 
     labelHtml: function(value) {
         if (value === undefined) {
@@ -51,15 +53,8 @@ var Button = new Object.Class('Button', Base, Focusable, {
         this._dom = dom.createElement('button', { className: 'ui-button', tabIndex: -1 },
 				      [this._text]);
     },
-
-    destruct: function() {
-        Focusable.destruct.call(this);
-        Base.destruct.call(this);
-    }
 });
 
 function updateImageOnly () {
     this.toggleClass('ui-button_image-only', !!(this.iconSrc() && !this.labelHtml()));
 }
-
-exports.Button = Button;

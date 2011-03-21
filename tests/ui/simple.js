@@ -18,6 +18,11 @@ var cmd_clicked = 0, pub_clicked = 0;
     
 ui('#cmd').on('click', function() { ++cmd_clicked });
 
+var pub = ui('#pub')[0];
+pub.destroy(); // test force destroy
+
+if (ui('#pub')[0]) { alert('ERROR: destroyed button #pub still findable') }
+
 var selector = require('ui/tool/selector'), pub;
 (pub = selector.find('#pub',root)).on('click', function() { ++pub_clicked });
 //'Button[text^=Publish]'

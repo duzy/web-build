@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 
 var utils = require('./utils'),

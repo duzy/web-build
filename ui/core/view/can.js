@@ -11,16 +11,13 @@ var view  = require('../view'),
  * @augments Base
  * @name Can
  */
-var Can = new Object.Class(Base, {
-    typeName: 'Can',
-
+var Can = new Object.Class('Can', Base, {
     init: function(initArgs) {
         this._childViews = [];
     },
 
-    destruct: function() {
+    destroy: function() {
         this.clear(true);
-        Base.prototype.destruct.call(this);
     },
 
     resized: function() {
