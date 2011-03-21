@@ -4,17 +4,20 @@
 // ==== Object.prototype ====
 var NOOP = function() { return function() {} }, noop = NOOP(),
 
+proto = Object.prototype,
+
+hasOwnProperty = proto.hasOwnProperty,
+toString = proto.toString,
+
 isFun = function(obj) {
-    //return toString.call(obj) === "[object Function]";
-    return obj && obj.typename === 'function';
+    //return obj && obj.typename === 'function';
+    return toString.call(obj) === "[object Function]";
 },
 
 isArray = function(obj) {
-    //return toString.call(obj) === "[object Array]";
-    return obj && obj.typename === 'array';
+    //return obj && obj.typename === 'array';
+    return toString.call(obj) === "[object Array]";
 },
-
-proto = Object.prototype,  hasOwnProperty = proto.hasOwnProperty,
 
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
 extend = proto.extend = function() {
@@ -52,13 +55,6 @@ extend = proto.extend = function() {
     }
     return this;
 };
-
-// allows all objects to access 'obj.typename' for the type name
-proto.__defineGetter__('typename', function() {
-    return this.$_type ? this.$_type : typeof this;
-});
-
-proto.__defineSetter__('typename', noop); // avoid set error
 
 // iterate in object's properties
 proto.extend({
@@ -117,6 +113,18 @@ proto.extend({
         }
     },
 });
+
+// allows all objects to access 'obj.typename' for the type name
+/*
+proto.__defineGetter__('typename', function() {
+    return this.$_type ? this.$_type : typeof this;
+});
+proto.__defineSetter__('typename', noop); // avoid set error
+*/
+proto.prop('typename', function() {
+    return this.$_type ? this.$_type : typeof this;
+});
+
 
 Object.extend({
     isFun: isFun,
