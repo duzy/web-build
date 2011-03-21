@@ -67,11 +67,11 @@ ui('#cmd').on('click l', function() { alert('LiteUI '+ui.version); });
 
 if (!(ui('#cmd')[0])) { alert("ui('#cmd') not found") }
 
-    var selector = require('ui/tool/selector');
-    selector.find('#pub',root).on('click', function() {
-    	alert('LiteUI');
-    });
-    //'Button[text^=Publish]'
+var selector = require('ui/tool/selector');
+selector.find('#pub',root).on('click', function() {
+    alert('LiteUI');
+});
+//'Button[text^=Publish]'
 // } catch(e) {
 //     alert(e);
 // }
