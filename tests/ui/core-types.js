@@ -63,6 +63,10 @@ obj.forEach(function(v,n) {
 	test.error('Object.prototype.forEach: bad name: '+n);
     }
 });
+if (value != obj.name.length + obj.age) {
+    test.error("Object.prototype.forEach: test failed: "+value);
+}
+
 test.equal(Object.isFun !== undefined, true, 'Object.isFun');
 test.equal(Object.isFun(function(){}), true, 'Object.isFun(function(){}) = '+Object.isFun(function(){}));
 test.equal(Object.isArray !== undefined, true, 'Object.isArray');
@@ -71,9 +75,6 @@ test.equal(Object.get !== undefined, true, 'Object.get');
 test.equal(Object.get('name', obj), 'foo', 'Object.get("name",obj) = '+Object.get('name',obj));
 test.equal(Object.keys !== undefined, true, 'Object.keys');
 //test.equal(Object.keys(obj) === ['name', 'age'], true, 'Object.keys(obj): '+Object.keys(obj));
-if (value != obj.name.length + obj.age) {
-    test.error("Object.prototype.forEach: test failed: "+value);
-}
 
 // ==== Array.prototype.forEach ====
 value = 0;

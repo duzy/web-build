@@ -68,7 +68,16 @@ proto.extend({
             }
         }
         return newObj;
-    }
+    },
+    */
+
+    /*
+    prop: function(name, funs) {
+        if (name !== 'prop') {
+            funs.get && this.__defineGetter__(name, funs.get);
+            this.__defineSetter__(name, funs.set || noop);
+        }
+    },
     */
 });
 
