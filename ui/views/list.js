@@ -15,7 +15,7 @@ var env   = require('../core/env'),
     Selectable = require('../facet/selectable').Selectable;
     
 
-var DataList = new Object.Class(Base, Focusable, Selectable, {
+var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     init: function(initArgs) {
 	this._data = [];
 	this._packs = {};

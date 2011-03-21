@@ -20,7 +20,7 @@ var dom  = require('../core/dom'),
     Base = require('../core/view/base').Base,
     Focusable = require('../facet/focusable').Focusable;
 
-var RichEdit = new Object.Class(Base, Focusable, {}),
+var RichEdit = new Object.Class('Rich', Base, Focusable, {}),
     proto = RichEdit.prototype;
 
 RichEdit.guid = 1;
@@ -58,7 +58,7 @@ proto.focusableDom = function() { return this._frame || this._iframe; }
 proto.resized = function() {
     var frame = this._frame = this._frame || env.root.frames[this._iframe.name];
     if (frame) {
-	var doc = this._doc = frame.document;
+	var doc = this._doc = frame.document, placeholder = this._placeholderDom;
 	if (doc.designMode !== 'on') {
 	    doc.designMode = 'on'; // on/off
 	}
@@ -69,12 +69,14 @@ proto.resized = function() {
 	}
         */
 
+        if (!placeholder) return;
+
         event.on(frame, 'focus blur change keyup', function(e) {
-            this._placeholderDom.style.display = (e.type !== 'blur')
+            placeholder.style.display = (e.type !== 'blur')
                 || doc.body.firstChild ? 'none' : '';
         }.bindOnce(this));
 
-        with(this._placeholderDom.style) {
+        with (placeholder.style) {
             //border = '1px solid #E00';
             position = 'absolute';
             color = '#888';

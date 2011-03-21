@@ -98,7 +98,9 @@ var Collection = exports.Collection = new Object.Class('Collection', Array, {
 	    view.resized();
         });
         return this;
-    }
+    },
+
+    foo: function() { alert('test') },
 });
 
 /**#@-*/
