@@ -136,7 +136,7 @@ proto.clone = function() {
     //var newObj = (this instanceof Array) ? [] : {}, a, i;
     var newObj = (typeof this ==='array') ? [] : {}, a, i;
     for (i in this) {
-        if (i !== 'clone' && (a = this[i])) {
+        if (hasOwnProperty.call(this,i) && (a = this[i])) {
             newObj[i] = (typeof a === 'object') ? a.clone() : a;
         }
     }

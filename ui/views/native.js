@@ -19,7 +19,7 @@ var ieResize = env.ua.match(/MSIE 6|7/);
  * Base class for native control wrappers.
  * Map common dom attributes and add binding
  */
-var NativeControl = new Object.Class(Base, Focusable, {
+var NativeControl = new Object.Class('native', Base, Focusable, {
     bindingOptions: fun.newProp('bindingOptions'),
 
     binding: fun.newProp('binding', function(val) {
@@ -29,9 +29,9 @@ var NativeControl = new Object.Class(Base, Focusable, {
                                            utils.extend(this._bindingOptions, val));
     }),
 
-    domForEvent: function(type) {
-        return this._input;
-    },
+    // domForEvent: function(type) {
+    //     return this._input;
+    // },
 
     focusableDom: function() {
         return this._input;
@@ -51,9 +51,7 @@ fun.delegateProp(NativeControl.prototype,
  * Radio button with a label
  * build({ view: 'native.Radio', name: 'color', value: 'red', text: 'Red' })
  */
-var Radio = new Object.Class(NativeControl, {
-    typeName: 'native.Radio',
-
+var Radio = new Object.Class('Radio', NativeControl, {
     _createDom: function(initArgs) {
         this._input = dom.createElement('input', { type: 'radio' });
         this._label = dom.createElement('span',	{ name: 'label' });
@@ -73,9 +71,7 @@ fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
  * Checkbox with a label
  * build({ view: 'native.Checkbox', name: 'color', value: 'red', text: 'Red' })
  */
-var Checkbox = new Object.Class(NativeControl, {
-    typeName: 'native.Checkbox',
-
+var Checkbox = new Object.Class('Checkbox', NativeControl, {
     _createDom: function(initArgs) {
         this._input = dom.createElement('input', { type: 'checkbox' });
         this._label = dom.createElement('span', { name: 'label' });
@@ -93,9 +89,7 @@ fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
  * Text input
  * build({ view: 'native.Text', value: 'John Smith', placeholder: 'Name?' })
  */
-var Text = new Object.Class(NativeControl, {
-    typeName: 'native.Text',
-
+var Text = new Object.Class('Text', NativeControl, {
     _createDom: function(initArgs) {
         this._inputTag = this._inputTag || 'input';
         this._input = dom.createElement(this._inputTag, { type: 'text' });
@@ -167,9 +161,7 @@ var Text = new Object.Class(NativeControl, {
     }
 });
 
-var TextArea = new Object.Class(Text, {
-    typeName: 'native.TextArea',
-
+var TextArea = new Object.Class('TextArea', Text, {
     init: function(initArgs) {
         this._inputTag = 'textarea';
     },
@@ -179,9 +171,7 @@ var TextArea = new Object.Class(Text, {
  * Native browser button
  * build({ view: 'native.Button', value: 'Work!'})
  */
-var Button = new Object.Class(NativeControl, {
-    typeName: 'native.Button',
-
+var Button = new Object.Class('Button', NativeControl, {
     _createDom: function(initArgs) {
         this._dom = this._input = dom.createElement('input', {
 	    className: 'ui-native-button', type: 'button'
@@ -205,9 +195,7 @@ var Button = new Object.Class(NativeControl, {
  *   { text: 'Custom', value: '' }
  * ]})
  */
-var Select = new Object.Class(NativeControl, {
-    typeName: 'native.Select',
-
+var Select = new Object.Class('Select', NativeControl, {
     _createDom: function(initArgs) {
         this._input = this._dom = dom.createElement('select', {
 	    className: 'ui-native-select'
