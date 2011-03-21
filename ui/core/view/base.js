@@ -22,12 +22,6 @@ POS_MAP = {
 var Base = new Object.Class({
     typeName: 'Base',
 
-    init: function(initArgs) {
-    },
-
-    destroy: function() {
-    },
-
     $create: function(initArgs) {
         this._createDom(initArgs);
         var d = this.dom();

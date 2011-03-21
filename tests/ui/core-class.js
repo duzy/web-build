@@ -40,8 +40,8 @@ var test = require('tool/test');
         },
     };
 
-    var MyClass = new types.Class(Base, Base2, {}, {
-	_typename: 'MyClass',
+    var MyClass = new types.Class('MyClass', Base, Base2, {}, {
+	//_typename: 'MyClass',
 	init: function(name) {
             test.info("MyClass.prototype.init");
 	    if (name) this.name = name;
@@ -108,8 +108,8 @@ var test = require('tool/test');
     test.equal(a.foo, 'Base2', 'a.foo is: '+a.foo);
     test.equal(b.foo, 'Base2', 'b.foo is: '+b.foo);
 
-    test.equal(a.extra, 'mixin', 'new Class(...) has mixin the last arg');
-    test.equal(b.extra, 'mixin', 'new Class(...) has mixin the last arg');
+    test.equal(a.extra, 'mixin', 'a.extra is: '+a.extra);
+    test.equal(b.extra, 'mixin', 'b.extra is: '+b.extra);
 }
 
 test.info('PASSED');

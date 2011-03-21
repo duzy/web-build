@@ -174,19 +174,24 @@ Object.Type = new Type('Type', Type);
 /*
   make a new class:
 	var Base = {}, Base2 = {};
-	var MyClass = new Class(Base, Base2, {
-		name: 'MyClass',
+	var MyClass = new Class('MyClass', Base, Base2, {
 		init: function() { }
 	});
+        var MyClass2 = new Class('MyClass2', {});
+        var MyClass3 = new Class({});
+
+        var a = new MyClass(), b = new MyClass2(), c = new MyClass3();
 */
 var Class = Object.Class = new Type('Class', function() {
-    var len = arguments.length,
-        first = arguments[0],
+    var len = arguments.length, isFun = Object.isFun, arg0 = arguments[0],
+        className = (arg0 && typeof arg0 === 'string') ? arg0 : '',
+        superPos = (className ? 1 : 0),
+        first = arguments[superPos],
         last = arguments[len - 1],
-        className,
-        newClass = (last && (Object.isFun(last) ? last : last.init)) || function() {},
-        superClass = 1 < len && first.prototype && first, i = superClass ? 1 : 0,
-        superCtr, superDtr, isFun = Object.isFun;
+        newClass = (last && (isFun(last) ? last : last.init)) || function() {},
+        superClass = (superPos + 1) < len && first.prototype && first,
+        i = superClass ? superPos + 1 : superPos,
+        superCtr, superDtr;
 
     // implements(real inheritance) the first base class
     if (superClass) {
@@ -198,13 +203,13 @@ var Class = Object.Class = new Type('Class', function() {
     }
 
     // chain 'init' and 'destroy' of mixins
-    for (; i < len - 1; ++i) {
+    for (; i < len - superPos - 1; ++i) {
 	var b = arguments[i];
         superCtr = isFun(b.init)    ? b.init.chain(superCtr)    : superCtr;
         superDtr = isFun(b.destroy) ? b.destroy.chain(0,superDtr) : superDtr;
     }
 
-    if (i = superClass ? 1 : 0) { // reset 'i' to extend from the second arg
+    if (superClass) {
         if (superCtr) {
 	    var ctr = newClass;
 	    newClass = function() { // TODO: usning ctr.hook(superClass) ?
@@ -220,13 +225,16 @@ var Class = Object.Class = new Type('Class', function() {
 
     newClass.prototype.extend(this); // extends the Class instance
 
+    // reset 'i' to extend from the second arg
+    i = superClass ? superPos + 1 : superPos;
+
     // mixin (see uki:functions.js)
-    for (; i < len - 1; ++i) {
+    for (; i < len - superPos - 1; ++i) {
 	newClass.prototype.extend(arguments[i]);
     }
 
     if (last) {
-	className = /*last.name || */last._typename || last.typeName;
+	//className = className || /*last.name || last._typename ||*/ last.typeName;
 	//last.name && delete last.name; // FIXME: don't do this!!
 	//last.init && delete last.init;
 
@@ -244,12 +252,12 @@ var Class = Object.Class = new Type('Class', function() {
         }
         : function() {};
     } else {
-	className = this.typename;
         newClass.prototype.destroy = superDtr;
     }
 
     newClass.prototype.init = undefined; // hide any 'init' methods
 
+    className = className || this.typename;
     new Type(className, newClass);
 
     return newClass;
