@@ -4,6 +4,16 @@
 // ==== Object.prototype ====
 var NOOP = function() { return function() {} }, noop = NOOP(),
 
+isFun = function(obj) {
+    //return toString.call(obj) === "[object Function]";
+    return obj && obj.typename === 'function';
+},
+
+isArray = function(obj) {
+    //return toString.call(obj) === "[object Array]";
+    return obj && obj.typename === 'array';
+},
+
 proto = Object.prototype,  hasOwnProperty = proto.hasOwnProperty,
 
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
@@ -77,7 +87,7 @@ proto.extend({
 
     prop: function(name, funs) {
         if (name !== 'prop' && name !== 'props' && !this[name]) {
-            var g, s, f = Object.isFun(funs);
+            var g, s, f = isFun(funs);
             g = f ? funs : funs.get;
             s = f ? funs : funs.set;
             this.__defineGetter__(name, g || NOOP());
@@ -95,7 +105,7 @@ proto.extend({
                 } else { // multiple or ZERO property names
                     for (i=0; i < names.length; ++i) {
                         pn = names[i];
-                        funs = Object.isFun(f) ? f.bind(null, pn)
+                        funs = isFun(f) ? f.bind(null, pn)
                             : {
                                 get: f.get && f.get.bind(null, pn),
                                 set: f.set && f.set.bind(null, pn),
@@ -109,15 +119,9 @@ proto.extend({
 });
 
 Object.extend({
-    isFun: function(obj) {
-        //return toString.call(obj) === "[object Function]";
-        return obj && obj.typename === 'function';
-    },
+    isFun: isFun,
 
-    isArray: function(obj) {
-        //return toString.call(obj) === "[object Array]";
-        return obj && obj.typename === 'array';
-    },
+    isArray: isArray,
 
     //if (Object.get) throw('Object.get already defined!');
 
@@ -143,12 +147,12 @@ Function.__huid = 1;
 (proto = Function.prototype).extend({
     chain: function(pre, post) {
         var self = this,
-        fun = Object.isFun(pre) ? (function() {
+        fun = isFun(pre) ? (function() {
             pre.apply(this, arguments);
             self.apply(this, arguments);
         }) : self;
 
-        return Object.isFun(post) ? (function() {
+        return isFun(post) ? (function() {
             fun.apply(this, arguments);
             post.apply(this, arguments);
         }) : fun;
@@ -160,7 +164,7 @@ Function.__huid = 1;
         return function() {
 	    if (this.prototype.hasOwnProperty(name)) {
 	        var f = this.prototype[name];
-	        if (!Object.isFun(f)) f = null;
+	        if (!isFun(f)) f = null;
 	        if (!defer) f.apply(this, arguments);
 	        self.apply(this.arguments);
 	        if (defer) f.apply(this, arguments);
@@ -269,7 +273,7 @@ Object.Type = new Type('Type', Type);
         var a = new MyClass(), b = new MyClass2(), c = new MyClass3();
 */
 var Class = Object.Class = new Type('Class', function() {
-    var args = arguments, len = args.length, isFun = Object.isFun, arg0 = args[0],
+    var args = arguments, len = args.length, arg0 = args[0],
         className = (arg0 && typeof arg0 === 'string') ? arg0 : '',
         superPos = (className ? 1 : 0),
         first = args[superPos],
