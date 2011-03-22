@@ -260,6 +260,9 @@ proto._rightPos = function() {
 proto._resizeChildViews = function() {
     this._childViews[0].pos(this._leftPos()).resized();
     this._childViews[1].pos(this._rightPos()).resized();
+    // var v;
+    // (v = this._childViews[0]).pos = this._leftPos();  v.resized();
+    // (v = this._childViews[1]).pos = this._rightPos(); v.resized();
 };
 
 exports.Split = Split;

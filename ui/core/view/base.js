@@ -20,15 +20,6 @@ POS_MAP = {
 };
 
 var Base = new Object.Class('Base', {
-    //init: NOOP(); 
-
-    destroy: function(args) {
-	view.unregisterId(this);
-	view.unregister(this);
-	this.removeListener();
-        args.nodettach || dom.removeElement(this._dom);
-    },
-
     $: {
         /**
          * Get views container dom node, all assignments to it will be ignored.
@@ -53,20 +44,33 @@ var Base = new Object.Class('Base', {
         },
 
         'left top right bottom width height': function(name,value) {
-            var s = this.dom && this.dom.style;
-            //alert(name+": "+value);
-            if (s && value !== undefined) {
-                //s.position = 'relative';
-                s.position = 'absolute'; // force position to be 'absolute'
+            var s = this.dom.style;
+            if (value !== undefined) {
+                //s.position = 'absolute'; // force position to be 'absolute'
                 s[name] = value;
-                //this.dom.innerHTML += '<br/>' + name + ' = ' + value;
                 return this;
             }
-            return s && s[name];
+            return s[name];
         },
 
         //size: function(value) { // for both 'width' and 'height'
         //},
+
+        /**
+         * Shortcut to set absolute positioning props
+         * @param {string|object} p Position string in the form of
+         *                          'l:10px t:10px r:30% h:200px'
+         */
+        /*
+        pos: function(pos) {
+	    if (pos === undefined) {
+	        return this._styleToPos(this.dom.style);
+	    }
+	    pos = this._expandPos(pos);
+	    this._applyPosToStyle(pos, this.dom.style);
+	    return this;
+        },
+        */
 
         html: fun.newDelegateProp('_dom', 'innerHTML'),
         text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
@@ -82,12 +86,21 @@ var Base = new Object.Class('Base', {
         },
     },
 
-    $create: function(initArgs) {
-        this._createDom(initArgs);
+    //init: NOOP(); 
+
+    destroy: function(args) {
+	view.unregisterId(this);
+	view.unregister(this);
+	this.removeListener();
+        args.nodettach || dom.removeElement(this._dom);
+    },
+
+    $create: function(args) { // internal used only, deleted once called
+        this._createDom(args);
         var d = this.dom;
         d[env.expando] = d[env.expando] || env.guid++;
 
-        initArgs.style && initArgs.style.forEach(function(value,name){
+        args.style && args.style.forEach(function(value,name){
             d.style[name] = value;
         },this);
 
@@ -96,8 +109,8 @@ var Base = new Object.Class('Base', {
         view.register(this);
     },
 
-    _createDom: function(initArgs) {
-	this._dom = dom.createElement(initArgs.tagName || 'div');
+    _createDom: function(args) {
+	this._dom = dom.createElement(args.tagName || 'div');
     },
 
     // noselect: function(v) {
@@ -188,12 +201,12 @@ var Base = new Object.Class('Base', {
      *                          'l:10px t:10px r:30% h:200px'
      */
     pos: function(pos) {
-	if (pos === undefined) {
-	    return this._styleToPos(this.dom.style);
-	}
-	pos = this._expandPos(pos);
-	this._applyPosToStyle(pos, this.dom.style);
-	return this;
+        if (pos === undefined) {
+            return this._styleToPos(this.dom.style);
+        }
+        pos = this._expandPos(pos);
+        this._applyPosToStyle(pos, this.dom.style);
+        return this;
     },
 
     _styleToPos: function(style) {
