@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
     var env = require('./env'),
         utils = require('./utils'),

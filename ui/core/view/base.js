@@ -30,7 +30,40 @@ var Base = new Object.Class('Base', {
     },
 
     $: {
-        name: function(v) {}
+        /**
+         * Used for fast (on hash lookup) view searches: build('#view_id');
+         *
+         * @param {string=} id New id value
+         * @returns {string|view.Base} current id or self
+         */
+        id: function(value) {
+            if (value !== undefined /*&& value*/) {
+                this.dom().id || view.unregisterId(this);
+                this.dom().id = value;
+                view.registerId(this);
+                return this;
+            }
+            return this.dom().id;
+        },
+
+        'left top right bottom width height': function(name,value) {
+            var s = this.dom() && this.dom().style;
+            //alert(name+": "+value);
+            if (s && value !== undefined) {
+                //s.position = 'relative';
+                s.position = 'absolute'; // force position to be 'absolute'
+                s[name] = value;
+                //this.dom().innerHTML += '<br/>' + name + ' = ' + value;
+                return this;
+            }
+            return s && s[name];
+        },
+
+        //size: function(value) { // for both 'width' and 'height'
+        //},
+
+        html: fun.newDelegateProp('_dom', 'innerHTML'),
+        text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
     },
 
     $create: function(initArgs) {
@@ -67,22 +100,9 @@ var Base = new Object.Class('Base', {
      */
     dom: function() { return this._dom; },
 
-    text: function(v) {	return this.html(v && dom.escapeHTML(v)); },
+    //text: function(v) {	return this.html(v && dom.escapeHTML(v)); },
 
     /* ----------------------- Common settings --------------------------------*/
-    /**
-     * Used for fast (on hash lookup) view searches: build('#view_id');
-     *
-     * @param {string=} id New id value
-     * @returns {string|view.Base} current id or self
-     */
-    id: function(id) {
-	if (id === undefined) { return this.dom().id; }
-	if (this.dom().id) { view.unregisterId(this); }
-	this.dom().id = id;
-	view.registerId(this);
-	return this;
-    },
 
     /**
      * Accessor for dom().className
@@ -277,7 +297,7 @@ var Base = new Object.Class('Base', {
 });
 
 var proto = Base.prototype;
-fun.delegateProp(proto, 'html', '_dom', 'innerHTML');
+//fun.delegateProp(proto, 'html', '_dom', 'innerHTML');
 fun.delegateProp(proto, 'className', 'dom');
 fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
 
