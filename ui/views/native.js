@@ -96,7 +96,7 @@ var Text = new Object.Class('Text', NativeControl, {
         this._dom = dom.createElement(initArgs.tagName || 'span', {
 	    className: 'ui-native-text'
 	});
-        this.dom().appendChild(this._input);
+        this.dom.appendChild(this._input);
     },
 
     placeholder: fun.newProp('placeholder', function(v) {
@@ -114,7 +114,7 @@ var Text = new Object.Class('Text', NativeControl, {
         this._updatePlaceholderHeight();
         // manual resize box-sizing: border-box for ie 6,7
         if (ieResize) {
-            this._input.style.width = this.dom().offsetWidth - 6;
+            this._input.style.width = this.dom.offsetWidth - 6;
         }
     },
 
@@ -126,7 +126,7 @@ var Text = new Object.Class('Text', NativeControl, {
         this._placeholderDom = dom.createElement('span', {
 	    name: 'placeholder'
 	});
-        this.dom().insertBefore(this._placeholderDom, this.dom().firstChild);
+        this.dom.insertBefore(this._placeholderDom, this.dom.firstChild);
         evt.on(this._placeholderDom, 'click',
 	       function() { this.focus(); }.bindOnce(this));
         this.on('focus blur change keyup', this._updatePlaceholderVis);

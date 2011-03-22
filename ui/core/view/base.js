@@ -31,6 +31,12 @@ var Base = new Object.Class('Base', {
 
     $: {
         /**
+         * Get views container dom node, all assignments to it will be ignored.
+         * @returns {Element} dom
+         */
+        dom: function() { return this._dom; },
+        
+        /**
          * Used for fast (on hash lookup) view searches: build('#view_id');
          *
          * @param {string=} id New id value
@@ -38,22 +44,22 @@ var Base = new Object.Class('Base', {
          */
         id: function(value) {
             if (value !== undefined /*&& value*/) {
-                this.dom().id || view.unregisterId(this);
-                this.dom().id = value;
+                this.dom.id || view.unregisterId(this);
+                this.dom.id = value;
                 view.registerId(this);
                 return this;
             }
-            return this.dom().id;
+            return this.dom.id;
         },
 
         'left top right bottom width height': function(name,value) {
-            var s = this.dom() && this.dom().style;
+            var s = this.dom && this.dom.style;
             //alert(name+": "+value);
             if (s && value !== undefined) {
                 //s.position = 'relative';
                 s.position = 'absolute'; // force position to be 'absolute'
                 s[name] = value;
-                //this.dom().innerHTML += '<br/>' + name + ' = ' + value;
+                //this.dom.innerHTML += '<br/>' + name + ' = ' + value;
                 return this;
             }
             return s && s[name];
@@ -64,11 +70,13 @@ var Base = new Object.Class('Base', {
 
         html: fun.newDelegateProp('_dom', 'innerHTML'),
         text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
+
+        className: fun.newDelegateProp('_dom', 'className'),
     },
 
     $create: function(initArgs) {
         this._createDom(initArgs);
-        var d = this.dom();
+        var d = this.dom;
         d[env.expando] = d[env.expando] || env.guid++;
 
         initArgs.style && initArgs.style.forEach(function(value,name){
@@ -94,44 +102,36 @@ var Base = new Object.Class('Base', {
      */
     resized: fun.FS,
 
-    /**
-     * Get views container dom node.
-     * @returns {Element} dom
-     */
-    dom: function() { return this._dom; },
-
-    //text: function(v) {	return this.html(v && dom.escapeHTML(v)); },
-
     /* ----------------------- Common settings --------------------------------*/
 
     /**
-     * Accessor for dom().className
+     * Accessor for dom.className
      * @param {string=} className
      *
      * @returns {string|view.Base} className or self
      */
 
     addClass: function(className) {
-	dom.addClass(this.dom(), className);
+	dom.addClass(this.dom, className);
 	return this;
     },
 
     hasClass: function(className) {
-	return dom.hasClass(this.dom(), className);
+	return dom.hasClass(this.dom, className);
     },
 
     removeClass: function(className) {
-	dom.removeClass(this.dom(), className);
+	dom.removeClass(this.dom, className);
 	return this;
     },
 
     toggleClass: function(className, condition) {
-	dom.toggleClass(this.dom(), className, condition);
+	dom.toggleClass(this.dom, className, condition);
 	return this;
     },
 
     domForEvent: function(type) {
-	return this.dom();
+	return this.dom;
     },
 
     /**
@@ -181,10 +181,10 @@ var Base = new Object.Class('Base', {
      */
     pos: function(pos) {
 	if (pos === undefined) {
-	    return this._styleToPos(this.dom().style);
+	    return this._styleToPos(this.dom.style);
 	}
 	pos = this._expandPos(pos);
-	this._applyPosToStyle(pos, this.dom().style);
+	this._applyPosToStyle(pos, this.dom.style);
 	return this;
     },
 
@@ -228,15 +228,15 @@ var Base = new Object.Class('Base', {
      */
     visible: function(state) {
 	if (state === undefined) {
-	    return this.dom().style.display != 'none';
+	    return this.dom.style.display != 'none';
 	}
 	
 	var origState = this.visible();
-	this.dom().style.display = state ? '' : 'none';
+	this.dom.style.display = state ? '' : 'none';
 	
 	// if we change from invis to vis, and we have dom, and we're attached
 	// redraw
-	if (state && !origState && this.dom() && this.dom().offsetWidth) {
+	if (state && !origState && this.dom && this.dom.offsetWidth) {
 	    this.resized();
 	}
 	return this;
@@ -287,7 +287,7 @@ var Base = new Object.Class('Base', {
     /**
      */
     clientRect: function(ignoreScroll) {
-	return dom.clientRect(this.dom(), ignoreScroll);
+	return dom.clientRect(this.dom, ignoreScroll);
     },
 
     childViews: function() {
@@ -297,8 +297,7 @@ var Base = new Object.Class('Base', {
 });
 
 var proto = Base.prototype;
-//fun.delegateProp(proto, 'html', '_dom', 'innerHTML');
-fun.delegateProp(proto, 'className', 'dom');
+//fun.delegateProp(proto, 'className', 'dom');
 fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
 
 proto.on = proto.addListener,

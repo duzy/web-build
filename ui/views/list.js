@@ -285,7 +285,7 @@ proto.editSelected = function() {
     
     var t = this.selectedIndex() * this.rowHeight();
     
-    this.dom().appendChild(this.editor().dom());
+    this.dom.appendChild(this.editor().dom);
     
     this.editor()
 	.on('finishEdit', this._editorBlur.bindOnce(this))
@@ -351,7 +351,7 @@ proto._editorBlur = function(e) {
 	.removeListener('move', this._editorMove.bindOnce(this))
 	.removeListener('finishEdit', this._editorBlur.bindOnce(this));
 	
-	dom.removeElement(this.editor().dom());
+	dom.removeElement(this.editor().dom);
 	if (e && e.remainFocused) this.focus();
     }
 };
@@ -389,16 +389,16 @@ proto._calcRowHeight = function() {
 	|| (this.data().slice && this.data().slice(0, 1)[0]) || '',
 	p = this._renderPack([sample]);
 	
-	this.dom().appendChild(p);
+	this.dom.appendChild(p);
 	this._rowHeight = p.offsetHeight;
-	this.dom().removeChild(p);
+	this.dom.removeChild(p);
     }
 };
 
 proto._updateHeight = function() {
-    this.dom().style.height = this.data().length * this.rowHeight() + 'px';
+    this.dom.style.height = this.data().length * this.rowHeight() + 'px';
     // setTimeout(function(){
-    // 	this.dom().style.height = this.data().length * this.rowHeight() + 'px';
+    // 	this.dom.style.height = this.data().length * this.rowHeight() + 'px';
     // }.bind(this), 0);
 };
 
@@ -477,7 +477,7 @@ proto._updatePack = function(packN, revision, rows) {
     this._packs[packN].style.top =
 	packN * this.rowHeight() * this.packSize() + 'px';
     this._packs[packN].__revision = revision;
-    this.dom().appendChild(this._packs[packN]);
+    this.dom.appendChild(this._packs[packN]);
     this._restorePackSelection(packN);
 };
 

@@ -127,7 +127,7 @@
     }
 
     Selectable._itemUnderCursor = function(e) {
-        var o = dom.clientRect(this.dom()),
+        var o = dom.clientRect(this.dom),
         y = e.pageY - o.top;
 
         return y / this._rowHeight << 0;

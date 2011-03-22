@@ -29,7 +29,7 @@ var Flow = new Object.Class(Can, {
 
     /* Wrap children in lis */
     _removeChildFromDom: function(child) {
-        this.dom().removeChild(child.dom().parentNode);
+        this.dom.removeChild(child.dom.parentNode);
     },
 
     _appendChildToDom: function(child) {
@@ -37,14 +37,14 @@ var Flow = new Object.Class(Can, {
         var li = dom.createElement('li', {
             className: 'ui-flow-item' + (flowClass ? ' ' + flowClass : '')
         });
-        li.appendChild(child.dom());
-        this.dom().appendChild(li);
+        li.appendChild(child.dom);
+        this.dom.appendChild(li);
     },
 
     _insertBeforeInDom: function(child, beforeChild) {
-        this.dom().insertBefore(
-            child.dom().parentNode,
-            beforeChild.dom().parentNode
+        this.dom.insertBefore(
+            child.dom.parentNode,
+            beforeChild.dom.parentNode
         );
     }
 });

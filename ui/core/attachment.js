@@ -17,7 +17,7 @@ var Attachment = exports.Attachment = new Object.Class('Attachment', Can, {
 
     init: function(initArgs) {
         this._dom = initArgs.dom;
-        dom.addClass(this.dom(), 'ui-attachment');
+        dom.addClass(this.dom, 'ui-attachment');
     },
 
     parent: function() {
@@ -61,7 +61,7 @@ Attachment.extend({
                     }
             });
         }
-        var el = a.dom(),
+        var el = a.dom,
             id = el[env.expando] = el[env.expando] || env.guid++;
 
         return (instances[id] = a);

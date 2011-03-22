@@ -12,7 +12,7 @@ var Focusable = exports.Focusable = {
     },
 
     focusableDom: function() {
-        return this.dom();
+        return this.dom;
     },
 
     _domForEvent: function(type) {

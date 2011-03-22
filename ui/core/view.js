@@ -15,11 +15,11 @@ var view = function() {
 
 view.extend({
     register: function(v) {
-	registry[v.dom()[env.expando]] = v;
+	registry[v.dom[env.expando]] = v;
     },
 
     unregister: function(v) {
-	delete registry[v.dom()[env.expando]];
+	delete registry[v.dom[env.expando]];
     },
 	
     registerId: function(v) {

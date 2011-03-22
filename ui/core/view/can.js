@@ -84,7 +84,7 @@ var Can = exports.Can = new Object.Class('Can', Base, {
     },
     
     _removeChildFromDom: function(child) {
-        dom.removeElement(child.dom());
+        dom.removeElement(child.dom);
     },
     
     /**
@@ -100,7 +100,7 @@ var Can = exports.Can = new Object.Class('Can', Base, {
     },
 	
     _appendChildToDom: function(child) {
-        this.dom().appendChild(child.dom());
+        this.dom.appendChild(child.dom);
     },
     
     /**
@@ -122,7 +122,7 @@ var Can = exports.Can = new Object.Class('Can', Base, {
     },
     
     _insertBeforeInDom: function(child, beforeChild) {
-        this.dom().insertBefore(child.dom(), beforeChild.dom());
+        this.dom.insertBefore(child.dom, beforeChild.dom);
     },
     
     _childrenChanged: function() {
@@ -134,7 +134,7 @@ var Can = exports.Can = new Object.Class('Can', Base, {
      * Child should append itself to this dom node
      */
     domForChild: function(child) {
-        return this.dom();
+        return this.dom;
     }
 });
 //})();

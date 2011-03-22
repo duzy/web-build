@@ -48,7 +48,7 @@ proto._initPlaceholder = function() {
     var d = this._placeholderDom = dom.createElement('span', {
 	name: 'placeholder'
     });
-    this.dom().insertBefore(d, this.dom().firstChild);
+    this.dom.insertBefore(d, this.dom.firstChild);
 
     event.on(d, 'click', function() { this.focus(); }.bindOnce(this));
 };

@@ -105,7 +105,7 @@ proto.vertical = function() { return this._vertical; };
  * Use _x_methods to adjust to horizontal layout
  */
 proto._x_width = function() {
-    return this.vertical() ? this.dom().offsetWidth : this.dom().offsetHeight;
+    return this.vertical() ? this.dom.offsetWidth : this.dom.offsetHeight;
 };
 
 proto._x_widthName = function() { return this.vertical() ? 'width' : 'height'; };

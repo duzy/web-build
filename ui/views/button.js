@@ -29,9 +29,9 @@ var Button = exports.Button = new Object.Class('Button', Base, Focusable, {
 
     disabled: function(state) {
         if (state === undefined) {
-            return this.dom().disabled;
+            return this.dom.disabled;
         }
-        this.dom().disabled = state ? 'disabled' : '';
+        this.dom.disabled = state ? 'disabled' : '';
         this.toggleClass('ui-button_disabled', state);
         return this;
     },
@@ -43,7 +43,7 @@ var Button = exports.Button = new Object.Class('Button', Base, Focusable, {
         this._iconSrc = src;
         if (src) {
             this._iconDom = dom.createElement('img', { className: 'ui-button__icon', src: src });
-            this.dom().insertBefore(this._iconDom, this._text);
+            this.dom.insertBefore(this._iconDom, this._text);
         }
         updateImageOnly.call(this);
     }),
