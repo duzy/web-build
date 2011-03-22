@@ -56,3 +56,5 @@ view2.html += '<br/>rect: '
 ;
 
 view2.text = view2.className;
+view2.alt = 'alt...';
+view2.title = 'blah ...';

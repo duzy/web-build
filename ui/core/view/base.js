@@ -72,6 +72,14 @@ var Base = new Object.Class('Base', {
         text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
 
         className: fun.newDelegateProp('_dom', 'className'),
+
+        'scrollTop scrollLeft title alt': function(name, value) {
+            if (value !== undefined) {
+                this.dom[name] = value;
+                return this;
+            }
+            return this.dom[name];
+        },
     },
 
     $create: function(initArgs) {
@@ -298,7 +306,7 @@ var Base = new Object.Class('Base', {
 
 var proto = Base.prototype;
 //fun.delegateProp(proto, 'className', 'dom');
-fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
+//fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
 
 proto.on = proto.addListener,
 proto.emit = proto.trigger,
