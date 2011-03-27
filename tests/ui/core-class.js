@@ -117,18 +117,18 @@ var test = require('tool/test');
         },
 
         _propSetter: 0, // this will be changed via 'a.propSetter(1)'
-        propSetter: function(v,v2) {
-            test.info("prop: function(){}._()    : "+this.typename+', '+v+', '+v2);
+        propSetter: function(v) {
+            test.info("prop: function(){}._    : "+this.typename+', '+v);
             this._propSetter += v;
-        }._(),
+        }._, // '._' is the same as '.$_()'
 
         _prop1: 0,
         _prop2: 0,
         _prop3: 0,
         'prop1 prop2 prop3': function(n,v) {
-            test.info("props: function(){}._()    : "+this.typename+', '+n+', '+v);
+            test.info("props: function(){}._    : "+this.typename+', '+n+', '+v);
             this['_'+n] = v;
-        }._(),
+        }._,
     });
 
     test.info("====== new MyClass('foobar')");
@@ -153,7 +153,7 @@ var test = require('tool/test');
     test.equal(a.propSetter(1), 1, 'a.propSetter(1) returns 1');
     test.equal(a.propSetter(2), 3, 'a.propSetter(2) returns 3');
     test.equal(a.propSetter(3), 6, 'a.propSetter(3) returns 6');
-    test.equal(a.propSetter(), 1+2+3, 'property setter marked via "FUN._()": '+a._propSetter);
+    test.equal(a.propSetter(), 1+2+3, 'property setter marked via "FUN._": '+a._propSetter);
 
     test.equal(a.prop1 !== undefined, true, 'has a.prop1');
     test.equal(a.prop2 !== undefined, true, 'has a.prop2');
@@ -162,9 +162,9 @@ var test = require('tool/test');
     test.equal(a.prop1(1), 1, 'a.prop1(1) returns 1');
     test.equal(a.prop2(2), 2, 'a.prop1(2) returns 2');
     test.equal(a.prop3(3), 3, 'a.prop1(3) returns 3');
-    test.equal(a.prop1(), 1, 'properties setter marked via "FUN._()": '+a._prop1);
-    test.equal(a.prop2(), 2, 'properties setter marked via "FUN._()": '+a._prop2);
-    test.equal(a.prop3(), 3, 'properties setter marked via "FUN._()": '+a._prop3);
+    test.equal(a.prop1(), 1, 'properties setter marked via "FUN._": '+a._prop1);
+    test.equal(a.prop2(), 2, 'properties setter marked via "FUN._": '+a._prop2);
+    test.equal(a.prop3(), 3, 'properties setter marked via "FUN._": '+a._prop3);
 
     test.info("====== new MyClass()");
 

@@ -19,6 +19,8 @@ isArray = function(obj) {
     return toString.call(obj) === "[object Array]";
 },
 
+slice = Array.prototype.slice,
+
 // extend 'this' object by other objects' own properties (see hasOwnProperty).
 extend = proto.extend = function() {
     var args = arguments, length = args.length, object, i = 0, name;
@@ -139,7 +141,7 @@ proto.__defineGetter__('typename', function() {
 });
 proto.__defineSetter__('typename', noop); // avoid set error
 */
-proto.defProp('typename', function() {
+proto.defProp('typename', function() { // this will allow a.$typename([xxx])
     return this.$_type ? this.$_type : typeof this;
 });
 
@@ -216,12 +218,13 @@ Function.__huid = 1;
      * obj.bar === 'bar';
      */
     bind: function(context) {
-        var self = this;
-        var args = Array.prototype.slice.call(arguments,1);
+        var self = this, args = slice.call(arguments,1);
         result = args.length
             ? function() {
-	        args = args.concat(Array.prototype.slice.call(arguments,0));
-	        return self.apply(context || this, args);
+                // NOTE: must avoid make changes on 'args', any changes on it
+                // may affect next call on 'this' function. (this is for
+                // the '$$' method.
+	        return self.apply(context || this, args.concat(slice.call(arguments,0)));
 	    }
             : function() {
 	        return self.apply(context || this, arguments);
@@ -267,53 +270,22 @@ Function.__huid = 1;
      *    a.foo2 = 2; // --> this._foo2 = 2
      */
     $$: function(name, prop) { // getter/setter, expected to be used in '$:{ }' spec
-        var self = this, f;
-
-        /*
+        var self = this, 
         f = prop
             ? function(n,v) {
-                //if (v !== undefined) self.apply(this, arguments);
-                if (v !== undefined) self.call(this, v);
+                if (v !== undefined) self.apply(this, slice.call(arguments,1));
                 return this[prop][n];
             }
             : function(n,v) {
-                //if (v !== undefined) self.apply(this, arguments);
-                if (v !== undefined) self.call(this, v);
+                if (v !== undefined) self.apply(this, slice.call(arguments,1));
                 return this['_'+n];
             };
         return name ? f.bind(null, name) : f;
-        */
-
-        return (
-            name
-            ? ( prop
-                ? function(v) {
-                    if (v !== undefined) self.apply(this, arguments);
-                    return this[prop][name];
-                }
-                : ( //name = '_' + name,
-                    function(v) {
-                        if (v !== undefined) self.apply(this, arguments);
-                        return this['_'+name];
-                    }
-                  )
-              )
-            : ( prop
-                ? function(name,v) {
-                    if (v !== undefined) self.apply(this, arguments);
-                    return this[prop][name];
-                }
-                : function(name,v) {
-                    if (v !== undefined) self.apply(this, arguments);
-                    return this['_'+name];
-                }
-              )
-        )
     },
 
-    _: function() {
-        this._$$ = true; // mark '_$$' for 'extend' to make this a 'prop'
-        return this;
+    $: {
+        // support for 'foo: function(){}._', mark '_$$' for 'extend' to call '$$()'
+        _: function() { this._$$ = true; return this; },
     },
 });
 

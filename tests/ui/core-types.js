@@ -86,7 +86,7 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
     alert("Array.prototype.forEach: test failed: "+n);
 }
 
-// ==== Function.prototype.overload ====
+// ==== Function.prototype ====
 {
     var preCalled, postCalled, inCalled;
 
@@ -108,6 +108,80 @@ if (value != (1+2+3+4+5) + (0+1+2+3+4)) {
     test.equal(postCalled, true, 'chain post-call');
     test.equal(inCalled, true, 'chain in-call');
 }
+
+// ==== Function.prototype.bind ====
+{
+    var c1 = { foo: 0 }, c2 = { foo: 0 }, f;
+    var arg_a, arg_b, arg_c, arg_d, arg_e;
+
+    arg_a = arg_b = arg_c = arg_d = arg_e = 0;
+
+    function fun(a,b,c,d,e) {
+        this.foo += 1;
+        if (a !== undefined) arg_a += a;
+        if (b !== undefined) arg_b += b;
+        if (c !== undefined) arg_c += c;
+        if (d !== undefined) arg_d += d;
+        if (e !== undefined) arg_e += e;
+    }
+
+    f = fun.bind(c1);
+    f();
+
+    test.equal(c1.foo, 1, 'f.bind(c1)');
+    test.equal(arg_a, 0, 'f.bind(c1), arguments[0]');
+    test.equal(arg_b, 0, 'f.bind(c1), arguments[1]');
+    test.equal(arg_c, 0, 'f.bind(c1), arguments[2]');
+    test.equal(arg_d, 0, 'f.bind(c1), arguments[3]');
+    test.equal(arg_e, 0, 'f.bind(c1), arguments[4]');
+
+    f = fun.bind(c2);
+    f();
+    test.equal(c2.foo, 1, 'f.bind(c2)');
+    test.equal(arg_a, 0, 'f.bind(c2), arguments[0]');
+    test.equal(arg_b, 0, 'f.bind(c2), arguments[1]');
+    test.equal(arg_c, 0, 'f.bind(c2), arguments[2]');
+    test.equal(arg_d, 0, 'f.bind(c2), arguments[3]');
+    test.equal(arg_e, 0, 'f.bind(c2), arguments[4]');
+    f(1,2,3,4,5);
+    test.equal(c2.foo, 2, 'f.bind(c2)');
+    test.equal(arg_a, 1, 'f.bind(c2), arguments[0]');
+    test.equal(arg_b, 2, 'f.bind(c2), arguments[1]');
+    test.equal(arg_c, 3, 'f.bind(c2), arguments[2]');
+    test.equal(arg_d, 4, 'f.bind(c2), arguments[3]');
+    test.equal(arg_e, 5, 'f.bind(c2), arguments[4]');
+
+    f = fun.bind(null);
+    f();
+    test.equal(c1.foo, 1, 'f.bind(null)');
+    test.equal(c2.foo, 2, 'f.bind(null)');
+    test.equal(arg_a, 1, 'f.bind(null), arguments[0]');
+    test.equal(arg_b, 2, 'f.bind(null), arguments[1]');
+    test.equal(arg_c, 3, 'f.bind(null), arguments[2]');
+    test.equal(arg_d, 4, 'f.bind(null), arguments[3]');
+    test.equal(arg_e, 5, 'f.bind(null), arguments[4]');
+
+    f = fun.bind(null, 1,0,-1);
+    f(-2,-3,1000,1000);
+    test.equal(c1.foo, 1, 'f.bind(null), c1');
+    test.equal(c2.foo, 2, 'f.bind(null), c2');
+    test.equal(arg_a, 2, 'f.bind(null), arguments[0]');
+    test.equal(arg_b, 2, 'f.bind(null), arguments[1]');
+    test.equal(arg_c, 2, 'f.bind(null), arguments[2]');
+    test.equal(arg_d, 2, 'f.bind(null), arguments[3]');
+    test.equal(arg_e, 2, 'f.bind(null), arguments[4]');
+
+    f = fun.bind(c1,1);
+    f(1,1,1,1,10000);
+    test.equal(c1.foo, 2, 'f.bind(c1), c1');
+    test.equal(c2.foo, 2, 'f.bind(c1), c2');
+    test.equal(arg_a, 3, 'f.bind(c1), arguments[0]');
+    test.equal(arg_b, 3, 'f.bind(c1), arguments[1]');
+    test.equal(arg_c, 3, 'f.bind(c1), arguments[2]');
+    test.equal(arg_d, 3, 'f.bind(c1), arguments[3]');
+    test.equal(arg_e, 3, 'f.bind(c1), arguments[4]');
+}
+
 
 // ==== Type ====
 {
