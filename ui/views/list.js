@@ -30,7 +30,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     _template: requireText('list/list.html'),
     _formatter: dom.escapeHTML,
     _packSize: 100,
-    _renderMoreRows: 60,
+    _renderMoreRows: 60, // Render 60-rows more than the visible zone
     _rowHeight: 0,
 
 
@@ -44,26 +44,39 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         /**
          * Do not redraw more often then in value ms
          */
-        throttle: function(v) {
-            this._throttle = v;
-            if (v > 0) {
-                this._visChanged = fun.throttle(this._originalVisChanged, this._throttle);
-            } else {
-                this._visChanged = this._originalVisChanged;
-            }
-        }.$$(),
+        // throttle: function(v) {
+        //     this._throttle = v;
+        //     if (v > 0) {
+        //         this._visChanged = fun.throttle(this._originalVisChanged, this._throttle);
+        //     } else {
+        //         this._visChanged = this._originalVisChanged;
+        //     }
+        // }.$$(), // TODO: using '._' instead of '.$$' for this case
 
         /**
          * Do redraw only after value ms after last scroll/update
          */
-        debounce: function(v) {
-            this._debounce = v;
+        // debounce: function(v) {
+        //     this._debounce = v;
+        //     if (v > 0) {
+        //         this._visChanged = fun.debounce(this._originalVisChanged, this._debounce);
+        //     } else {
+        //         this._visChanged = this._originalVisChanged;
+        //     }
+        // }.$$(), // TODO: using '._' instead of '.$$' for this case
+
+        /**
+         * throttle: Do not redraw more often then in value ms
+         * debounce: Do redraw only after value ms after last scroll/update
+         */
+        'debounce throttle': function(name,v) {
+            this['_'+name] = v;
             if (v > 0) {
-                this._visChanged = fun.debounce(this._originalVisChanged, this._debounce);
+                this._visChanged = fun[name](this._originalVisChanged, this['_'+name]);
             } else {
                 this._visChanged = this._originalVisChanged;
             }
-        }.$$(),
+        }.$$(), // TODO: using '._' instead of '.$$' for this case
     },
 
     /**
