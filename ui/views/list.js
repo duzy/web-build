@@ -78,7 +78,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     data: function(d) {
         this._data = d;
         this._reset();
-    }._(),
+    }._,
 
     /**
  * Bind representation to colleciton.
@@ -93,7 +93,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         if (this._binding) this._binding.destroy();
         this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
         if (val) this.data(val.model);
-    }._(),
+    }._,
 
     /**
  * Actual row selected.
@@ -184,7 +184,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     // }),
     editor: function(e) {
         this._editor = build(e)[0];
-    }._(),
+    }._,
 
     /**
  * Is editor open right now?

@@ -179,9 +179,10 @@ fun.setterN = function(prop) {
 };
 
 fun.setter = function(name, prop) {
-    return prop
-    ? function(v) { this[prop][name] = v; }.$$(name, prop)
-    : function(v) { this[name] = v; }.$$(name, prop)
+    // return prop
+    //     ? function(v) { this[prop][name] = v; }.$$(name, prop)
+    //     : function(v) { this[name] = v; }.$$(name, prop)
+    return fun.setterN(prop).bind(null,name);
 };
 
 /**

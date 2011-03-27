@@ -40,10 +40,14 @@ var NativeControl = new Object.Class('native', Base, Focusable, {
     domForEvent: function(type) {
         return Focusable._domForEvent.call(this, type) ||
             Base.prototype.domForEvent.call(this, type);
-    }
+    },
+
+    $: {
+        'name checked disabled value type': fun.setterN('_input'),
+    },
 });
-fun.delegateProp(NativeControl.prototype,
-                 ['name', 'checked', 'disabled', 'value', 'type'], '_input');
+ // fun.delegateProp(NativeControl.prototype,
+ //                  ['name', 'checked', 'disabled', 'value', 'type'], '_input');
 
 
 
@@ -62,9 +66,13 @@ var Radio = new Object.Class('Radio', NativeControl, {
     
     _bindingOptions: {
 	viewEvent: 'click', viewProp: 'checked', commitChangesViewEvent: 'click'
-    }
+    },
+
+    $: {
+        html: fun.setter('innerHTML', '_label'),
+    },
 });
-fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
+// fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
 
 
 /**
@@ -80,9 +88,13 @@ var Checkbox = new Object.Class('Checkbox', NativeControl, {
 	}, [this._input, this._label]);
     },
 
-    _bindingOptions: Radio.prototype._bindingOptions
+    _bindingOptions: Radio.prototype._bindingOptions,
+
+    $: {
+        html: fun.setter('innerHTML', '_label'),
+    },
 });
-fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
+// fun.delegateProp(Checkbox.prototype, 'html', '_label', 'innerHTML');
 
 
 /**

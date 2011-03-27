@@ -260,11 +260,13 @@ Function.__huid = 1;
         var self = this, i = name ? 1 : 0,
         f = prop
             ? function(n,v) {
-                if (v !== undefined) self.apply(this, slice.call(arguments,i));
-                return this[prop][n];
+                if (this[prop] !== undefined) {
+                    v !== undefined && self.apply(this, slice.call(arguments,i));
+                    return this[prop][n];
+                }
             }
             : function(n,v) {
-                if (v !== undefined) self.apply(this, slice.call(arguments,i));
+                v !== undefined && self.apply(this, slice.call(arguments,i));
                 return this['_'+n];
             };
         return name ? f.bind(null, name) : f;
