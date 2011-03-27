@@ -30,7 +30,7 @@ extend = proto.extend = function() {
 		if (!hasOwnProperty.call(object,name)  // only the owned property
 
 		    // skip protected names
-		    || name == '$_type' || name == 'typename')
+		    || name == '$__t' || name == 'typename')
 		{
 		    continue;
 		}
@@ -137,12 +137,12 @@ proto.extend({
 // allows all objects to access 'obj.typename' for the type name
 /*
 proto.__defineGetter__('typename', function() {
-    return this.$_type ? this.$_type : typeof this;
+    return this.$__t ? this.$__t : typeof this;
 });
 proto.__defineSetter__('typename', noop); // avoid set error
 */
 proto.defProp('typename', function() { // this will allow a.$typename([xxx])
-    return this.$_type ? this.$_type : typeof this;
+    return this.$__t ? this.$__t : typeof this;
 });
 
 
@@ -186,21 +186,6 @@ Function.__huid = 1;
         }) : fun;
     },
 
-    /*
-    derive: function(name,defer) {
-        var self = this;
-        return function() {
-	    if (this.prototype.hasOwnProperty(name)) {
-	        var f = this.prototype[name];
-	        if (!isFun(f)) f = null;
-	        if (!defer) f.apply(this, arguments);
-	        self.apply(this.arguments);
-	        if (defer) f.apply(this, arguments);
-	    }
-        };
-    };
-    */
-
     /**
      * Bind a function to a context and optional arguments.
      *
@@ -242,19 +227,21 @@ Function.__huid = 1;
      *   // will unbind bound function here
      *   x.removeListener('click', fun.bindOnce(handler, this));
      */
+    // TODO: unit-tests for this
     bindOnce: function(context) {
         this.huid = this.huid || Function.__huid++;
-        var bindName = '__bind_' + this.huid;
+        var bindName = '$__bi_' + this.huid;
         // Optimize:
         // Do not rebind bound functions for the second time
         // since this will not affect their behaviour
-        context[bindName] = context[bindName] ||
-	    (this.bound ? this : this.bind(context));
+        context[bindName] || (
+            context[bindName] = this.bound ? this : this.bind(context)
+        );
         return context[bindName];
     },
 
     /**
-     * Make the function be a named property getter/setter function:
+     * Make the function be a named property getter/setter function(wrap setters):
      *    var C = new Class({
      *      $:{
      *        foo: function(v) { this._foo = v }.$$('foo');
@@ -270,14 +257,14 @@ Function.__huid = 1;
      *    a.foo2 = 2; // --> this._foo2 = 2
      */
     $$: function(name, prop) { // getter/setter, expected to be used in '$:{ }' spec
-        var self = this, 
+        var self = this, i = name ? 1 : 0,
         f = prop
             ? function(n,v) {
-                if (v !== undefined) self.apply(this, slice.call(arguments,1));
+                if (v !== undefined) self.apply(this, slice.call(arguments,i));
                 return this[prop][n];
             }
             : function(n,v) {
-                if (v !== undefined) self.apply(this, slice.call(arguments,1));
+                if (v !== undefined) self.apply(this, slice.call(arguments,i));
                 return this['_'+n];
             };
         return name ? f.bind(null, name) : f;
@@ -290,33 +277,34 @@ Function.__huid = 1;
 });
 
 // === String.prototype ====
+/*
 (proto = String.prototype).trim = proto.trim || function(s) {
     return s.replace(/^\s*|\s*$/g, "");
 };
+*/
 
 // ==== Array.prototype ====
 (proto = Array.prototype).extend({
     //TODO: ['indexOf', 'lastIndexOf', 'forEach', 'map', 'filter', 'reduce'];
 
     // iterate in the elements of array
+    /*
     forEach: proto.forEach || function(action,context) {
         for (var i=0, n = this.length; i < n; i++) {
 	    if (i in this) {
-	    action.call(context, this[i], i, this);
+	        action.call(context, this[i], i, this);
 	    }
         }
-    },
-});
-proto.$_type = 'array';
+    }, */
+
+}).$__t = 'array';
 
 ////////////////////////////////////////////////////////////////////////////////
 
 // ==== Type ==== (see: MooTools:Core.js)
 // helps to make new types supports 'type' property, etc.
 var Type = function(name, object) {
-    if (name) {
-	object.prototype.$_type = name;
-    }
+    name && ( object.prototype.$__t = name );
 
     object.extend(this);
 
@@ -414,8 +402,6 @@ var Class = Object.Class = new Type('Class', function() {
 
     return newClass;
 });
-
-//Arguments.prototype.forEach = Array.prototype.forEach;
 
 // module.exports = {
 //     Type: Type,

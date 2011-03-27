@@ -70,6 +70,8 @@ var test = require('tool/test');
 
     var b3 = new Base3('foo');
 
+    var foobar1_called = 0, foobar2_called = 0;
+
     // NOTE: the Base3.prototype.init and Base3.prototype.destroy is not chained!
     var MyClass = new Object.Class('MyClass', Base, Base2, Base3, {
 	//_typename: 'MyClass',
@@ -83,6 +85,9 @@ var test = require('tool/test');
         },
 
 	extra: 'mixin',
+
+        _foobar1: 0,
+        _foobar2: 0,
 
         $: {
             // multiple property names bind to one single function
@@ -114,6 +119,12 @@ var test = require('tool/test');
                 get: function() { return this._foobar; },
                 set: function(value) { return (this._foobar = value); },
             },
+
+            'foobar1 foobar2': function(name,value) {
+                if (name === 'foobar1') foobar1_called += 1;
+                if (name === 'foobar2') foobar2_called += 1;
+                this['_'+name] = value;
+            }.$$(),
         },
 
         _propSetter: 0, // this will be changed via 'a.propSetter(1)'
@@ -142,11 +153,25 @@ var test = require('tool/test');
     test.equal(a.$foo1 !== undefined, true, 'has a.$foo1');
     test.equal(a.$foo2 !== undefined, true, 'has a.$foo2');
     test.equal(a.$foobar !== undefined, true, 'has a.$foobar');
+    test.equal(a.$foobar1 !== undefined, true, 'has a.$foobar1');
+    test.equal(a.$foobar2 !== undefined, true, 'has a.$foobar2');
     test.equal(a.$bar !== undefined, true, 'has a.$bar');
 
     test.equal(a.$foobar('foo'), a, 'a.$foobar returns "this"');
     test.equal(a.$foobar(), 'foo', 'a.$foobar used as "setter"');
     test.equal(a.foobar, 'foo', 'a.$foobar and a.foobar are samethings');
+
+    test.equal(a.foobar1, 0, 'a.foobar1 == 0');
+    test.equal(a.foobar2, 0, 'a.foobar2 == 0');
+
+    a.foobar1 = 1, a.foobar2 = 2;
+    test.equal(a.foobar1, 1, 'a.foobar1 == 1');
+    test.equal(a.foobar2, 2, 'a.foobar2 == 2');
+    test.equal(foobar1_called, 1, 'foobar1_called == 1');
+    test.equal(foobar2_called, 1, 'foobar2_called == 1');
+
+    a.foobar2 = 2;
+    test.equal(foobar2_called, 2, 'foobar2_called == 2');
 
     test.equal(a.propSetter !== undefined, true, 'has a.propSetter');
 

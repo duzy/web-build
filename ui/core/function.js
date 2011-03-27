@@ -172,16 +172,16 @@
         return setTimeout(fn, timeout);
     };
 
-fun.setter = function(name, prop) {
-    return prop
-    ? function(v) { this[prop][name] = v; }.$$(name, prop)
-    : function(v) { this[name] = v; }.$$(name, prop)
-};
-
 fun.setterN = function(prop) {
     return prop
         ? function(name,v) { this[prop][name] = v; }.$$(null, prop)
         : function(name,v) { this[name] = v; }.$$(null, prop)
+};
+
+fun.setter = function(name, prop) {
+    return prop
+    ? function(v) { this[prop][name] = v; }.$$(name, prop)
+    : function(v) { this[name] = v; }.$$(name, prop)
 };
 
 /**
