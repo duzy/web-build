@@ -13,8 +13,6 @@ var fun   = require('../core/function'),
     Base      = require('../core/view/base').Base;
 
 
-var ieResize = env.ua.match(/MSIE 6|7/);
-
 /**
  * Base class for native control wrappers.
  * Map common dom attributes and add binding
@@ -125,7 +123,7 @@ var Text = new Object.Class('Text', NativeControl, {
         NativeControl.prototype.resized.call(this);
         this._updatePlaceholderHeight();
         // manual resize box-sizing: border-box for ie 6,7
-        if (ieResize) {
+        if (env.isIE) {
             this._input.style.width = this.dom.offsetWidth - 6;
         }
     },

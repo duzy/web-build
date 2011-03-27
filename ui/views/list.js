@@ -27,38 +27,44 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     _throttle: 0,
     _debounce: 0,
 
-    /**
-     * Do not redraw more often then in value ms
-     */
-    throttle: fun.newProp('throttle', function(v) {
-        this._throttle = v;
-        if (v > 0) {
-            this._visChanged = fun.throttle(this._originalVisChanged, this._throttle);
-        } else {
-            this._visChanged = this._originalVisChanged;
-        }
-    }),
-
-   /**
-    * Do redraw only after value ms after last scroll/update
-    */
-    debounce: fun.newProp('debounce', function(v) {
-        this._debounce = v;
-        if (v > 0) {
-            this._visChanged = fun.debounce(this._originalVisChanged, this._debounce);
-        } else {
-            this._visChanged = this._originalVisChanged;
-        }
-    }),
-
     _template: requireText('list/list.html'),
     _formatter: dom.escapeHTML,
     _packSize: 100,
     _renderMoreRows: 60,
     _rowHeight: 0,
 
+
     _key: null,
     _changeOnKeys: [],
+
+    $: {
+        'template formatter packSize renderMoreRows rowHeight key changeOnKeys lastClickIndex'
+        : fun.setter(),
+
+        /**
+         * Do not redraw more often then in value ms
+         */
+        throttle: function(v) {
+            this._throttle = v;
+            if (v > 0) {
+                this._visChanged = fun.throttle(this._originalVisChanged, this._throttle);
+            } else {
+                this._visChanged = this._originalVisChanged;
+            }
+        }.$$(),
+
+        /**
+         * Do redraw only after value ms after last scroll/update
+         */
+        debounce: function(v) {
+            this._debounce = v;
+            if (v > 0) {
+                this._visChanged = fun.debounce(this._originalVisChanged, this._debounce);
+            } else {
+                this._visChanged = this._originalVisChanged;
+            }
+        }.$$(),
+    },
 
     /**
  * Data to render. Data should provide one of the following simple API's:
@@ -168,7 +174,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
  * @name shouldRedrawOnPropChange
  */
     shouldRedrawOnPropChange: function(key) {
-        return this.key() === key || utils.indexOf(this.changeOnKeys(), key) > -1;
+        return this.key === key || utils.indexOf(this.changeOnKeys, key) > -1;
     },
     
     /* --------------- Inline editing -------------- */
@@ -207,7 +213,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         if (!this.editor()) return this;
         this._editorBlur();
     
-        var t = this.selectedIndex() * this.rowHeight();
+        var t = this.selectedIndex() * this.rowHeight;
     
         this.dom.appendChild(this.editor().dom);
     
@@ -215,13 +221,13 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
 	    .on('finishEdit', this._editorBlur.bindOnce(this))
 	    .on('move', this._editorMove.bindOnce(this))
 	    .pos({ top: t+'px', left: 0+'px',
-	           right: 0+'px', height: this.rowHeight() + 'px'
+	           right: 0+'px', height: this.rowHeight + 'px'
 	         })
-	    .visible(true)
+	    .$visible(true)
 	    .parent(this)
-	    .edit({ model: this.selectedRow(), modelProp: this.key() });
+	    .edit({ model: this.selectedRow(), modelProp: this.key });
         
-        this.lastClickIndex(this.selectedIndex());
+        this.lastClickIndex = this.selectedIndex();
         return this;
     },
 
@@ -291,7 +297,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     _firstResize: function() {
         if (this._allreadyResized) return false;
         this._calcRowHeight();
-        if (this.rowHeight()) {
+        if (this.rowHeight) {
 	    this._allreadyResized = true;
 	    this._scrollableParent().on('scroll', this._scroll.bindOnce(this));
 	    this._updateHeight();
@@ -314,9 +320,9 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     },
 
     _updateHeight: function() {
-        this.dom.style.height = this.data().length * this.rowHeight() + 'px';
+        this.dom.style.height = this.data().length * this.rowHeight + 'px';
         // setTimeout(function(){
-        // 	this.dom.style.height = this.data().length * this.rowHeight() + 'px';
+        // 	this.dom.style.height = this.data().length * this.rowHeight + 'px';
         // }.bind(this), 0);
     },
 
@@ -347,8 +353,8 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         var pxs = this._visiblePixels();
     
         return [
-	    pxs[0] / this.rowHeight() << 0,
-            pxs[1] / this.rowHeight() + 0.5 << 0
+	    pxs[0] / this.rowHeight << 0,
+            pxs[1] / this.rowHeight + 0.5 << 0
         ];
     },
 
@@ -356,24 +362,24 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         var rows = this._visibleRows();
         return [
             Math.max(0, rows[0] - this._renderMoreRows)
-	        / this.packSize() << 0,
+	        / this.packSize << 0,
             Math.min(this.data().length, rows[1] + this._renderMoreRows)
-	        / this.packSize() << 0
+	        / this.packSize << 0
         ];
     },
 
     _schedulePackRender: function(packN, revision) {
         //setTimeout(function(){
-        var from = packN * this.packSize();
+        var from = packN * this.packSize;
 
         if (this.data().loadRange) {
 	    this.data().loadRange(
-	        from, this.packSize() + from,
+	        from, this.packSize + from,
 	        this._updatePack.bind(this, packN, revision)
 	    );
         } else {
 	    this._updatePack(packN, revision,
-			     this.data().slice(from, from + this.packSize()));
+			     this.data().slice(from, from + this.packSize));
         }
         //}.bind(this), 0);
     },
@@ -393,7 +399,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         this._removePack(packN);
         this._packs[packN] = this._renderPack(rows);
         this._packs[packN].style.top =
-	    packN * this.rowHeight() * this.packSize() + 'px';
+	    packN * this.rowHeight * this.packSize + 'px';
         this._packs[packN].__revision = revision;
         this.dom.appendChild(this._packs[packN]);
         this._restorePackSelection(packN);
@@ -412,8 +418,8 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     
     _restorePackSelection: function(packN) {
         var indexes = this._selectedIndexes,
-        from = packN * this.packSize(),
-        to   = from + this.packSize();
+        from = packN * this.packSize,
+        to   = from + this.packSize;
 
         var currentSelection = utils.binarySearch(from, indexes);
         currentSelection = Math.max(currentSelection, 0);
@@ -444,11 +450,11 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     },
 
     _itemAt: function(position) {
-        var packN = (position / this.packSize()) << 0,
+        var packN = (position / this.packSize) << 0,
         pack = this._packs[packN];
     
         if (!pack) return null;
-        return this._itemWithinPack(pack, position - this.packSize() * packN);
+        return this._itemWithinPack(pack, position - this.packSize * packN);
     },
 
     _itemWithinPack: function(pack, packPos) {
@@ -511,8 +517,8 @@ proto = DataList.prototype;
  * @function
  * @name rowHeight
  */
-fun.addProps(proto, [
-    'template', 'formatter', 'packSize', 'renderMoreRows', 'rowHeight']);
+// fun.addProps(proto, [
+//     'template', 'formatter', 'packSize', 'renderMoreRows', 'rowHeight']);
 
 
 /* --------------- Data API --------------*/
@@ -535,7 +541,7 @@ fun.addProps(proto, [
  * @function
  * @name changeOnKeys
  */
-fun.addProps(proto, ['key', 'changeOnKeys']);
+//fun.addProps(proto, ['key', 'changeOnKeys']);
 
 
 /* --------------- Selection API -------------- 
@@ -546,7 +552,7 @@ fun.addProps(proto, ['key', 'changeOnKeys']);
  * @function
  * @name lastClickIndex
  */
-fun.addProp(proto, 'lastClickIndex');
+//fun.addProp(proto, 'lastClickIndex');
 
 
 // store original version function so we can instance override

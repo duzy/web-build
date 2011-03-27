@@ -31,7 +31,7 @@ var Can = exports.Can = new Object.Class('Can', Base, {
 	var cv = this.childViews();
         cv && cv.forEach(function(view) {
 	    // do not resize invisible views, save time
-	    view.visible() && view.resized();
+	    view.visible && view.resized();
 	});
     },
 

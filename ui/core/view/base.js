@@ -52,6 +52,28 @@ var Base = new Object.Class('Base', {
             return s[name];
         },
 
+    /**
+     * Accessor for view visibility.
+     *
+     * @param {boolean=} state
+     * @returns {boolean|view.Base} current visibility state of self
+     */
+    visible: function(state) {
+	if (state === undefined) {
+	    return this.dom.style.display != 'none';
+	}
+	
+	var origState = this.visible;
+	this.dom.style.display = state ? '' : 'none';
+	
+	// if we change from invis to vis, and we have dom, and we're attached
+	// redraw
+	if (state && !origState && this.dom && this.dom.offsetWidth) {
+	    this.resized();
+	}
+	return this.visible;
+    },
+
         //size: function(value) { // for both 'width' and 'height'
         //},
 
@@ -221,28 +243,6 @@ var Base = new Object.Class('Base', {
 	POS_RULES.forEach(function(rule) {
 	    style[rule] = pos[rule] || '';
 	});
-    },
-
-    /**
-     * Accessor for view visibility.
-     *
-     * @param {boolean=} state
-     * @returns {boolean|view.Base} current visibility state of self
-     */
-    visible: function(state) {
-	if (state === undefined) {
-	    return this.dom.style.display != 'none';
-	}
-	
-	var origState = this.visible();
-	this.dom.style.display = state ? '' : 'none';
-	
-	// if we change from invis to vis, and we have dom, and we're attached
-	// redraw
-	if (state && !origState && this.dom && this.dom.offsetWidth) {
-	    this.resized();
-	}
-	return this;
     },
 
 /* ----------------------------- Container api ------------------------------*/
