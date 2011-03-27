@@ -169,7 +169,7 @@
 	code    += 'function require(index) { if (!require.cache[index]) {var module = require.cache[index] = {exports: {}}; require.modules[index].call(module.exports, global, module);} return require.cache[index].exports; }\n';
 	code    += 'var require_modules = require.modules = []; require.cache = [];';
 	var body = jsp.parse(code)[1];
-    
+        
 	if (state.requiredCssUsed) {
             var code = state.requiredCssFiles.map(function(filePath) {
 		return processCssIncludes(filePath);

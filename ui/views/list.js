@@ -30,7 +30,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     /**
      * Do not redraw more often then in value ms
      */
-    throttle: fun.newProp(function(v) {
+    throttle: fun.newProp('throttle', function(v) {
         this._throttle = v;
         if (v > 0) {
             this._visChanged = fun.throttle(this._originalVisChanged, this._throttle);
@@ -42,7 +42,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
    /**
     * Do redraw only after value ms after last scroll/update
     */
-    debounce: fun.newProp(function(v) {
+    debounce: fun.newProp('debounce', function(v) {
         this._debounce = v;
         if (v > 0) {
             this._visChanged = fun.debounce(this._originalVisChanged, this._debounce);
@@ -71,21 +71,29 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
  * row hight if rowHeight is not provided. 
  * If there's no sampleRow slice(0, 1)[0] will be used.
  */
-    data: fun.newProp(function(d) {
-        alert(d);
+    // data: fun.newProp('data', function(d) {
+    //     this._data = d;
+    //     this._reset();
+    // }),
+    data: function(d) {
         this._data = d;
         this._reset();
-    }),
+    }._(),
 
     /**
  * Bind representation to colleciton.
  * #TBD
  */
-    binding: fun.newProp(function(val) {
+    // binding: fun.newProp('binding', function(val) {
+    //     if (this._binding) this._binding.destroy();
+    //     this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
+    //     if (val) this.data(val.model);
+    // }),
+    binding: function(val) {
         if (this._binding) this._binding.destroy();
         this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
         if (val) this.data(val.model);
-    }),
+    }._(),
 
     /**
  * Actual row selected.
@@ -165,15 +173,18 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     
     /* --------------- Inline editing -------------- */
     /**
- * Either a view or view description of the row inline editor. 
- * See view.dataList.Editor for example.
- * 
- * @function
- * @name editor
- */
-    editor: fun.newProp(function(e) {
+     * Either a view or view description of the row inline editor. 
+     * See view.dataList.Editor for example.
+     * 
+     * @function
+     * @name editor
+     */
+    // editor: fun.newProp('editor', function(e) {
+    //     this._editor = build(e)[0];
+    // }),
+    editor: function(e) {
         this._editor = build(e)[0];
-    }),
+    }._(),
 
     /**
  * Is editor open right now?

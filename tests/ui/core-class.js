@@ -100,11 +100,39 @@ var test = require('tool/test');
                 set: function(value) { return (this._foobar = value); },
             },
         },
+
+        _propSetter: 0, // this will be changed via 'a.propSetter(1).propSetter(2)'
+        propSetter: function(v) {
+            test.info("prop: function(){}._()    : "+v);
+            this._propSetter += v;
+        }._(),
+
+        _prop1: 0,
+        _prop2: 0,
+        _prop3: 0,
+        'prop1 prop2 prop3': function(n,v) {
+            test.info("props: function(){}._()    : "+this.typename+', '+n+', '+v);
+            this['_'+n] = v;
+        }._(),
     });
 
     test.info("====== new MyClass('foobar')");
 
     var a = new MyClass('foobar');
+
+    test.equal(a.propSetter !== undefined, true, 'has a.propSetter');
+
+    a.propSetter(1).propSetter(2).propSetter(3);
+    test.equal(a.propSetter(), 1+2+3, 'property setter marked via "FUN._()": '+a._propSetter);
+
+    test.equal(a.prop1 !== undefined, true, 'has a.prop1');
+    test.equal(a.prop2 !== undefined, true, 'has a.prop2');
+    test.equal(a.prop3 !== undefined, true, 'has a.prop3');
+    
+    a.prop1(1).prop2(2).prop3(3);
+    test.equal(a.prop1(), 1, 'properties setter marked via "FUN._()": '+a._prop1);
+    test.equal(a.prop2(), 2, 'properties setter marked via "FUN._()": '+a._prop2);
+    test.equal(a.prop3(), 3, 'properties setter marked via "FUN._()": '+a._prop3);
 
     test.info("====== new MyClass()");
 

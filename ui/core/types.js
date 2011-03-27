@@ -41,14 +41,25 @@ extend = proto.extend = function() {
                 /*
                 */
 
-		var copy = object[name];
+		var copy = object[name], names, iss;
 
                 // 'copy !== this' prevents dead-loop, (by jQuery)
 		if (copy !== this && copy !== undefined) {
-                    //this[name] = copy;
-                    ( name === '$' )
-                        ? ( this.props(copy) )
-                        : ( this[name] = copy );
+                    ( name === '$' ) // is property spec?
+                        ? ( this.defProps(copy) ) // define properties
+                        : (
+                            iss = isFun(copy) && copy._$, // is FUN setter?
+                            names = name.split(' '),
+                            ( names.length === 1 )
+                            ? ( this[name] = iss ? copy.be(name) : copy )
+                            : (
+                                names.forEach(function(nm){
+                                    this[nm] = iss
+                                        ? copy.bind(null,nm).be(nm)
+                                        : copy.bind(null,nm)
+                                }.bind(this))
+                            )
+                        );
 		}
 	    }
 	}
@@ -81,7 +92,7 @@ proto.extend({
     },
     */
 
-    prop: function(name, funs) {
+    defProp: function(name, funs) { // TODO: rename to defProp
         if (name !== 'prop' && name !== 'props' && !this[name]) {
             var g, s, f = isFun(funs);
             g = f ? funs : funs.get;
@@ -91,13 +102,13 @@ proto.extend({
         }
     },
 
-    props: function(ps) {
+    defProps: function(ps) { // TODO: rename to defProps
         var name, names, f, funs, pn;
         for(name in ps) {
             if (hasOwnProperty.call(ps,name) && (f = ps[name])) {
                 names = name.split(' ');
                 if (names.length == 1) { // one single property name
-                    this.prop(name, f);
+                    this.defProp(name, f);
                 } else { // multiple or ZERO property names
                     for (i=0; i < names.length; ++i) {
                         pn = names[i];
@@ -106,7 +117,7 @@ proto.extend({
                                 get: f.get && f.get.bind(null, pn),
                                 set: f.set && f.set.bind(null, pn),
                             };
-                        this.prop(pn, funs);
+                        this.defProp(pn, funs);
                     }
                 }
             }
@@ -121,7 +132,7 @@ proto.__defineGetter__('typename', function() {
 });
 proto.__defineSetter__('typename', noop); // avoid set error
 */
-proto.prop('typename', function() {
+proto.defProp('typename', function() {
     return this.$_type ? this.$_type : typeof this;
 });
 
@@ -230,6 +241,26 @@ Function.__huid = 1;
         context[bindName] = context[bindName] ||
 	    (this.bound ? this : this.bind(context));
         return context[bindName];
+    },
+
+    /**
+     * Make the function 'be' a named property getter/setter function:
+     *    p = function(v) { this._foo = v }._('foo');
+     *    p();  // --> this._foo
+     *    p(1); // --> this._foo = 1
+     */
+    be: function(name) {
+        var self = this;
+        name = '_' + name;
+        return function(v) {
+            if (v === undefined) { return this[name]; }
+            self.apply(this, arguments);
+            return this;
+        }
+    },
+    _: function() {
+        this._$ = true; // mark '_$' for 'extend' to make this a 'prop'
+        return this;
     },
 });
 
