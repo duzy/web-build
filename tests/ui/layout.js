@@ -39,7 +39,7 @@ main.right = '50%';
 main.bottom ='10px';
 */
 view1.html = 'rect: '
-    + main.left + ', '
+    + main.left.typename + ', '
     + main.top + ', '
     + main.right + ', '
     + main.bottom + ';'

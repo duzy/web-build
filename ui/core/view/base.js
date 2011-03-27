@@ -48,7 +48,6 @@ var Base = new Object.Class('Base', {
             if (value !== undefined) {
                 //s.position = 'absolute'; // force position to be 'absolute'
                 s[name] = value;
-                return this;
             }
             return s[name];
         },
@@ -56,34 +55,17 @@ var Base = new Object.Class('Base', {
         //size: function(value) { // for both 'width' and 'height'
         //},
 
-        /**
-         * Shortcut to set absolute positioning props
-         * @param {string|object} p Position string in the form of
-         *                          'l:10px t:10px r:30% h:200px'
-         */
-        /*
-        pos: function(pos) {
-	    if (pos === undefined) {
-	        return this._styleToPos(this.dom.style);
-	    }
-	    pos = this._expandPos(pos);
-	    this._applyPosToStyle(pos, this.dom.style);
-	    return this;
-        },
-        */
-
-        html: fun.newDelegateProp('_dom', 'innerHTML'),
+        //html: fun.newDelegateProp('_dom', 'innerHTML'),
+        //html: function(v) { this.dom.innerHTML = v }.$$('innerHTML', 'dom'),
+        html: fun.setter('innerHTML', 'dom'),
         text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
 
-        className: fun.newDelegateProp('_dom', 'className'),
+        //className: fun.newDelegateProp('_dom', 'className'),
 
-        'scrollTop scrollLeft title alt': function(name, value) {
-            if (value !== undefined) {
-                this.dom[name] = value;
-                return this;
-            }
-            return this.dom[name];
-        },
+        // 'scrollTop scrollLeft title alt': function(name, value) {
+        //     this.dom[name] = value;
+        // }.$$(null, 'dom'),
+        'scrollTop scrollLeft title alt className': fun.setterN('dom'),
     },
 
     //init: NOOP(); 

@@ -9,6 +9,21 @@ try {
 
 var test = require('tool/test');
 
+{
+    var a = { foo: 0 };
+    var b = {}, aa;
+    b.A = a;
+    aa = b.A;
+    a.foo = 1;
+    test.equal(a.foo, 1, 'ref test');
+    test.equal(b.A.foo, a.foo, 'ref test');
+    test.equal(aa.foo, a.foo, 'ref test');
+    aa.foo = 2;
+    test.equal(a.foo, 2, 'ref test');
+    test.equal(b.A.foo, a.foo, 'ref test');
+    test.equal(aa.foo, a.foo, 'ref test');
+}
+
 // ==== Class ====
 {
     test.equal(Object.Class != undefined, true, 'Object.Class defined');
@@ -101,9 +116,9 @@ var test = require('tool/test');
             },
         },
 
-        _propSetter: 0, // this will be changed via 'a.propSetter(1).propSetter(2)'
-        propSetter: function(v) {
-            test.info("prop: function(){}._()    : "+v);
+        _propSetter: 0, // this will be changed via 'a.propSetter(1)'
+        propSetter: function(v,v2) {
+            test.info("prop: function(){}._()    : "+this.typename+', '+v+', '+v2);
             this._propSetter += v;
         }._(),
 
@@ -120,16 +135,33 @@ var test = require('tool/test');
 
     var a = new MyClass('foobar');
 
+    test.equal(a.$name1 !== undefined, true, 'has a.$name1');
+    test.equal(a.$name2 !== undefined, true, 'has a.$name2');
+    test.equal(a.$name3 !== undefined, true, 'has a.$name3');
+    test.equal(a.$name4 !== undefined, true, 'has a.$name4');
+    test.equal(a.$foo1 !== undefined, true, 'has a.$foo1');
+    test.equal(a.$foo2 !== undefined, true, 'has a.$foo2');
+    test.equal(a.$foobar !== undefined, true, 'has a.$foobar');
+    test.equal(a.$bar !== undefined, true, 'has a.$bar');
+
+    test.equal(a.$foobar('foo'), a, 'a.$foobar returns "this"');
+    test.equal(a.$foobar(), 'foo', 'a.$foobar used as "setter"');
+    test.equal(a.foobar, 'foo', 'a.$foobar and a.foobar are samethings');
+
     test.equal(a.propSetter !== undefined, true, 'has a.propSetter');
 
-    a.propSetter(1).propSetter(2).propSetter(3);
+    test.equal(a.propSetter(1), 1, 'a.propSetter(1) returns 1');
+    test.equal(a.propSetter(2), 3, 'a.propSetter(2) returns 3');
+    test.equal(a.propSetter(3), 6, 'a.propSetter(3) returns 6');
     test.equal(a.propSetter(), 1+2+3, 'property setter marked via "FUN._()": '+a._propSetter);
 
     test.equal(a.prop1 !== undefined, true, 'has a.prop1');
     test.equal(a.prop2 !== undefined, true, 'has a.prop2');
     test.equal(a.prop3 !== undefined, true, 'has a.prop3');
     
-    a.prop1(1).prop2(2).prop3(3);
+    test.equal(a.prop1(1), 1, 'a.prop1(1) returns 1');
+    test.equal(a.prop2(2), 2, 'a.prop1(2) returns 2');
+    test.equal(a.prop3(3), 3, 'a.prop1(3) returns 3');
     test.equal(a.prop1(), 1, 'properties setter marked via "FUN._()": '+a._prop1);
     test.equal(a.prop2(), 2, 'properties setter marked via "FUN._()": '+a._prop2);
     test.equal(a.prop3(), 3, 'properties setter marked via "FUN._()": '+a._prop3);
