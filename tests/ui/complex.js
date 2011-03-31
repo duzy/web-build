@@ -72,6 +72,6 @@ selector.find('#pub',root).on('click', function() {
     alert('LiteUI');
 });
 //'Button[text^=Publish]'
- } catch(e) {
-     alert(e);
- }
+} catch(e) {
+    alert(e);
+}

@@ -180,8 +180,7 @@
 	for (var i=0; i < state.requiredCount; i++) {
             body[body.length] =
 		[ 'stat', 
-                  ['assign', 
-                   true,
+                  ['assign', true,
                    ['sub',
                     ['name', 'require_modules'],
                     ['num', i]

@@ -23,18 +23,18 @@ var NativeControl = new Object.Class('native', Base, Focusable, {
     binding: fun.newProp('binding', function(val) {
         if (this._binding) this._binding.destroy();
 
-        this._binding = val && new Binding(this, val.model,
-                                           utils.extend(this._bindingOptions, val));
+        this._binding = val
+            && new Binding(this, val.model, utils.extend(this._bindingOptions, val));
     }),
-
-    // domForEvent: function(type) {
-    //     return this._input;
-    // },
 
     focusableDom: function() {
         return this._input;
     },
     
+    // domForEvent: function(type) {
+    //     return this._input;
+    // },
+
     domForEvent: function(type) {
         return Focusable._domForEvent.call(this, type) ||
             Base.prototype.domForEvent.call(this, type);
@@ -44,8 +44,8 @@ var NativeControl = new Object.Class('native', Base, Focusable, {
         'name checked disabled value type': fun.setterN('_input'),
     },
 });
- // fun.delegateProp(NativeControl.prototype,
- //                  ['name', 'checked', 'disabled', 'value', 'type'], '_input');
+// fun.delegateProp(NativeControl.prototype,
+//                  ['name', 'checked', 'disabled', 'value', 'type'], '_input');
 
 
 
@@ -70,7 +70,7 @@ var Radio = new Object.Class('Radio', NativeControl, {
         html: fun.setter('innerHTML', '_label'),
     },
 });
-// fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
+//fun.delegateProp(Radio.prototype, 'html', '_label', 'innerHTML');
 
 
 /**
