@@ -61,7 +61,8 @@ function createSingle(row) {
 
 function copyAttrs(view, row) {
     row.forEach(function(value, name) {
-        if (name == 'view' || name == 'init') { return; }
+        if (name == 'view' || name == 'init' || name == 'destroy')
+            return;
         utils.prop(view, name, value);
     });
     return view;

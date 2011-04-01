@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
 
     var slice = Array.prototype.slice,
@@ -22,15 +23,16 @@
      * @returns {object} target if value is being set, retrieved value otherwise
      */
     utils.prop = function(obj, prop, value, extra) {
+        var g = obj.hasProp(prop);
         if (value !== undefined) {
-            if (obj[prop] && obj[prop].apply) {
+            if (!g && obj[prop] && obj[prop].apply) {
                 obj[prop](value, extra);
             } else {
                 obj[prop] = value;
             }
             return obj;
         } else {
-            if (obj[prop] && obj[prop].apply) {
+            if (!g && obj[prop] && obj[prop].apply) {
                 return obj[prop]();
             } else {
                 return obj[prop];

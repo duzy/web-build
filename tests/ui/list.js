@@ -14,6 +14,10 @@ s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 var data = s.split('');
 
+function formatRow(k, r) {
+    return '<b>' + k + '</b>';
+}
+
 ui([
     { view: 'Split', pos: 'l:0 t:0 r:0 b:0',
       init: {
@@ -25,7 +29,9 @@ ui([
 	  { view: 'Can', pos: 't:10px l:10px w:150px b:10px', addClass: 'scrollable',
 	    childViews: [
 		{ view: 'Header', text: 'Base Data List', size: 'small' },
-		{ view: 'List', pos: 't:20px r:0 b:0 l:0', data: data }
+		{ view: 'List', pos: 't:20px r:0 b:0 l:0', id: 'll', 
+                  formatter: formatRow, data: data,
+                }
 	    ]
 	  },
 	  
@@ -41,3 +47,7 @@ ui([
       ]
     }
 ]).attach();
+
+//ui('#ll')[0].formatter = formatRow;
+//alert(ui('#ll')[0].formatter);
+//alert(ui('#ll')[0].packSize);

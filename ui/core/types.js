@@ -96,7 +96,11 @@ proto.extend({
     },
     */
 
-    defProp: function(name, funs) { // TODO: rename to defProp
+    hasProp: function(name) {
+        return !!this.__lookupGetter__(name);
+    },
+
+    defProp: function(name, funs) {
         if (name !== 'defProp' && name !== 'defProps' && !this[name]) {
             var g, s, f = isFun(funs);
             g = f ? funs : funs.get;
@@ -292,6 +296,7 @@ Function.__huid = 1;
                 }
             }
             : function(n,v) {
+                //if (n==='formatter') alert(n+','+v);
                 v !== undefined && self.apply(this, slice.call(arguments,i));
                 return this['_'+n];
             };

@@ -38,7 +38,7 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
 
     $: {
         'template formatter packSize renderMoreRows rowHeight key changeOnKeys lastClickIndex'
-        : fun.setterN(),
+        : fun.setter(),
 
         /**
          * throttle: Do not redraw more often then in value ms
@@ -370,8 +370,8 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
     },
 
     _formatRow: function(row, pos) {
-        return this._formatter(this._key ? utils.prop(row, this._key) : row,
-                               row, pos);
+        return this._formatter(this._key ? utils.prop(row, this._key)
+			       : row, row, pos);
     },
 
     _updatePack: function(packN, revision, rows) {
@@ -386,7 +386,7 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
 
     _renderPack: function(rows) {
         var formated = rows.map(function(r, i) {
-            return { value: this._formatRow(r, i), index: i, even: i & 1 };
+            return { value: this._formatRow(r), index: i, even: i & 1 };
         }, this);
 
         return dom.fromHTML(Mustache.to_html(

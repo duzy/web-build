@@ -173,20 +173,20 @@
     };
 
 fun.setterN = function(prop) {
-    return ((
+    return (
         prop
         ? function(name,v) { this[prop][name] = v; }
-        : function(name,v) { this[name] = v; }
-    ).getterize(null, prop))
+        : function(name,v) { this['_'+name] = v; }
+    )._$(null, prop) // getterize
 };
 
 fun.setter = function(name, prop) {
-    return ((
+    return (
         prop
         ? function(v) { this[prop][name] = v; }
-        : function(v) { this[name] = v; }
-    ).getterize(name, prop))
-    /* // maximum call stack size eceeded
+        : function(v) { this['_'+name] = v; }
+    )._$(name, prop) // getterize
+    /* // maximum call stack size exceeded
     var f = fun.setterN(prop);
     return name ? f.bind(null,name) : f;
     */
