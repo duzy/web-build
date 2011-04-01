@@ -70,7 +70,10 @@ var test = require('tool/test');
 
     var b3 = new Base3('foo');
 
-    var foobar1_called = 0, foobar2_called = 0;
+    var foobar0_called = 0,
+    foobar1_called = 0,
+    foobar2_called = 0,
+    XXX_called = 0;
 
     // NOTE: the Base3.prototype.init and Base3.prototype.destroy is not chained!
     var MyClass = new Object.Class('MyClass', Base, Base2, Base3, {
@@ -86,10 +89,12 @@ var test = require('tool/test');
 
 	extra: 'mixin',
 
+        _foobar0: 100,
         _foobar1: 0,
         _foobar2: 0,
+        _foobar3: 1000,
 
-        $: {
+        $: { // see obj.defProps({ ... })
             // multiple property names bind to one single function
             'name1 name2 name3 name4': function(name,value) {
                 name = '_' + name;
@@ -120,11 +125,20 @@ var test = require('tool/test');
                 set: function(value) { return (this._foobar = value); },
             },
 
+            foobar0: function(v) {/* a NOOP setter*/
+                foobar0_called += 1;
+            }._,
+
             'foobar1 foobar2': function(name,value) {
                 if (name === 'foobar1') foobar1_called += 1;
                 if (name === 'foobar2') foobar2_called += 1;
                 this['_'+name] = value;
-            }.$$(),
+            }._,
+
+            XXX: function(v) {
+                XXX_called += 1;
+                this._foobar3 = v;
+            }._$('foobar3'), // getterize for o._foobar3 instead of o._XXX
         },
 
         _propSetter: 0, // this will be changed via 'a.propSetter(1)'
@@ -153,22 +167,39 @@ var test = require('tool/test');
     test.equal(a.$foo1 !== undefined, true, 'has a.$foo1');
     test.equal(a.$foo2 !== undefined, true, 'has a.$foo2');
     test.equal(a.$foobar !== undefined, true, 'has a.$foobar');
+    test.equal(a.$foobar0 !== undefined, true, 'has a.$foobar0');
     test.equal(a.$foobar1 !== undefined, true, 'has a.$foobar1');
     test.equal(a.$foobar2 !== undefined, true, 'has a.$foobar2');
+    test.equal(a.$XXX !== undefined, true, 'has a.$XXX');
     test.equal(a.$bar !== undefined, true, 'has a.$bar');
 
     test.equal(a.$foobar('foo'), a, 'a.$foobar returns "this"');
     test.equal(a.$foobar(), 'foo', 'a.$foobar used as "setter"');
     test.equal(a.foobar, 'foo', 'a.$foobar and a.foobar are samethings');
 
+    test.equal(a.$foobar0(), 100, 'a.$foobar0() == 100');
+    test.equal(a.$foobar1(), 0, 'a.$foobar1() == 0');
+    test.equal(a.$foobar2(), 0, 'a.$foobar2() == 0');
+    test.equal(a.$XXX(), 1000, 'a.$XXX() == 1000');
+    test.equal(a.foobar0, 100, 'a.foobar0 == 100');
     test.equal(a.foobar1, 0, 'a.foobar1 == 0');
     test.equal(a.foobar2, 0, 'a.foobar2 == 0');
+    test.equal(a.XXX, 1000, 'a.XXX == 1000');
+    test.equal(foobar0_called, 0, 'foobar0_called == 0');
+    test.equal(foobar1_called, 0, 'foobar1_called == 0');
+    test.equal(foobar2_called, 0, 'foobar2_called == 0');
+    test.equal(XXX_called, 0, 'XXX_called == 0');
 
-    a.foobar1 = 1, a.foobar2 = 2;
+    a.foobar0 = 0, a.foobar1 = 1, a.foobar2 = 2, a.XXX = 3;
+    test.equal(a.foobar0, 100, 'a.foobar0 == 100');
     test.equal(a.foobar1, 1, 'a.foobar1 == 1');
     test.equal(a.foobar2, 2, 'a.foobar2 == 2');
+    test.equal(a.XXX, 3, 'a.XXX == 3');
+    test.equal(a._foobar3, 3, 'a._foobar3 == 3');
+    test.equal(foobar0_called, 1, 'foobar0_called == 1');
     test.equal(foobar1_called, 1, 'foobar1_called == 1');
     test.equal(foobar2_called, 1, 'foobar2_called == 1');
+    test.equal(XXX_called, 1, 'XXX_called == 1');
 
     a.foobar2 = 2;
     test.equal(foobar2_called, 2, 'foobar2_called == 2');

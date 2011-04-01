@@ -14,10 +14,12 @@ isFun = function(obj) {
     return toString.call(obj) === "[object Function]";
 },
 
-isArray = function(obj) {
+isArr = function(obj) {
     //return obj && obj.typename === 'array';
     return toString.call(obj) === "[object Array]";
 },
+
+isStr = function(obj) { return typeof obj === 'string'; },
 
 slice = Array.prototype.slice,
 
@@ -53,11 +55,11 @@ extend = proto.extend = function() {
                             iss = isFun(copy) && copy._$$, // is FUN setter?
                             names = name.split(' '),
                             ( names.length === 1 )
-                            ? ( this[name] = iss ? copy.$$(name) : copy )
+                            ? ( this[name] = iss ? copy.getterize(name) : copy )
                             : (
                                 names.forEach(function(nm){
                                     this[nm] = iss
-                                        ? copy.bind(null,nm).$$(nm)
+                                        ? copy.bind(null,nm).getterize(nm)
                                         : copy.bind(null,nm)
                                 }.bind(this))
                             )
@@ -111,17 +113,37 @@ proto.extend({
         }
     },
 
-    defProps: function(ps) { // TODO: rename to defProps
+    /**
+     * Make the function be a named property getter/setter function(wrap setters):
+     *
+     *    var a = {};
+     *    a.defProps({
+     *        foo: function(v) { this._foo = v }._$('foo'),
+     *        'foo1 foo2': function(n,v) { this['_'+n] = v }._, // delayed
+     *
+     *        foobar: function(v) { this._foo = v }._$('foobar'),
+     *    });
+     *
+     *    a.foo = 1; // --> this._foo = 1
+     *    a.foo;     // --> return this._foo
+     *    a.foo1 = 1; // --> this._foo1 = 1
+     *    a.foo1;     // --> return this._foo1
+     *    a.foo2 = 2; // --> this._foo2 = 2
+     */
+    defProps: function(ps) {
         var name, names, f, funs, pn;
         for(name in ps) {
             if (hasOwnProperty.call(ps,name) && (f = ps[name])) {
                 names = name.split(' ');
-                if (names.length == 1) { // one single property name
-                    this.defProp(name, f);
+                if (names.length == 1) { // single property name
+                    this.defProp(name, f._$$ ? f.getterize(name) : f);
                 } else { // multiple or ZERO property names
                     for (i=0; i < names.length; ++i) {
                         pn = names[i];
-                        funs = isFun(f) ? f.bind(null, pn)
+                        funs = isFun(f)
+                            ? (f._$$
+                               ? f.bind(null, pn).getterize(pn)
+                               : f.bind(null, pn))
                             : {
                                 get: f.get && f.get.bind(null, pn),
                                 set: f.set && f.set.bind(null, pn),
@@ -149,7 +171,7 @@ proto.defProp('typename', function() { // this will allow a.$typename([xxx])
 Object.extend({
     isFun: isFun,
 
-    isArray: isArray,
+    isArray: isArr,
 
     //if (Object.get) throw('Object.get already defined!');
 
@@ -241,11 +263,15 @@ Function.__huid = 1;
     },
 
     /**
+     * Make 'this' setter function become a getter.
+     *
      * Make the function be a named property getter/setter function(wrap setters):
      *    var C = new Class({
      *      $:{
-     *        foo: function(v) { this._foo = v }.$$('foo');
-     *        'foo1 foo2': function(n,v) { this['_'+n] = v }.$$();
+     *        foo: function(v) { this._foo = v }._$('foo'),
+     *        'foo1 foo2': function(n,v) { this['_'+n] = v }._, // delayed
+     *
+     *        foobar: function(v) { this._foo = v }._$('foobar'),
      *      },
      *    });
      *
@@ -256,7 +282,7 @@ Function.__huid = 1;
      *    a.foo1;     // --> return this._foo1
      *    a.foo2 = 2; // --> this._foo2 = 2
      */
-    $$: function(name, prop) { // getter/setter, expected to be used in '$:{ }' spec
+    getterize: function(name, prop) { // getter/setter, expected to be used in '$:{ }' spec
         var self = this, i = name ? 1 : 0,
         f = prop
             ? function(n,v) {
@@ -272,10 +298,21 @@ Function.__huid = 1;
         return name ? f.bind(null, name) : f;
     },
 
-    $: {
-        // support for 'foo: function(){}._', mark '_$$' for 'extend' to call '$$()'
-        _: function() { this._$$ = true; return this; },
+    // work with extend() and defProps() to alias getterization
+    _$: function(a,b) {
+        if (a || b) {
+            return this.getterize(a, b);
+        } else {
+            this._$$ = true; // mark for delay getterize
+            return this;
+        }
     },
+
+    $: {
+        // work with extend() and defProps() to delay getterization
+        _: function() { return this._$(); },
+    },
+
 });
 
 // === String.prototype ====

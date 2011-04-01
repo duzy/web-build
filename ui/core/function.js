@@ -173,15 +173,19 @@
     };
 
 fun.setterN = function(prop) {
-    return prop
-        ? function(name,v) { this[prop][name] = v; }.$$(null, prop)
-        : function(name,v) { this[name] = v; }.$$(null, prop)
+    return ((
+        prop
+        ? function(name,v) { this[prop][name] = v; }
+        : function(name,v) { this[name] = v; }
+    ).getterize(null, prop))
 };
 
 fun.setter = function(name, prop) {
-    return prop
-        ? function(v) { this[prop][name] = v; }.$$(name, prop)
-        : function(v) { this[name] = v; }.$$(name, prop)
+    return ((
+        prop
+        ? function(v) { this[prop][name] = v; }
+        : function(v) { this[name] = v; }
+    ).getterize(name, prop))
     /* // maximum call stack size eceeded
     var f = fun.setterN(prop);
     return name ? f.bind(null,name) : f;

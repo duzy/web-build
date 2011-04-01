@@ -51,7 +51,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         //     } else {
         //         this._visChanged = this._originalVisChanged;
         //     }
-        // }.$$(), // TODO: using '._' instead of '.$$' for this case
+        // }._,
 
         /**
          * Do redraw only after value ms after last scroll/update
@@ -63,7 +63,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         //     } else {
         //         this._visChanged = this._originalVisChanged;
         //     }
-        // }.$$(), // TODO: using '._' instead of '.$$' for this case
+        // }._,
 
         /**
          * throttle: Do not redraw more often then in value ms
@@ -76,7 +76,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
             } else {
                 this._visChanged = this._originalVisChanged;
             }
-        }.$$(), // TODO: using '._' instead of '.$$' for this case
+        }._, // getterized
     },
 
     /**

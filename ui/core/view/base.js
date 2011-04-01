@@ -77,16 +77,9 @@ var Base = new Object.Class('Base', {
         //size: function(value) { // for both 'width' and 'height'
         //},
 
-        //html: fun.newDelegateProp('_dom', 'innerHTML'),
-        //html: function(v) { this.dom.innerHTML = v }.$$('innerHTML', 'dom'),
         html: fun.setter('innerHTML', 'dom'),
         text: function(v) { return v && ( this.html = dom.escapeHTML(v)) },
 
-        //className: fun.newDelegateProp('_dom', 'className'),
-
-        // 'scrollTop scrollLeft title alt': function(name, value) {
-        //     this.dom[name] = value;
-        // }.$$(null, 'dom'),
         'scrollTop scrollLeft title alt className': fun.setterN('dom'),
     },
 
