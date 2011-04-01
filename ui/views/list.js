@@ -77,7 +77,6 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
                 this._visChanged = this._originalVisChanged;
             }
         }._, // getterized
-    },
 
     /**
  * Data to render. Data should provide one of the following simple API's:
@@ -90,14 +89,11 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
  * row hight if rowHeight is not provided. 
  * If there's no sampleRow slice(0, 1)[0] will be used.
  */
-    // data: fun.newProp('data', function(d) {
-    //     this._data = d;
-    //     this._reset();
-    // }),
-    data: function(d) {
-        this._data = d;
-        this._reset();
-    }._,
+        data: function(d) {
+            this._data = d;
+            this._reset();
+        }._,
+    },
 
     /**
  * Bind representation to colleciton.
@@ -106,12 +102,12 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     // binding: fun.newProp('binding', function(val) {
     //     if (this._binding) this._binding.destroy();
     //     this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
-    //     if (val) this.data(val.model);
+    //     if (val) this.data = val.model;
     // }),
     binding: function(val) {
         if (this._binding) this._binding.destroy();
         this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
-        if (val) this.data(val.model);
+        if (val) this.data = val.model;
     }._,
 
     /**
@@ -171,7 +167,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
 	    this._scrollableParent().scroll(
 	        0, maxY - pxs[1] +
 		    // hackish overflow to compensate for bottom scroll bar
-		    (position === this.data().length - 1 ? 100 : 0)
+		    (position === this.data.length - 1 ? 100 : 0)
 	    );
         } else if (minY < pxs[0]) {
 	    this._scrollableParent().scroll(0, minY - pxs[0]);
@@ -319,11 +315,11 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     },
 
     _calcRowHeight: function() {
-        if (!this.data().length) {
+        if (!this.data.length) {
 	    this._rowHeight = 0;
         } else {
-	    var sample = utils.prop(this.data(), 'sampleRow')
-	        || (this.data().slice && this.data().slice(0, 1)[0]) || '',
+	    var sample = utils.prop(this.data, 'sampleRow')
+	        || (this.data.slice && this.data.slice(0, 1)[0]) || '',
 	    p = this._renderPack([sample]);
 	
 	    this.dom.appendChild(p);
@@ -333,9 +329,9 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
     },
 
     _updateHeight: function() {
-        this.dom.style.height = this.data().length * this.rowHeight + 'px';
+        this.dom.style.height = this.data.length * this.rowHeight + 'px';
         // setTimeout(function(){
-        // 	this.dom.style.height = this.data().length * this.rowHeight + 'px';
+        // 	this.dom.style.height = this.data.length * this.rowHeight + 'px';
         // }.bind(this), 0);
     },
 
@@ -376,7 +372,7 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         return [
             Math.max(0, rows[0] - this._renderMoreRows)
 	        / this.packSize << 0,
-            Math.min(this.data().length, rows[1] + this._renderMoreRows)
+            Math.min(this.data.length, rows[1] + this._renderMoreRows)
 	        / this.packSize << 0
         ];
     },
@@ -385,14 +381,14 @@ var DataList = new Object.Class('DataList', Base, Focusable, Selectable, {
         //setTimeout(function(){
         var from = packN * this.packSize;
 
-        if (this.data().loadRange) {
-	    this.data().loadRange(
+        if (this.data.loadRange) {
+	    this.data.loadRange(
 	        from, this.packSize + from,
 	        this._updatePack.bind(this, packN, revision)
 	    );
         } else {
 	    this._updatePack(packN, revision,
-			     this.data().slice(from, from + this.packSize));
+			     this.data.slice(from, from + this.packSize));
         }
         //}.bind(this), 0);
     },
