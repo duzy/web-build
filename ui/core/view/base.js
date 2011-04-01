@@ -96,7 +96,7 @@ var Base = new Object.Class('Base', {
 	view.unregisterId(this);
 	view.unregister(this);
 	this.removeListener();
-        args.nodettach || dom.removeElement(this._dom);
+        (args && args.nodettach) || dom.removeElement(this._dom);
     },
 
     $create: function(args) { // internal used only, deleted once called
