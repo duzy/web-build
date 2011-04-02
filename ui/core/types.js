@@ -174,7 +174,7 @@ proto.defProp('typename', function() { // this will allow a.$typename([xxx])
 
 Object.extend({
     isFun: isFun,
-
+    isStr: isStr,
     isArray: isArr,
 
     //if (Object.get) throw('Object.get already defined!');

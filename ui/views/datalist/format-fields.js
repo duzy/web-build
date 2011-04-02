@@ -3,9 +3,25 @@ requireCss('./format-fields.css');
 
 var BaseFmt = require('./format-ul').DataListFormatter;
 
+/**
+ *  var fmt1 = new DataListFormatFields(function(){
+ *    return [ f1, f2, f3 ];
+ *  });
+ *
+ *  var fmt2 = new DataListFormatFields({
+ *    fields: function(v) { return [ f1, f2, f3 ]; },
+ *    field : function(f,i) { return '<b>' + f + '</b>'; },
+ *  });
+ */
 exports.DataListFormatFields = new Object.Class('DataListFormatFields', BaseFmt, {
-    init: function(f) {
-        f && ( this.fields = f );
+    init: function(a) {
+        if (a) {
+            var isf = Object.isFun;
+            isf(a)
+                ? ( this.fields = a )
+                : ( a.fields && isf(a.fields) && ( this.fields = a.fields ),
+                    a.field  && isf(a.field)  && ( this.field  = a.field ) );
+        }
     },
 
     listClass: 'ui-list-fmt-fields',
@@ -21,7 +37,7 @@ exports.DataListFormatFields = new Object.Class('DataListFormatFields', BaseFmt,
         return s;
     },
 
-    fields: function(v,row,pos) {
+    fields: function(v/*,row,pos*/) {
         return [v];
     },
 

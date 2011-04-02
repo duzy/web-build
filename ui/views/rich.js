@@ -45,6 +45,7 @@ var RichEdit = exports.RichEdit = new Object.Class('Rich', Base, Focusable, {
     focusableDom: function() { return this._frame || this._iframe; },
 
     resized: function() {
+        // TODO: using _frame.contentWindow.document or _frame.contentDocument
         var frame = this._frame = this._frame || env.root.frames[this._iframe.name];
         if (frame) {
 	    var doc = this._doc = frame.document, placeholder = this._placeholderDom;
