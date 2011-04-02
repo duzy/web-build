@@ -12,22 +12,11 @@ var env   = require('../core/env'),
     //Mustache   = require('../tool/mustache').Mustache,
     Base       = require('../core/view/base').Base,
     Focusable  = require('../facet/focusable').Focusable,
-Selectable = require('../facet/selectable').Selectable,
+    Selectable = require('../facet/selectable').Selectable,
+    DataListFormatter = require('./datalist/format-ul').DataListFormatter,
 
-formatStart = '<ul>', // class="ui-list-pack">',
-formatItem = function(v,r,i) {
-    return '<li>' // class="ui-list-row'
-        //+ ((i & 1) ? ' ui-list-row-odd' : '')
-        //+ '">'
-        + this.value(v,r,i)
-        + '</li>'
-    ;
-},
-formatValue = dom.escapeHTML, //function(r,i) {},
-formatEnd = '</ul>'
-;
+formatDef = new DataListFormatter();
 
-    
 var DataList = exports.DataList = new Object.Class(
     'DataList', Base, Focusable, Selectable, {
     init: function(args) {
@@ -40,13 +29,7 @@ var DataList = exports.DataList = new Object.Class(
     _throttle: 0,
     _debounce: 0,
 
-    //_template: requireText('list/list.html'),
-    _formatter: {
-        start: formatStart, //function(rows) { return '<ul class="ui-list-pack">' },
-        item: formatItem,
-        value: formatValue,
-        end: formatEnd, //function(rows) { return '</ul>' },
-    },
+    _formatter: formatDef,
     _packSize: 100,
     _renderMoreRows: 60, // Render 60-rows more than the visible zone
     _rowHeight: 0,
@@ -396,17 +379,17 @@ var DataList = exports.DataList = new Object.Class(
         var f = this._formatter, s = f.start,
         t = s ? typeof s : 0, k = this._key,
         str = t === 'string' ? s :
-            t === 'function' ? f.start(rows) : formatStart;
+            t === 'function' ? f.start(rows) : formatDef.start;
 
-        f.item || (f.item = formatItem);
-        f.value || (f.value = formatValue);
+        f.item  || (f.item  = formatDef.item);
+        f.value || (f.value = formatDef.value);
         rows.forEach(function(r, i) {
             str += f.item(k ? utils.prop(r, k) : r, r, i);
         }, this);
 
         s = f.end, t = s ? typeof s : 0,
         str += t === 'string' ? s :
-            t === 'function' ? f.end(rows) : formatEnd;
+            t === 'function' ? f.end(rows) : formatDef.end;
 
         // =====
         var d = dom.fromHTML(str);

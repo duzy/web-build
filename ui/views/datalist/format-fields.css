@@ -1,0 +1,9 @@
+.ui-list-fmt-fields {
+    display: table;
+}
+.ui-list-fmt-fields-row {
+    display: table-row;
+}
+.ui-list-fmt-fields-cell {
+    display: table-cell;
+}
