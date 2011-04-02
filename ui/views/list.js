@@ -9,13 +9,13 @@ var env   = require('../core/env'),
     event = require('../core/event'),
     build = require('../core/builder').build,
 
-    Mustache   = require('../tool/mustache').Mustache,
+    //Mustache   = require('../tool/mustache').Mustache,
     Base       = require('../core/view/base').Base,
     Focusable  = require('../facet/focusable').Focusable,
     Selectable = require('../facet/selectable').Selectable;
     
-
-var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Selectable, {
+var List = exports.List = new Object.Class(
+    'List', Base, Focusable, Selectable, {
     init: function(args) {
 	this._data = [];
 	this._packs = {};
@@ -26,12 +26,11 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
     _throttle: 0,
     _debounce: 0,
 
-    _template: requireText('list/list.html'),
+        _template: '', //requireText('list/list.html'),
     _formatter: dom.escapeHTML,
     _packSize: 100,
     _renderMoreRows: 60, // Render 60-rows more than the visible zone
     _rowHeight: 0,
-
 
     _key: null,
     _changeOnKeys: [],
@@ -54,49 +53,58 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
         }._, // getterized
 
         /**
- * Data to render. Data should provide one of the following simple API's:
- * 1. Sync: #slice(from, to) and #length. Any native JS array can do this.
- * 2. Async: #loadRange(from, to, callback), and length. 
- *    Please note that syncronous data fetching like selectedRow will use
- *    #slice(from, to) anyway. So it might be worth to provide #slice to.
- * 
- * Data may also provide #sampleRow property. It will be used to calculate
- * row hight if rowHeight is not provided. 
- * If there's no sampleRow slice(0, 1)[0] will be used.
- */
+         * Data to render. Data should provide one of the following simple API's:
+         * 1. Sync: #slice(from, to) and #length. Any native JS array can do this.
+         * 2. Async: #loadRange(from, to, callback), and length. 
+         *    Please note that syncronous data fetching like selectedRow will use
+         *    #slice(from, to) anyway. So it might be worth to provide #slice to.
+         * 
+         * Data may also provide #sampleRow property. It will be used to calculate
+         * row hight if rowHeight is not provided. 
+         * If there's no sampleRow slice(0, 1)[0] will be used.
+         */
         data: function(d) {
             this._data = d;
             this._reset();
         }._,
 
         /**
- * Bind representation to colleciton.
- * #TBD
- */
+         * Bind representation to colleciton.
+         * #TBD
+         */
         binding: function(val) {
             if (this._binding) this._binding.destroy();
             this._binding = val && new require('./list/binding').Binding(this, val.model, utils.extend({ viewEvent: 'change.item' }, val));
             if (val) this.data = val.model;
         }._,
+
+        /**
+         * Either a view or view description of the row inline editor. 
+         * See view.dataList.Editor for example.
+         * 
+         * @function
+         * @name editor
+         */
+        editor: function(e) { this._editor = build(e)[0]; }._,
     },
 
     /**
- * Actual row selected.
- * 
- * Warning! This method will use #slice even for async data
- * @function
- */
+     * Actual row selected.
+     * 
+     * Warning! This method will use #slice even for async data
+     * @function
+     */
     selectedRow: function() {
         var index = this.selectedIndex();
         return index > -1 && this._data.slice(index, index+1)[0];
     },
 
     /**
- * Array of the the rows selected
- * 
- * Warning! This method will use #slice even for async data
- * @function
- */
+     * Array of the the rows selected
+     * 
+     * Warning! This method will use #slice even for async data
+     * @function
+     */
     selectedRows: function() {
         var result = [];
         for (var i=0, indexes = this.selectedIndexes(), l = indexes.length; i < l; i++) {
@@ -107,13 +115,13 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
     },
 
     /**
- * Redraws the row under the index imideately. If you do not want to redraw the 
- * whole pack this method may provide performance benefit. On the other hand if
- * you change all the data calling #resized might be faster.
- * 
- * Warning! This method will use #slice even for async data
- * @function
- */
+     * Redraws the row under the index imideately. If you do not want to redraw the 
+     * whole pack this method may provide performance benefit. On the other hand if
+     * you change all the data calling #resized might be faster.
+     * 
+     * Warning! This method will use #slice even for async data
+     * @function
+     */
     redrawRow: function(index) {
         var item = this._itemAt(index);
         if (!item) return this;
@@ -123,11 +131,11 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
         return this;
     },
 
-/**
- * Scroll the parent so row at position gets into view
- * 
- * @function
- */
+    /**
+     * Scroll the parent so row at position gets into view
+     * 
+     * @function
+     */
     scrollToPosition: function(position) {
         var pxs  = this._visiblePixels(),
         maxY = (position+1)*this._rowHeight,
@@ -143,60 +151,46 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
 	    this._scrollableParent().scroll(0, minY - pxs[0]);
         }
         this._visChanged();
-    return this;
+        return this;
     },
 
     /**
- * #TBD
- * Answers if the row should be redraw on the key change
- * @function
- * @name shouldRedrawOnPropChange
- */
+     * #TBD
+     * Answers if the row should be redraw on the key change
+     * @function
+     * @name shouldRedrawOnPropChange
+     */
     shouldRedrawOnPropChange: function(key) {
         return this.key === key || utils.indexOf(this.changeOnKeys, key) > -1;
     },
     
     /* --------------- Inline editing -------------- */
+
     /**
-     * Either a view or view description of the row inline editor. 
-     * See view.dataList.Editor for example.
+     * Is editor open right now?
      * 
      * @function
      * @name editor
      */
-    // editor: fun.newProp('editor', function(e) {
-    //     this._editor = build(e)[0];
-    // }),
-    editor: function(e) {
-        this._editor = build(e)[0];
-    }._,
-
-    /**
- * Is editor open right now?
- * 
- * @function
- * @name editor
- */
     editing: function() {
-        return this.editor() && this.editor().parent();
+        return this.editor && this.editor.parent();
     },
 
-
     /**
- * Trigger inline editing on the first selected row
- * 
- * @function
- * @name editSelected
- */
+     * Trigger inline editing on the first selected row
+     * 
+     * @function
+     * @name editSelected
+     */
     editSelected: function() {
-        if (!this.editor()) return this;
+        if (!this.editor) return this;
         this._editorBlur();
     
         var t = this.selectedIndex() * this.rowHeight;
     
-        this.dom.appendChild(this.editor().dom);
+        this.dom.appendChild(this.editor.dom);
     
-        this.editor()
+        this.editor
 	    .on('finishEdit', this._editorBlur.bindOnce(this))
 	    .on('move', this._editorMove.bindOnce(this))
 	    .pos({ top: t+'px', left: 0+'px',
@@ -249,13 +243,13 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
     },
 
     _editorBlur: function(e) {
-        if (this.editor() && this.editor().parent()) {
-	    this.editor()
+        if (this.editor && this.editor.parent()) {
+	    this.editor
 	        .parent(null)
 	        .removeListener('move', this._editorMove.bindOnce(this))
 	        .removeListener('finishEdit', this._editorBlur.bindOnce(this));
 	    
-	    dom.removeElement(this.editor().dom);
+	    dom.removeElement(this.editor.dom);
 	    if (e && e.remainFocused) this.focus();
         }
     },
@@ -385,6 +379,7 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
     },
 
     _renderPack: function(rows) {
+        /*
         var formated = rows.map(function(r, i) {
             return { value: this._formatRow(r, i), index: i, even: i & 1 };
         }, this);
@@ -392,7 +387,8 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
         return dom.fromHTML(Mustache.to_html(
             this._template,
             { rows: formated }
-        ));
+        )); */
+        return dom.fromHTML('<div></div>');
     },
     
     _restorePackSelection: function(packN) {
@@ -462,7 +458,7 @@ var DataList = exports.List = new Object.Class('DataList', Base, Focusable, Sele
             Base.prototype.domForEvent.call(this, type);
     },
 }),
-proto = DataList.prototype;
+proto = List.prototype;
     
 // store original version function so we can instance override
 // _visChanged in throttle and debounce and then revert back

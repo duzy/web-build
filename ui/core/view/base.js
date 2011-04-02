@@ -275,8 +275,8 @@ var Base = new Object.Class('Base', {
     },
 
     scroll: function(dx, dy) {
-	dx && this.scrollLeft(this.scrollLeft() + dx);
-	dy && this.scrollTop(this.scrollTop() + dy);
+	dx && this.$scrollLeft(this.scrollLeft + dx);
+	dy && this.$scrollTop(this.scrollTop + dy);
     },
 
     /* ----------------------------- Layout ------------------------------*/
@@ -290,11 +290,9 @@ var Base = new Object.Class('Base', {
 	return [];
     },
     
-});
+}),
 
-var proto = Base.prototype;
-//fun.delegateProp(proto, 'className', 'dom');
-//fun.delegateProp(proto, ['scrollTop', 'scrollLeft', 'title', 'alt'], 'dom');
+proto = Base.prototype;
 
 proto.on = proto.addListener,
 proto.emit = proto.trigger,

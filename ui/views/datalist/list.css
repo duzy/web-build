@@ -1,0 +1,55 @@
+.ui-list {
+    position: relative;
+    outline: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.ui-list-pack {
+    left: 0;
+    width: 100%;
+    display: block;
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
+.ui-list-row {
+    cursor: default;
+    display: block;
+    padding: 5px;
+    margin: 0;
+    height: 14px;
+    font-size: 11px;
+    line-height: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ui-list-row-odd {
+    background-color: #F1F1F1;
+}
+
+.ui-list-row-selected {
+    background-color: #3875D7;
+    color: #FFF;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #2760C0;
+    border-left: none;
+    border-right: none;
+}
+
+.ui-list-row-selected + .ui-list-row-selected {
+    border-top: none;
+    padding-top: 5px;
+}
+
+.ui-list-blured .ui-list-row-selected {
+    background-color: #CCC;
+    border-color: #AAA;
+    color: #000;
+}

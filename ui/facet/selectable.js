@@ -1,3 +1,4 @@
+// -*- javascript -*-
 //(function() {
     var env   = require('../core/env'),
         fun   = require('../core/function'),
@@ -62,7 +63,7 @@
 
     Selectable.moveSelectedIndex = function(offset) {
         var newIndex = this.selectedIndex() + offset;
-        newIndex = Math.min(newIndex, this.data().length - 1);
+        newIndex = Math.min(newIndex, this.data.length - 1);
         newIndex = Math.max(0, newIndex);
         if (newIndex != this.selectedIndex()) {
             this.selectedIndex(newIndex);
@@ -170,22 +171,22 @@
         var p = this._itemUnderCursor(e),
         indexes = this._selectedIndexes;
 
-        this._hadFocusOnSelectionStart = this.hasFocus() &&
-        this.isSelected(p);
+        this._hadFocusOnSelectionStart = this.hasFocus()
+            && this.isSelected(p);
 
         if (this._multiselect) {
             this._selectionInProcess = false;
             if (e.shiftKey && indexes.length > 0) {
                 if (this.isSelected(p)) {
                     this._removeFromSelection(
-                                              Math.min(p+1, this._lastClickIndex),
-                                              Math.max(p-1, this._lastClickIndex)
-                                              );
+                        Math.min(p+1, this._lastClickIndex),
+                        Math.max(p-1, this._lastClickIndex)
+                    );
                 } else {
                     this.selectedIndexes(utils.range(
-                                                     Math.min(p, indexes[0]),
-                                                     Math.max(p, indexes[indexes.length - 1])
-                                                     ));
+                        Math.min(p, indexes[0]),
+                        Math.max(p, indexes[indexes.length - 1])
+                    ));
                 }
                 this._triggerSelection();
             } else if (e.metaKey) {
@@ -216,11 +217,11 @@
             nextIndex = Math.max(0, this._lastClickIndex - 1);
             e.preventDefault();
         } else if (e.which == 40 || e.keyCode == 40) { // DOWN
-            nextIndex = Math.min(this.data().length-1, this._lastClickIndex + 1);
+            nextIndex = Math.min(this.data.length-1, this._lastClickIndex + 1);
             e.preventDefault();
         } else if (this._multiselect && (e.which == 97 || e.which == 65) && e.metaKey) {
             e.preventDefault();
-            this.selectedIndexes(utils.range(0, this.data().length -1));
+            this.selectedIndexes(utils.range(0, this.data.length -1));
             this._triggerSelection();
         }
         if (nextIndex > -1 && nextIndex != this._lastClickIndex) {
@@ -240,7 +241,7 @@
     };
 
     Selectable._selectionFocus = function(e) {
-        if (this._selectedIndexes.length == 0 && this.data().length > 0) {
+        if (this._selectedIndexes.length == 0 && this.data.length > 0) {
             this.selectedIndexes([0]).lastClickIndex(0).scrollToPosition(0)._triggerSelection();
         } else {
             // this.selectedIndexes(this.selectedIndexes());
