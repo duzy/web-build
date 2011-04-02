@@ -121,7 +121,7 @@ proto._createHandle = function() {
     )); */
     var t = this._x_type(), handle = dom.fromHTML(
         '<div class="ui-split-handle ui-split-handle-'+t+'">' +
-        '<div class="ui-split-handle-bar ui-split-handle-bar_'+t+'">' +
+        '<div class="ui-split-handle-bar ui-split-handle-bar-'+t+'">' +
         '</div></div>'
     );
 
