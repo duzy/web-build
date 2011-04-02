@@ -12,7 +12,21 @@ var env   = require('../core/env'),
     //Mustache   = require('../tool/mustache').Mustache,
     Base       = require('../core/view/base').Base,
     Focusable  = require('../facet/focusable').Focusable,
-    Selectable = require('../facet/selectable').Selectable;
+Selectable = require('../facet/selectable').Selectable,
+
+formatStart = '<ul class="ui-list-pack">',
+formatItem = function(v,r,i) {
+    return '<li class="ui-list-row'
+        + ((i & 1) ? ' ui-list-row-odd' : '')
+        + '">'
+        + this.value(v,r,i)
+        + '</li>'
+    ;
+},
+formatValue = dom.escapeHTML, //function(r,i) {},
+formatEnd = '</ul>'
+;
+
     
 var DataList = exports.DataList = new Object.Class(
     'DataList', Base, Focusable, Selectable, {
@@ -27,7 +41,12 @@ var DataList = exports.DataList = new Object.Class(
     _debounce: 0,
 
     //_template: requireText('list/list.html'),
-    _formatter: dom.escapeHTML,
+    _formatter: {
+        start: formatStart, //function(rows) { return '<ul class="ui-list-pack">' },
+        item: formatItem,
+        value: formatValue,
+        end: formatEnd, //function(rows) { return '</ul>' },
+    },
     _packSize: 100,
     _renderMoreRows: 60, // Render 60-rows more than the visible zone
     _rowHeight: 0,
@@ -364,22 +383,25 @@ var DataList = exports.DataList = new Object.Class(
     },
 
     _formatList: function(rows) {
-        var str = '<ul class="ui-list-pack">';
+        var f = this._formatter, s = f.start,
+        t = s ? typeof s : 0, k = this._key,
+        str = t === 'string' ? s :
+            t === 'function' ? f.start(rows) : formatStart;
+        f.item || (f.item = formatItem);
+        f.value || (f.value = formatValue);
         rows.forEach(function(r, i) {
-            str += '<li class="ui-list-row'
-                + ((i & 1) ? ' ui-list-row-odd' : '')
-                + '">'
-                + this._formatRow(r, i)
-                + '</li>';
+            str += f.item(k ? utils.prop(r, k) : r, r, i);
         }, this);
-        str += '</ul>';
+        s = f.end, t = s ? typeof s : 0,
+        str += t === 'string' ? s :
+            t === 'function' ? f.end(rows) : formatEnd;
         return str;
     },
 
-    _formatRow: function(row, pos) {
-        return this._formatter(this._key ? utils.prop(row, this._key) : row,
-                               row, pos);
-    },
+    // _formatRow: function(row, pos) {
+    //     return this._formatter(this._key ? utils.prop(row, this._key) : row,
+    //                            row, pos);
+    // },
 
     _updatePack: function(packN, revision, rows) {
         this._removePack(packN);
@@ -401,7 +423,9 @@ var DataList = exports.DataList = new Object.Class(
             this._template,
             { rows: formated }
         )); */
-        return dom.fromHTML(this._formatList(rows));
+        var d = dom.fromHTML(this._formatList(rows));
+        dom.addClass(d, "ui-list-pack");
+        return d;
     },
     
     _restorePackSelection: function(packN) {

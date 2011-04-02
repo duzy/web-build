@@ -27,9 +27,19 @@ ui([
 	    childViews: [
 		{ view: 'Header', text: 'Base Data List', size: 'small' },
 		{ view: 'DataList', pos: 't:20px r:0 b:0 l:0', id: 'll',
-                  template: '<table class="ui-list-pack" width="100%">{{#rows}}<tr class="ui-list-row{{^even}} ui-list-row_odd{{/even}}">{{{value}}}</tr>{{/rows}}</table>',
-                  data: data, formatter: function(k, r, i) {
-                      return '<td><b>' + k + '</b></td>';
+                  data: data, formatter: {
+                      start: '<div width="100%">',
+                      item: function(k, r, i) {
+                          return '<span class="ui-list-row'
+                              + ((i & 1) ? ' ui-list-row-odd' : '')
+                              +'">'
+                              + this.value(k, r, i)
+                              + '</span>';
+                      },
+                      value: function(k) {
+                          return '<b>' + k + '</b>'
+                      },
+                      end: '</div>',
                   },
                 },
 	    ]
