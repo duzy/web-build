@@ -21,7 +21,7 @@
 
 /* horizontal */
 
-.ui-split-handle_h {
+.ui-split-handle-h {
     cursor: ns-resize;
     cursor: row-resize;
     width: 100%;
@@ -36,7 +36,7 @@
 
 /* vertical */
 
-.ui-split-handle_v {
+.ui-split-handle-v {
     cursor: ew-resize;
     cursor: col-resize;
     height: 100%;
@@ -52,20 +52,20 @@
 
 /* thin (1px) */
 
-.ui-split-handle_thin .ui-split-handle-bar {
+.ui-split-handle-thin .ui-split-handle-bar {
     display: block;
 }
 
-.ui-split-handle_thin.ui-split-handle {
+.ui-split-handle-thin.ui-split-handle {
     background: url(x.gif);
 }
 
-.ui-split-handle_thin.ui-split-handle_v {
+.ui-split-handle-thin.ui-split-handle-v {
     width: 5px !important;
     margin-left: -2px;
 }
 
-.ui-split-handle_thin.ui-split-handle_h {
+.ui-split-handle-thin.ui-split-handle-h {
     height: 5px !important;
     margin-top: -2px;
 }

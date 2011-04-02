@@ -225,7 +225,7 @@ var List = exports.List = new Object.Class(
     },
 
     _createDom: function(args) {
-        this._dom = dom.createElement('div', { className: 'ui-list ui-list_blured' });
+        this._dom = dom.createElement('div', { className: 'ui-list ui-list-blured' });
         this.tabIndex(1);
         this._initSelectable();
         
@@ -408,12 +408,12 @@ var List = exports.List = new Object.Class(
 
     /** Selectable API */
     _selectionFocus: function(e) {
-        this.removeClass('ui-list_blured');
+        this.removeClass('ui-list-blured');
         Selectable._selectionFocus.call(this, e);
     },
 
     _selectionBlur: function(e) {
-        this.addClass('ui-list_blured');
+        this.addClass('ui-list-blured');
         Selectable._selectionBlur.call(this, e);
     },
 

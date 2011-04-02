@@ -8,7 +8,7 @@ var fun   = require('../core/function'),
     dom   = require('../core/dom'),
     build = require('../core/builder').build,
 
-    Mustache  = require('../tool/mustache').Mustache,
+    //Mustache  = require('../tool/mustache').Mustache,
     Can = require('../core/view/can').Can,
     Focusable = require('../facet/focusable').Focusable;
 
@@ -114,15 +114,21 @@ proto._x_type = function() { return this.vertical() ? 'v' : 'h'; };
 proto._x_xName = function() { return this.vertical() ? 'x' : 'y'; };
 
 proto._createHandle = function() {
+    /*
     var handle = dom.fromHTML(Mustache.to_html(
         requireText('split/handle.html'),
         { type: this._x_type() }
-    ));
+    )); */
+    var t = this._x_type(), handle = dom.fromHTML(
+        '<div class="ui-split-handle ui-split-handle-'+t+'">' +
+        '<div class="ui-split-handle-bar ui-split-handle-bar_'+t+'">' +
+        '</div></div>'
+    );
 
     if (this.handleWidth() > 1) {
         handle.style[this._x_widthName()] = this.handleWidth() + 'px';
     } else {
-        handle.className += ' ' + 'ui-split-handle_thin';
+        handle.className += ' ' + 'ui-split-handle-thin';
     }
 
     if (this._fixed) {

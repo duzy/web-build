@@ -3,7 +3,7 @@ var ui = require('ui');
 requireCss('../data-list/datalist.css');
 
 ui.view(
-    require('ui/views/list'),
+    //require('ui/views/list'),
     require('ui/views/datalist'),
     require('ui/views/split'),
     require('ui/views/text')
@@ -14,10 +14,6 @@ s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 var data = s.split('');
-
-function formatRow(k, r) {
-    return '<td>' + k + '</td>';
-}
 
 ui([
     { view: 'Split', pos: 'l:0 t:0 r:0 b:0',
@@ -30,9 +26,11 @@ ui([
 	  { view: 'Can', pos: 't:10px l:10px w:150px b:10px', addClass: 'scrollable',
 	    childViews: [
 		{ view: 'Header', text: 'Base Data List', size: 'small' },
-		{ view: 'List', pos: 't:20px r:0 b:0 l:0', id: 'll',
+		{ view: 'DataList', pos: 't:20px r:0 b:0 l:0', id: 'll',
                   template: '<table class="ui-list-pack" width="100%">{{#rows}}<tr class="ui-list-row{{^even}} ui-list-row_odd{{/even}}">{{{value}}}</tr>{{/rows}}</table>',
-                  formatter: formatRow, data: data,
+                  data: data, formatter: function(k, r, i) {
+                      return '<td><b>' + k + '</b></td>';
+                  },
                 },
 	    ]
 	  },
