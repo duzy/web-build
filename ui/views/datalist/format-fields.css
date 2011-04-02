@@ -6,4 +6,5 @@
 }
 .ui-list-fmt-fields-cell {
     display: table-cell;
+    padding: 3px;
 }

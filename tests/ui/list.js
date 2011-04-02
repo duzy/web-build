@@ -9,6 +9,8 @@ ui.view(
     require('ui/views/text')
 );
 
+var FormatFields = require('ui/views/datalist/format-fields').DataListFormatFields;
+
 var s = 'abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890';
 s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
 s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s;
@@ -51,7 +53,11 @@ ui([
 		{ view: 'Text', addClass: 'help', html:
 		  requireText('../data-list/multiselecthelp.html') },
 		{ view: 'DataList', pos: 't:100px r:0 b:0 l:0', data: data,
-		  multiselect: true }
+		  multiselect: true,
+                  formatter: new FormatFields(function(f,row,i){
+                      return [i, f, 'foo...']
+                  }),
+                }
 	    ]
 	  }
       ]
