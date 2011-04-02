@@ -14,11 +14,11 @@ var env   = require('../core/env'),
     Focusable  = require('../facet/focusable').Focusable,
 Selectable = require('../facet/selectable').Selectable,
 
-formatStart = '<ul class="ui-list-pack">',
+formatStart = '<ul>', // class="ui-list-pack">',
 formatItem = function(v,r,i) {
-    return '<li class="ui-list-row'
-        + ((i & 1) ? ' ui-list-row-odd' : '')
-        + '">'
+    return '<li>' // class="ui-list-row'
+        //+ ((i & 1) ? ' ui-list-row-odd' : '')
+        //+ '">'
         + this.value(v,r,i)
         + '</li>'
     ;
@@ -382,27 +382,6 @@ var DataList = exports.DataList = new Object.Class(
         dom.removeElement(pack);
     },
 
-    _formatList: function(rows) {
-        var f = this._formatter, s = f.start,
-        t = s ? typeof s : 0, k = this._key,
-        str = t === 'string' ? s :
-            t === 'function' ? f.start(rows) : formatStart;
-        f.item || (f.item = formatItem);
-        f.value || (f.value = formatValue);
-        rows.forEach(function(r, i) {
-            str += f.item(k ? utils.prop(r, k) : r, r, i);
-        }, this);
-        s = f.end, t = s ? typeof s : 0,
-        str += t === 'string' ? s :
-            t === 'function' ? f.end(rows) : formatEnd;
-        return str;
-    },
-
-    // _formatRow: function(row, pos) {
-    //     return this._formatter(this._key ? utils.prop(row, this._key) : row,
-    //                            row, pos);
-    // },
-
     _updatePack: function(packN, revision, rows) {
         this._removePack(packN);
         this._packs[packN] = this._renderPack(rows);
@@ -414,17 +393,30 @@ var DataList = exports.DataList = new Object.Class(
     },
 
     _renderPack: function(rows) {
-        /*
-        var formated = rows.map(function(r, i) {
-            return { value: this._formatRow(r, i), index: i, even: i & 1 };
+        var f = this._formatter, s = f.start,
+        t = s ? typeof s : 0, k = this._key,
+        str = t === 'string' ? s :
+            t === 'function' ? f.start(rows) : formatStart;
+
+        f.item || (f.item = formatItem);
+        f.value || (f.value = formatValue);
+        rows.forEach(function(r, i) {
+            str += f.item(k ? utils.prop(r, k) : r, r, i);
         }, this);
 
-        return dom.fromHTML(Mustache.to_html(
-            this._template,
-            { rows: formated }
-        )); */
-        var d = dom.fromHTML(this._formatList(rows));
-        dom.addClass(d, "ui-list-pack");
+        s = f.end, t = s ? typeof s : 0,
+        str += t === 'string' ? s :
+            t === 'function' ? f.end(rows) : formatEnd;
+
+        // =====
+        var d = dom.fromHTML(str);
+        dom.addClass(d, 'ui-list-pack'
+                     + (f.listClass ? ' ' + f.listClass : ''));
+        d.children.forEach(function(e,i){
+            dom.addClass(e, 'ui-list-row'
+                         + ((i & 1) ? ' ui-list-row-odd' : '')
+                         + (f.itemClass ? ' ' + f.itemClass : ''));
+        }, this);
         return d;
     },
     

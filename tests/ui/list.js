@@ -29,10 +29,10 @@ ui([
 		{ view: 'DataList', pos: 't:20px r:0 b:0 l:0', id: 'll',
                   data: data, formatter: {
                       start: '<div width="100%">',
+                      listClass: 'list',
+                      itemClass: 'row',
                       item: function(k, r, i) {
-                          return '<span class="ui-list-row'
-                              + ((i & 1) ? ' ui-list-row-odd' : '')
-                              +'">'
+                          return '<span>'
                               + this.value(k, r, i)
                               + '</span>';
                       },
