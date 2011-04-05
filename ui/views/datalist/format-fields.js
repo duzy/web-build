@@ -31,7 +31,7 @@ exports.DataListFormatFields = new Object.Class('DataListFormatFields', BaseFmt,
         var fs = this.fields(v,row,pos), s = '';
         fs.forEach(function(f,i){
             s += '<span class="ui-list-fmt-fields-cell">'
-                + this.field(f,i)
+                + this.field(f,i,v)
                 + '</span>';
         }, this);
         return s;
@@ -41,7 +41,7 @@ exports.DataListFormatFields = new Object.Class('DataListFormatFields', BaseFmt,
         return [v];
     },
 
-    field: function(f,i) {
-        return BaseFmt.prototype.value.call(this,f,f,i);
+    field: function(f,i,a) {
+        return BaseFmt.prototype.value.call(this,f,a,i);
     },
 });
