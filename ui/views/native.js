@@ -175,6 +175,17 @@ var TextArea = new Object.Class('TextArea', Text, {
     init: function(initArgs) {
         this._inputTag = 'textarea';
     },
+
+    $: {
+        resize: function(v) {
+            if (v !== undefined) this._input.style.resize = v;
+            return this._input.style.resize;
+        },
+        readonly: function(v) {
+            if (v !== undefined) this._input.readOnly = v;
+            return this._input.readOnly;
+        },
+    },
 });
 
 /**

@@ -102,6 +102,8 @@ var Base = new Object.Class('Base', {
         },this);
 
         d.onselectstart = fun.FF; // disable selection
+        /*
+        */
 
         view.register(this);
     },

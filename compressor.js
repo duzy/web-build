@@ -23,6 +23,9 @@
         required: {},
         requiredCount: 0,
         requiredAsts: [],
+
+        requiredModules: [], // stack
+        requiredModulePaths: [],
         
         requiredCss: {},
         requiredCssFiles: [],
@@ -33,16 +36,16 @@
         options: {}
     };
 
-    var sate = exports.state = null;
+    var state = exports.state = null;
     
     var walker = pro.ast_walker(),
         walkers = {
         "call": function(expr, args) {
             if (expr[0] === 'name' && expr[1] === REQUIRE) {
-                var file = resolvePath(args[0][1]);
+                var id, file = resolvePath(id = args[0][1]);
                    
                 if (!state.required[file]) {
-                    addFileToAstList(file, true);
+                    addFileToAstList(file, true, id);
                 }
                 return [this[0], expr, [['num', state.required[file]]] ];
             } else if (expr[0] === 'name' && expr[1] === REQUIRE_TEXT) {
@@ -126,7 +129,7 @@
 	return fs.realpathSync(resolvedPath);
     }
 
-    function addFileToAstList (filePath, wrap) {
+    function addFileToAstList (filePath, wrap, mid) {
 	state.required[filePath] = state.requiredCount++;
 	var oldPath = state.currentPath;
 	state.currentPath = filePath;
@@ -142,6 +145,8 @@
 	});
 	state.currentPath = oldPath;
 	state.requiredAsts[state.required[filePath]] = newAst;
+        state.requiredModules.push(filePath);
+        state.requiredModulePaths.push([mid, filePath]);
     }
 
     exports.parse = function(filePath, options) {
@@ -164,7 +169,7 @@
 	state.requiredAsts = [];
     
 	addFileToAstList(filePath, true);
-    
+
 	var code = 'var global = this;';
 	code    += 'function require(index) { if (!require.cache[index]) {var module = require.cache[index] = {exports: {}}; require.modules[index].call(module.exports, global, module);} return require.cache[index].exports; }\n';
 	code    += 'var require_modules = require.modules = []; require.cache = [];';

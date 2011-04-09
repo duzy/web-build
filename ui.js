@@ -1,3 +1,4 @@
+// -*- javascript -*-
 (function() {
     require('./ui/core/types');
 
