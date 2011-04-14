@@ -1,9 +1,8 @@
 // -*- javascript -*-
-//(function() {
-    var env   = require('../core/env'),
-        fun   = require('../core/function'),
-        utils = require('../core/utils'),
-        dom   = require('../core/dom');
+var env   = require('../core/env'),
+    fun   = require('../core/function'),
+    utils = require('../core/utils'),
+    dom   = require('../core/dom');
 
 
     /**

@@ -13,17 +13,17 @@ var Flow = new Object.Class(Can, {
     typeName: 'Flow',
 
     spacing: view.newClassMapProp({
-        none: 'ui-flow_spacing-none',
-        small: 'ui-flow_spacing-small',
-        medium: 'ui-flow_spacing-medium',
-        large: 'ui-flow_spacing-large'
+        none: 'ui-flow-spacing-none',
+        small: 'ui-flow-spacing-small',
+        medium: 'ui-flow-spacing-medium',
+        large: 'ui-flow-spacing-large'
     }),
 
-    horizontal: view.newToggleClassProp('ui-flow_horizontal'),
+    horizontal: view.newToggleClassProp('ui-flow-horizontal'),
 
     _createDom: function() {
         this._dom = dom.createElement('ul', {
-            className: 'ui-flow ui-flow_spacing-small'
+            className: 'ui-flow ui-flow-spacing-small'
         });
     },
 

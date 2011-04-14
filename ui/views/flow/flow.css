@@ -17,7 +17,7 @@
     for more info.
 */
 
-.ui-flow_horizontal:after {
+.ui-flow-horizontal:after {
     clear: both;
     content: '.';
     display: block;
@@ -26,28 +26,28 @@
     visibility: hidden;
 }
 
-.ui-flow_horizontal {
+.ui-flow-horizontal {
     *zoom: 1;
 }
 
-.ui-flow_horizontal > .ui-flow-item {
+.ui-flow-horizontal > .ui-flow-item {
     float: left;
 }
 
 /* Spacing */
-.ui-flow_spacing-small {
+.ui-flow-spacing-small {
     margin: 0;
 }
 
-.ui-flow_spacing-small > .ui-flow-item {
+.ui-flow-spacing-small > .ui-flow-item {
     margin: 5px 0 0 0;
 }
 
-.ui-flow_spacing-medium > .ui-flow-item {
+.ui-flow-spacing-medium > .ui-flow-item {
     margin: 10px 0 0 0;
 }
 
-.ui-flow_spacing-large > .ui-flow-item {
+.ui-flow-spacing-large > .ui-flow-item {
     margin: 20px 0 0 0;
 }
 
@@ -57,18 +57,18 @@
 
 
 /* Spacing for horizontal */
-.ui-flow_horizontal.ui-flow_spacing-small > .ui-flow-item {
+.ui-flow-horizontal.ui-flow-spacing-small > .ui-flow-item {
     margin: 0 0 0 5px;
 }
 
-.ui-flow_horizontal.ui-flow_spacing-medium > .ui-flow-item {
+.ui-flow-horizontal.ui-flow-spacing-medium > .ui-flow-item {
     margin: 0 0 0 10px;
 }
 
-.ui-flow_horizontal.ui-flow_spacing-large > .ui-flow-item {
+.ui-flow-horizontal.ui-flow-spacing-large > .ui-flow-item {
     margin: 0 0 0 20px;
 }
 
-.ui-flow_horizontal.ui-flow > .ui-flow-item:first-child {
+.ui-flow-horizontal.ui-flow > .ui-flow-item:first-child {
     margin-left: 0;
 }
