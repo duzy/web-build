@@ -1,16 +1,15 @@
 // -*- javascript -*-
-//(function() {
 requireCss('./native/native.css');
 
 var fun   = require('../core/function'),
-    utils = require('../core/utils'),
-    dom   = require('../core/dom'),
-    env   = require('../core/env'),
-    evt   = require('../core/event'),
+utils = require('../core/utils'),
+dom   = require('../core/dom'),
+env   = require('../core/env'),
+evt   = require('../core/event'),
 
-    Binding   = require('../tool/binding').Binding,
-    Focusable = require('../facet/focusable').Focusable,
-    Base      = require('../core/view/base').Base;
+Base      = require('../core/view/base').Base,
+Binding   = require('../tool/binding').Binding,
+Focusable = require('../facet/focusable').Focusable;
 
 
 /**
@@ -133,12 +132,9 @@ var Text = new Object.Class('Text', NativeControl, {
 	
         this._initedPlaceholder = true;
         this.addClass('ui-native-text-with-placeholder');
-        this._placeholderDom = dom.createElement('span', {
-	    name: 'placeholder'
-	});
+        this._placeholderDom = dom.createElement('span', { name: 'placeholder' });
         this.dom.insertBefore(this._placeholderDom, this.dom.firstChild);
-        evt.on(this._placeholderDom, 'click',
-	       function() { this.focus(); }.bindOnce(this));
+        evt.on(this._placeholderDom, 'click', function() { this.focus(); }.bindOnce(this));
         this.on('focus blur change keyup', this._updatePlaceholderVis);
         if (this._input.offsetHeight) {
             this._updatePlaceholderHeight();
@@ -262,4 +258,3 @@ exports.native = {
     Select:        Select,
     TextArea:      TextArea,
 };
-//})();

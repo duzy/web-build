@@ -1,0 +1,119 @@
+.uki-datatable-container {
+    overflow: auto;
+}
+
+.uki-datatable-header,
+.uki-datatable-pack {
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+.uki-datatable-pack {
+    width: 100%;
+}
+
+.uki-datatable-row {
+    display: table-row;
+}
+
+.uki-datatable-cell {
+    border: none;
+    padding: 2px 5px;
+    margin: 0;
+    height: 14px;
+    font-size: 11px;
+    line-height: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: default;
+}
+
+.uki-datatable-row_selected {
+    background-color: #3875D7;
+    color: #FFF;
+}
+
+.uki-datatable-row_selected .uki-datatable-cell {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-top: 1px solid #2760C0;
+    border-bottom: 1px solid #2760C0;
+}
+
+.uki-datatable-row_selected + .uki-datatable-row_selected .uki-datatable-cell {
+    border-top: none;
+    padding-top: 2px;
+}
+
+.uki-dataList_blured .uki-datatable-row_selected {
+    background-color: #CCC;
+    color: #000;
+}
+
+.uki-dataList_blured .uki-datatable-row_selected .uki-datatable-cell {
+    border-color: #AAA;
+}
+
+
+.uki-datatable-wrap {
+    width: 100%;
+}
+
+.uki-datatable-cell_number {
+    text-align: right;
+}
+
+.uki-datatable-header-container {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+    z-index: 100;
+    position: relative;
+    background-color: #EFEFEF;
+    border-bottom: 1px solid #999;
+    overflow: hidden;
+    cursor: default;
+}
+
+.uki-datatable-header-cell {
+    margin: 0;
+    border-right: 1px solid #CCC;
+    padding: 0 4px 0 5px;
+}
+
+.uki-datatable-header-wrap {
+    position: relative;
+}
+
+.uki-datatable-header-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 2px 0;
+    height: 14px;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.uki-datatable-resizer {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    width: 5px;
+    top: 0;
+    right: -7px;
+    height: 100%;
+    text-indent: 1em;
+    cursor: ew-resize;
+    cursor: col-resize;
+}
+
+.uki-datatable-header-cell_resizable .uki-datatable-resizer {
+    display: block;
+}
+
+.uki-datatable-spacer {
+    padding-left: 0;
+    padding-right: 0;
+}
