@@ -3,7 +3,8 @@ var cli    = require("cli");
 
 /*var flags =*/ cli.parse({
     output:     ['o', 'Set compiled output file', 'string'],
-    debug:      ['d', 'Build a "debug" version for debugging in browsers']
+    debug:      ['d', 'Build a "debug" version for debugging in browsers'],
+    beautify:   ['b', 'Genearte beautified output'],
 });
 
 var fs     = require("fs"),
@@ -85,10 +86,10 @@ cli.main(function(args, flags) {
     var ext = path.extname(outname);
     var name = path.basename(outname, ext);
     var title = path.basename(inname, path.extname(inname));
-    
+
     var codegen_options = {
 	ascii_only: false,
-	beautify: false,
+	beautify: flags.beautify,
 	indent_level: 4,
 	indent_start: 0,
 	quote_keys: false,

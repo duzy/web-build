@@ -217,12 +217,15 @@
 
             var ast = exports.parse(filePath, parseOptions);
 
-            if (true) {
+            if (1) {
 		ast = pro.ast_mangle(ast);
 		ast = pro.ast_squeeze(ast);
 		ast = pro.ast_squeeze_more(ast);
             }
 
+            //{ beautify: !req.param('squeeze') }
+
+            //var code = pro.gen_code(ast, { beautify: 1 });
             var code = pro.gen_code(ast, options);
 	} catch (e) {
 	    var msg = e.message + ' (in ' + exports.state.currentPath + ')';
